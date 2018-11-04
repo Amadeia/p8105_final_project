@@ -16,10 +16,33 @@ Motivations:
 -   Political party searches
 -   Look at geographic components (i.e. where are certain searches occurring)
 
-Intended Final Products
------------------------
+Intended Final Products:
+------------------------
 
 -   Map of Texas that shows voter registration searches per county
 -   Graph(s) on trends of voter registration searches and searched political topics by election cycle
 -   Searches for Beto O'Rourke vs. Ted Cruz for this cycle
 -   Registration deadline in relation to voter registration searches
+
+Anticipated Data Sources:
+-------------------------
+
+-   [Google trends](http://googletrends.github.io/data/) (downloading the provided csv files)
+-   [Texas voting site](https://www.votetexas.gov/register-to-vote/)
+
+Planned Analyses / Visualizations / Coding Challenges:
+------------------------------------------------------
+
+-   Interactive map (Plotly/Flexdashboard)
+-   Line graph for timelines
+-   Bar graph for counties and voter registration searches
+-   Bar graph for political topic searches (e.g. top 5)
+-   Finding county level data
+
+Timeline:
+---------
+
+-   Project review meeting **Nov 12-16**
+-   Report **Dec 6**
+-   Webpage and screencast **Dec 6**
+-   Peer assessment **Dec 6**

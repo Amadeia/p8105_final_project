@@ -1,0 +1,96 @@
+---
+title: "Testing code"
+author: "Courtney Chan"
+date: "November 14, 2018"
+output: github_document
+---
+#Testing code for the final project
+
+##To accomplish:
+-Looking through the datasets we have available
+-What kind of analysis do we want to see
+-Review the sample final projects
+
+Some links to keep in mind:
+https://www.cnn.com/election/2018/exit-polls/texas/senate
+https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/
+
+
+```{r packages}
+library(tidyverse)
+library(rvest)
+library(httr)
+
+```
+
+##scraping election results from the web
+
+###New York Times voting results by county
+
+```{r scraping election results for texas from the web table method}
+
+url = "https://www.nytimes.com/elections/results/texas-senate"
+nytimes_data = read_html(url)
+
+nytimes_data
+
+```
+
+```{r extracting tables from webiste}
+nytimes_data %>% 
+  html_nodes(css = "table")
+
+```
+This seems to have created two tables from the website data.
+
+```{r making 1st web table into tibbles?}
+
+table_overall = (nytimes_data %>% html_nodes(css = "table")) %>% 
+  .[[1]] %>%
+  html_table()
+
+```
+
+Made the first table that which we have final results for the state of texas.
+
+```{r making 2nd web table into another tibble}
+
+table_county =  (nytimes_data %>% html_nodes(css = "table")) %>% 
+  .[[2]] %>%
+  html_table() %>% 
+  slice(1:(n() - 1))
+
+```
+
+
+Made the second table which has all of the 254 county level data for Texas!
+
+
+## comparing these county level election results to highly searched voter election interests in google
+
+```{r reading in dataset voter searches}
+
+district_searches = read_csv(file =  "./data/Search_Data_US_Congressional_District_04Nov2018.csv")
+
+```
+
+
+```{r Tx subdata}
+
+TX_searches = 
+  district_searches %>% janitor::clean_names() %>% 
+  filter(state == "TX")
+
+```
+
+
+##uploading county congressional district txt file
+
+```{r 113th congressional district table}
+
+congress_district = read.csv(file = "./data/congress_district.csv")
+
+```
+
+## comparing these county level election results to search results by candidate
+

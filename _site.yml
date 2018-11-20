@@ -3,8 +3,8 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "About"
-      href: about.html
+    - text: "Data"
+      href: data.html
     - text: "Report"
       href: report.html
     - icon: fab fa-youtube

@@ -1,8 +1,9 @@
 ---
-title: "report"
-author: "Francois Ban"
-date: "11/20/2018"
-output: html_document
+title: "Report"
+output: 
+  html_document:
+    theme: flatly
+    highlight: tango
 ---
 
 ```{r setup, include=FALSE}

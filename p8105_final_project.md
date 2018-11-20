@@ -34,7 +34,7 @@ Planned Analyses / Visualizations / Coding Challenges:
 ------------------------------------------------------
 
 -   Interactive map (Plotly/Flexdashboard)
-      - GIS type of interactive map showing different searches by districts 
+    -   GIS type of interactive map showing different searches by districts
 -   Line graph for timelines
 -   Bar graph for counties and voter registration searches
 -   Bar graph for political topic searches (e.g. top 5)

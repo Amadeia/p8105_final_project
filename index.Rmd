@@ -1,10 +1,9 @@
 ---
-title: "Final Project"
+title: "Midterm Election 2018"
+author: "Amadeia Rector, aar2192; Courtney Chan, cac2225; Pei Yang Hsieh, ph2538; Qiu Xia Guan, qg2155; Francois Ban, kb2977"
+date: "November 20th, 2018"
 output: 
   html_document:
     theme: flatly
 ---
 
-### I have a webpage!
-
-And I can put all kinds of stuff on it!

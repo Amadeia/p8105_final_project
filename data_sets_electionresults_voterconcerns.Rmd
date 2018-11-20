@@ -1,8 +1,8 @@
 ---
 title: "Testing code"
-author: "Courtney Chan"
-date: "November 14, 2018"
-output: github_document
+output: 
+  html_document:
+    theme: flatly
 ---
 #Testing code for the final project
 

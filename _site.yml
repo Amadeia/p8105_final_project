@@ -1,4 +1,4 @@
-name: "Yay internet!"
+name: "p8105_final_project"
 output_dir: "."
 navbar:
   title: "Home"
@@ -9,5 +9,7 @@ navbar:
       href: mailto:<you@youremail.com>
     - icon: fa-github fa-lg
       href: http://github.com/<YOUR_GH_NAME>/
+    - text: "Report"
+      href: report.html
 output:
   html_document

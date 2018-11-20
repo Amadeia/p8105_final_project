@@ -1,5 +1,12 @@
 ---
 title: "About"
+output: 
+  html_document:
+    theme: flatly
+    highlight: tango
+    toc: true
+    toc_depth: 4
+    toc_float: true
 ---
 
 ### About this site

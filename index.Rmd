@@ -1,5 +1,8 @@
 ---
-title: "Holy cow!"
+title: "Final Project"
+output: 
+  html_document:
+    theme: flatly
 ---
 
 ### I have a webpage!

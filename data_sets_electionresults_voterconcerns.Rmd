@@ -20,6 +20,7 @@ https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border
 library(tidyverse)
 library(rvest)
 library(httr)
+library(ggridges)
 
 ```
 
@@ -30,13 +31,13 @@ library(httr)
 ```{r scraping election results for texas from the web table method}
 
 url = "https://www.nytimes.com/elections/results/texas-senate"
-nytimes_data = read_html(url)
+nytimes_data = read_html(url, col_types = "ccdd")
 
 nytimes_data
 
 ```
 
-```{r extracting tables from webiste}
+```{r extracting tables from website}
 nytimes_data %>% 
   html_nodes(css = "table")
 
@@ -48,8 +49,42 @@ This seems to have created two tables from the website data.
 table_overall = (nytimes_data %>% html_nodes(css = "table")) %>% 
   .[[1]] %>%
   html_table()
-
 ```
+
+## Tidying overall table for exploratory analysis
+
+```{r}
+#remove the commas in the numbers first
+table_overall$Votes <- gsub(",","",table_overall$Votes)
+table_overall$Pct. <- gsub("%","",table_overall$Pct.)
+
+#convert votes and percent to numeric
+table_overall = 
+  table_overall %>% 
+  mutate(Votes = as.numeric(Votes), Pct. = as.numeric(Pct.))
+```
+
+## Bar Plot of Votes per Candidate
+
+```{r bar_plot}
+bar_overall =
+  table_overall %>% 
+  mutate(Candidate = as.factor(Candidate)) %>% 
+  mutate(Candidate = forcats::fct_reorder(Candidate, Votes)) %>% 
+  ggplot(aes(x = Candidate, y = Votes, fill = Party)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Number of Votes per Candidate",
+    x = "Candidate",
+    y = "Number of Votes"
+  ) +
+  scale_x_discrete(labels = c("Cruz* Ted Cruz*" = "Ted Cruz", "O'Rourke Beto O'Rourke" = "Beto O'Rourke",
+                              "Dikeman Neal Dikeman" = "Neal Dikeman"))
+  
+bar_overall
+```
+
+
 
 Made the first table that which we have final results for the state of texas.
 
@@ -58,12 +93,52 @@ Made the first table that which we have final results for the state of texas.
 table_county =  (nytimes_data %>% html_nodes(css = "table")) %>% 
   .[[2]] %>%
   html_table() %>% 
-  slice(1:(n() - 1))
+  slice(1:(n() - 1)) %>% 
+  select(-Rpt.) %>% 
+  janitor::clean_names()
 
+```
+
+## Tidying county table
+
+```{r}
+#remove the commas in the numbers first
+table_county$cruz <- gsub(",","",table_county$cruz)
+table_county$o_rourke <- gsub(",","",table_county$o_rourke)
+table_county$dikeman <- gsub(",","",table_county$dikeman)
+
+table_county = 
+  table_county %>% 
+  mutate(cruz = as.numeric(cruz), o_rourke = as.numeric(o_rourke), dikeman = as.numeric(dikeman))
+
+table_county_long = gather(table_county, key = candidate, value = votes, cruz:dikeman)
 ```
 
 
 Made the second table which has all of the 254 county level data for Texas!
+
+## Plots for all counties
+
+```{r}
+point_county =
+  table_county_long %>% 
+  filter(candidate != "dikeman") %>% 
+  ggplot(aes(x = county, y = votes, color = candidate)) +
+  geom_point() +
+  labs(
+    title = "Number of Votes for Beto vs Cruz",
+    x = "County",
+    y = "Number of Votes"
+  ) +
+  theme(axis.text.x = element_text(angle = 90), text = element_text(size = 3))
+  
+point_county
+
+ggplot(table_county_long, aes(x = candidate, y = votes)) + geom_boxplot()
+
+ggplot(table_county_long, aes(x = votes, y = candidate)) + 
+  geom_density_ridges(scale = .85)
+```
 
 
 ## comparing these county level election results to highly searched voter election interests in google
@@ -81,6 +156,11 @@ TX_searches =
   district_searches %>% janitor::clean_names() %>% 
   filter(state == "TX")
 
+TX_counts = 
+  TX_searches %>% 
+  count(fifth)
+
+#select only some variables: immigration, health care, Medicare, Medicaid 
 ```
 
 

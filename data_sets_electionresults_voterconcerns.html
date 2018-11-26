@@ -221,21 +221,18 @@ $(document).ready(function () {
 </div>
 
 
-<div id="testing-code-for-the-final-project" class="section level1">
-<h1>Testing code for the final project</h1>
-<div id="to-accomplish" class="section level2">
-<h2>To accomplish:</h2>
-<p>-Looking through the datasets we have available -What kind of analysis do we want to see -Review the sample final projects</p>
+<p>#Testing code for the final project</p>
+<p>##To accomplish: -Looking through the datasets we have available -What kind of analysis do we want to see -Review the sample final projects</p>
 <p>Some links to keep in mind: <a href="https://www.cnn.com/election/2018/exit-polls/texas/senate" class="uri">https://www.cnn.com/election/2018/exit-polls/texas/senate</a> <a href="https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/" class="uri">https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/</a></p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ──────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
-## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
-## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>## -- Attaching packages ------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
+## v tibble  1.4.2     v dplyr   0.7.6
+## v tidyr   0.8.1     v stringr 1.3.1
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## -- Conflicts ---------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(rvest)</code></pre>
 <pre><code>## Loading required package: xml2</code></pre>
 <pre><code>## 
@@ -246,14 +243,17 @@ $(document).ready(function () {
 <pre><code>## The following object is masked from &#39;package:readr&#39;:
 ## 
 ##     guess_encoding</code></pre>
-<pre class="r"><code>library(httr)</code></pre>
-</div>
-<div id="scraping-election-results-from-the-web" class="section level2">
-<h2>scraping election results from the web</h2>
-<div id="new-york-times-voting-results-by-county" class="section level3">
-<h3>New York Times voting results by county</h3>
+<pre class="r"><code>library(httr)
+library(ggridges)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;ggridges&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     scale_discrete_manual</code></pre>
+<p>##scraping election results from the web</p>
+<p>###New York Times voting results by county</p>
 <pre class="r"><code>url = &quot;https://www.nytimes.com/elections/results/texas-senate&quot;
-nytimes_data = read_html(url)
+nytimes_data = read_html(url, col_types = &quot;ccdd&quot;)
 
 nytimes_data</code></pre>
 <pre><code>## {xml_document}
@@ -269,13 +269,79 @@ nytimes_data</code></pre>
 <pre class="r"><code>table_overall = (nytimes_data %&gt;% html_nodes(css = &quot;table&quot;)) %&gt;% 
   .[[1]] %&gt;%
   html_table()</code></pre>
+<div id="tidying-overall-table-for-exploratory-analysis" class="section level2">
+<h2>Tidying overall table for exploratory analysis</h2>
+<pre class="r"><code>#remove the commas in the numbers first
+table_overall$Votes &lt;- gsub(&quot;,&quot;,&quot;&quot;,table_overall$Votes)
+table_overall$Pct. &lt;- gsub(&quot;%&quot;,&quot;&quot;,table_overall$Pct.)
+
+#convert votes and percent to numeric
+table_overall = 
+  table_overall %&gt;% 
+  mutate(Votes = as.numeric(Votes), Pct. = as.numeric(Pct.))</code></pre>
+</div>
+<div id="bar-plot-of-votes-per-candidate" class="section level2">
+<h2>Bar Plot of Votes per Candidate</h2>
+<pre class="r"><code>bar_overall =
+  table_overall %&gt;% 
+  mutate(Candidate = as.factor(Candidate)) %&gt;% 
+  mutate(Candidate = forcats::fct_reorder(Candidate, Votes)) %&gt;% 
+  ggplot(aes(x = Candidate, y = Votes, fill = Party)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  labs(
+    title = &quot;Number of Votes per Candidate&quot;,
+    x = &quot;Candidate&quot;,
+    y = &quot;Number of Votes&quot;
+  ) +
+  scale_x_discrete(labels = c(&quot;Cruz* Ted Cruz*&quot; = &quot;Ted Cruz&quot;, &quot;O&#39;Rourke Beto O&#39;Rourke&quot; = &quot;Beto O&#39;Rourke&quot;,
+                              &quot;Dikeman Neal Dikeman&quot; = &quot;Neal Dikeman&quot;))
+  
+bar_overall</code></pre>
+<p><img src="data_sets_electionresults_voterconcerns_files/figure-html/bar_plot-1.png" width="672" /></p>
 <p>Made the first table that which we have final results for the state of texas.</p>
 <pre class="r"><code>table_county =  (nytimes_data %&gt;% html_nodes(css = &quot;table&quot;)) %&gt;% 
   .[[2]] %&gt;%
   html_table() %&gt;% 
-  slice(1:(n() - 1))</code></pre>
+  slice(1:(n() - 1)) %&gt;% 
+  select(-Rpt.) %&gt;% 
+  janitor::clean_names()</code></pre>
+</div>
+<div id="tidying-county-table" class="section level2">
+<h2>Tidying county table</h2>
+<pre class="r"><code>#remove the commas in the numbers first
+table_county$cruz &lt;- gsub(&quot;,&quot;,&quot;&quot;,table_county$cruz)
+table_county$o_rourke &lt;- gsub(&quot;,&quot;,&quot;&quot;,table_county$o_rourke)
+table_county$dikeman &lt;- gsub(&quot;,&quot;,&quot;&quot;,table_county$dikeman)
+
+table_county = 
+  table_county %&gt;% 
+  mutate(cruz = as.numeric(cruz), o_rourke = as.numeric(o_rourke), dikeman = as.numeric(dikeman))
+
+table_county_long = gather(table_county, key = candidate, value = votes, cruz:dikeman)</code></pre>
 <p>Made the second table which has all of the 254 county level data for Texas!</p>
 </div>
+<div id="plots-for-all-counties" class="section level2">
+<h2>Plots for all counties</h2>
+<pre class="r"><code>point_county =
+  table_county_long %&gt;% 
+  filter(candidate != &quot;dikeman&quot;) %&gt;% 
+  ggplot(aes(x = county, y = votes, color = candidate)) +
+  geom_point() +
+  labs(
+    title = &quot;Number of Votes for Beto vs Cruz&quot;,
+    x = &quot;County&quot;,
+    y = &quot;Number of Votes&quot;
+  ) +
+  theme(axis.text.x = element_text(angle = 90), text = element_text(size = 3))
+  
+point_county</code></pre>
+<p><img src="data_sets_electionresults_voterconcerns_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(table_county_long, aes(x = candidate, y = votes)) + geom_boxplot()</code></pre>
+<p><img src="data_sets_electionresults_voterconcerns_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(table_county_long, aes(x = votes, y = candidate)) + 
+  geom_density_ridges(scale = .85)</code></pre>
+<pre><code>## Picking joint bandwidth of 1080</code></pre>
+<p><img src="data_sets_electionresults_voterconcerns_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
 </div>
 <div id="comparing-these-county-level-election-results-to-highly-searched-voter-election-interests-in-google" class="section level2">
 <h2>comparing these county level election results to highly searched voter election interests in google</h2>
@@ -305,15 +371,18 @@ nytimes_data</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
 <pre class="r"><code>TX_searches = 
   district_searches %&gt;% janitor::clean_names() %&gt;% 
-  filter(state == &quot;TX&quot;)</code></pre>
-</div>
-<div id="uploading-county-congressional-district-txt-file" class="section level2">
-<h2>uploading county congressional district txt file</h2>
+  filter(state == &quot;TX&quot;)
+
+TX_counts = 
+  TX_searches %&gt;% 
+  count(fifth)
+
+#select only some variables: immigration, health care, Medicare, Medicaid </code></pre>
+<p>##uploading county congressional district txt file</p>
 <pre class="r"><code>congress_district = read.csv(file = &quot;./data/congress_district2.csv&quot;)</code></pre>
 </div>
 <div id="comparing-these-county-level-election-results-to-search-results-by-candidate" class="section level2">
 <h2>comparing these county level election results to search results by candidate</h2>
-</div>
 </div>
 
 

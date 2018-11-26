@@ -8,6 +8,7 @@ output:
 
 ##To accomplish:
 -Looking through the datasets we have available
+-Need Google Trend data for search terms such as "Cruz" vs "Rourke" or "midterm election" to see if number of searches correlate with # votes for each candidate or # registered voters
 -What kind of analysis do we want to see
 -Review the sample final projects
 

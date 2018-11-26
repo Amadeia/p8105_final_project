@@ -29,7 +29,8 @@ Qiu Xia Guan, qg2155; Francois Ban, kb2977
 
   - [Google trends](http://googletrends.github.io/data/) (downloading
     the provided csv files)
-  - [Texas voting site](https://www.votetexas.gov/register-to-vote/)
+  - [NY Times Election
+    Results](https://www.nytimes.com/elections/results/texas-senate)
 
 ## Planned Analyses / Visualizations / Coding Challenges:
 

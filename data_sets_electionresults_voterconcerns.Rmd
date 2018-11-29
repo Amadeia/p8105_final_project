@@ -148,14 +148,14 @@ ggplot(table_county_long, aes(x = votes, y = candidate)) +
 ## comparing these county level election results to highly searched voter election interests in google
 -using search terms "Midterms" and selecting dataset from top result
 
-```{r reading in dataset voter searches}
+```{r reading in dataset voter searches2}
 
 district_searches = read_csv(file =  "./data/Search_Data_US_Congressional_District_04Nov2018.csv")
 
 ```
 
 
-```{r Tx subdata}
+```{r Tx subdata2}
 
 TX_searches = 
   district_searches %>% janitor::clean_names() %>% 

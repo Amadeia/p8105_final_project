@@ -214,7 +214,20 @@ TX_searches2 =
   separate(code, into = c("remove_1", "district_num"), sep = "-") %>% 
   mutate(district_num = as.numeric(district_num)) %>% 
   select(district_num, most_searched = first, health_care, immigration, medicare, medicaid,mental_health, september_11_attacks) 
-  
+
+nested_congress =
+  congress_district %>% 
+  nest(county_name) 
+	
+merged_searches= merge(TX_searches2, nested_congress, by="district_num", all=TRUE) %>% 
+  unnest() 
+
+merged_searches = merged_searches %>% 
+  select(district_num, county=county_name, everything())
+
+merged_nyc_searches = merge(merged_searches, table_county, by="county", all=TRUE)
+#there appear to be 4 counties from the NY times data that aren't in the other datasets...Sterling, De Witt, La Vaca, and McCulloch
+
 ```
 
 ## comparing these county level election results to search results by candidate

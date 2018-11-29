@@ -190,7 +190,7 @@ TX_searches =
   TX_searches %>% 
   separate(code, into = c("remove_1", "district_num"), sep = "-") %>% 
   mutate(district_num = as.numeric(district_num)) %>% 
-  select(district_num, most_searched = first, everything()) 
+  select(district_num, most_searched = first, x2003_invasion_of_iraq:womens_health) 
 
 nested_congress =
   congress_district %>% 

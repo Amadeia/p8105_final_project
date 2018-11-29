@@ -225,6 +225,7 @@ $(document).ready(function () {
 <p>##To accomplish: -Looking through the datasets we have available -Need Google Trend data for search terms such as “Cruz” vs “Rourke” or “midterm election” to see if number of searches correlate with # votes for each candidate or # registered voters -What kind of analysis do we want to see -Review the sample final projects</p>
 <p>Some links to keep in mind: <a href="https://www.cnn.com/election/2018/exit-polls/texas/senate" class="uri">https://www.cnn.com/election/2018/exit-polls/texas/senate</a> <a href="https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/" class="uri">https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/</a></p>
 <pre class="r"><code>library(tidyverse)</code></pre>
+<<<<<<< HEAD
 <pre><code>## -- Attaching packages ------------------------- tidyverse 1.2.1 --</code></pre>
 <pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
 ## v tibble  1.4.2     v dplyr   0.7.6
@@ -233,6 +234,24 @@ $(document).ready(function () {
 <pre><code>## -- Conflicts ---------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
+=======
+<<<<<<< HEAD
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+=======
+<pre><code>## ── Attaching packages ─────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+>>>>>>> 5275e2f711f69b23868b6af4aed3a5c52a21a46f
+<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
+## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
+<<<<<<< HEAD
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+=======
+<pre><code>## ── Conflicts ────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+>>>>>>> 5275e2f711f69b23868b6af4aed3a5c52a21a46f
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+>>>>>>> e0f8284fc662d921db443cc98d2d279df71c249a
 <pre class="r"><code>library(rvest)</code></pre>
 <pre><code>## Loading required package: xml2</code></pre>
 <pre><code>## 
@@ -454,9 +473,22 @@ merged_searches2 = merged_searches %&gt;%
   select(district_num, county=county_name, everything())
 
 merged_nyt_searches = merge(merged_searches2, table_county, by= &quot;county&quot;, all=TRUE)</code></pre>
+<<<<<<< HEAD
 <p>#plot for topics search per county Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
 <pre class="r"><code>merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = search_interest, health_care:september_11_attacks)</code></pre>
 </div>
+=======
+</div>
+</div>
+<div id="plot-for-topics-search-per-county" class="section level1">
+<h1>plot for topics search per county</h1>
+<p>Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
+<<<<<<< HEAD
+<pre class="r"><code>merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = counts, health_care:september_11_attacks)</code></pre>
+=======
+<pre class="r"><code>merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = search_interest, health_care:september_11_attacks)</code></pre>
+>>>>>>> 5275e2f711f69b23868b6af4aed3a5c52a21a46f
+>>>>>>> e0f8284fc662d921db443cc98d2d279df71c249a
 <div id="comparing-these-county-level-election-results-to-search-results-by-candidate" class="section level2">
 <h2>comparing these county level election results to search results by candidate</h2>
 </div>

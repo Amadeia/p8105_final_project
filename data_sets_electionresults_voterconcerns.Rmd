@@ -219,7 +219,7 @@ TX_searches2 =
   TX_searches2 %>% 
   separate(code, into = c("remove_1", "district_num"), sep = "-") %>% 
   mutate(district_num = as.numeric(district_num)) %>% 
-  select(district_num, most_searched = first, health_care, immigration, medicare, medicaid,mental_health, september_11_attacks) 
+  select(district_num, most_searched = first, everything()) 
 
 nested_congress =
   congress_district %>% 
@@ -243,7 +243,7 @@ ideas: 1) interactive barchart in the current long format, if we use shiny we co
 3) Alternative to first option, how can we show the distribution of topics among counties instead?
 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area
 ```{r}
-merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = counts, health_care:september_11_attacks)
+merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = search_interest, health_care:september_11_attacks)
 
 ```
 

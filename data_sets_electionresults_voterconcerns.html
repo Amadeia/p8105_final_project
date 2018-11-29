@@ -450,7 +450,7 @@ congress_district$county_name = str_replace(congress_district$county_name,&quot;
   TX_searches2 %&gt;% 
   separate(code, into = c(&quot;remove_1&quot;, &quot;district_num&quot;), sep = &quot;-&quot;) %&gt;% 
   mutate(district_num = as.numeric(district_num)) %&gt;% 
-  select(district_num, most_searched = first, health_care, immigration, medicare, medicaid,mental_health, september_11_attacks) 
+  select(district_num, most_searched = first, everything()) 
 
 nested_congress =
   congress_district %&gt;% 
@@ -469,7 +469,7 @@ merged_nyt_searches = merge(merged_searches2, table_county, by= &quot;county&quo
 <div id="plot-for-topics-search-per-county" class="section level1">
 <h1>plot for topics search per county</h1>
 <p>Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
-<pre class="r"><code>merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = counts, health_care:september_11_attacks)</code></pre>
+<pre class="r"><code>merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = search_interest, health_care:september_11_attacks)</code></pre>
 <div id="comparing-these-county-level-election-results-to-search-results-by-candidate" class="section level2">
 <h2>comparing these county level election results to search results by candidate</h2>
 </div>

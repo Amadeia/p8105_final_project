@@ -357,7 +357,7 @@ point_county</code></pre>
 <div id="comparing-these-county-level-election-results-to-highly-searched-voter-election-interests-in-google" class="section level2">
 <h2>comparing these county level election results to highly searched voter election interests in google</h2>
 <p>-using search terms “Midterms” and selecting dataset from top result</p>
-<pre class="r"><code>district_searches = read_csv(file =  &quot;./data/Search_Data_US_Congressional_District_04Nov2018.csv&quot;)</code></pre>
+<pre class="r"><code>district_searches = read_csv(file =  &quot;./data/Search_Data_US_Congressional_District_26Sep2018.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_double(),
@@ -374,7 +374,6 @@ point_county</code></pre>
 ##   EIGHTH = col_character(),
 ##   NINTH = col_character(),
 ##   TENTH = col_character(),
-##   `Gender workplace diversity` = col_integer(),
 ##   `Maternity leave in the United States` = col_integer(),
 ##   `Single-payer healthcare` = col_integer(),
 ##   `Tax Cuts and Jobs Act of 2017` = col_integer(),
@@ -387,48 +386,6 @@ point_county</code></pre>
 
 TX_counts = 
   TX_searches %&gt;% 
-  count(fifth)
-
-#select only some variables: immigration, health care, Medicare, Medicaid 
-#first most searched: immigration, health care, islam, Medicare
-#second most searched: health care, immigration, Medicaid, Medicare, Mental Health, Offshore bank
-#third most searched: Medicare, Islam, Medicaid, Mental health, Social security, September 11 attacks, Electoral college, Climate change
-#4th most searched: Medicaid, Medicare, Abortion...
-#5th most searched: Medicaid, Mental health, Abortion, Islam...
-#based on this, we should select variables immigration, health care, islam, Medicare, Medicaid, Mental health, and Abortion. The others can be combined as &quot;other&quot;</code></pre>
-</div>
-<div id="looking-at-searches-for-texas-but-for-september-26-2018-registration-ends-oct-9" class="section level2">
-<h2>Looking at searches for Texas but for September 26, 2018 (registration ends Oct 9)</h2>
-<p>-I’m a little confused as to the variables… I assume first means the most searched topic… and so forth for each district</p>
-<pre class="r"><code>district_searches2 = read_csv(file =  &quot;./data/Search_Data_US_Congressional_District_26Sep2018.csv&quot;)</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_double(),
-##   District = col_character(),
-##   Code = col_character(),
-##   State = col_character(),
-##   FIRST = col_character(),
-##   SECOND = col_character(),
-##   THIRD = col_character(),
-##   FOURTH = col_character(),
-##   FIFTH = col_character(),
-##   SIXTH = col_character(),
-##   SEVENTH = col_character(),
-##   EIGHTH = col_character(),
-##   NINTH = col_character(),
-##   TENTH = col_character(),
-##   `Maternity leave in the United States` = col_integer(),
-##   `Single-payer healthcare` = col_integer(),
-##   `Tax Cuts and Jobs Act of 2017` = col_integer(),
-##   `Transgender people in the military` = col_integer()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre class="r"><code>TX_searches2 = 
-  district_searches2 %&gt;% janitor::clean_names() %&gt;% 
-  filter(state == &quot;TX&quot;)
-
-TX_counts2 = 
-  TX_searches2 %&gt;% 
   count(fifth)
 
 
@@ -446,8 +403,8 @@ TX_counts2 =
 congress_district$county_name = str_replace(congress_district$county_name,&quot;Sterlin&quot;, &quot;Sterling&quot;)
 congress_district$county_name = str_replace(congress_district$county_name,&quot;MuCulloch&quot;,&quot;McCulloch&quot;)
 #misspelled counties discovered while exploring data when merging later on</code></pre>
-<pre class="r"><code>TX_searches2 =
-  TX_searches2 %&gt;% 
+<pre class="r"><code>TX_searches =
+  TX_searches %&gt;% 
   separate(code, into = c(&quot;remove_1&quot;, &quot;district_num&quot;), sep = &quot;-&quot;) %&gt;% 
   mutate(district_num = as.numeric(district_num)) %&gt;% 
   select(district_num, most_searched = first, everything()) 
@@ -456,14 +413,14 @@ nested_congress =
   congress_district %&gt;% 
   nest(county_name) 
     
-merged_searches= merge(TX_searches2, nested_congress, by=&quot;district_num&quot;, all=TRUE) %&gt;% 
+merged_searches= merge(TX_searches, nested_congress, by=&quot;district_num&quot;, all=TRUE) %&gt;% 
   unnest() 
 
 #rename variable county_name
-merged_searches2 = merged_searches %&gt;% 
+merged_searches = merged_searches %&gt;% 
   select(district_num, county=county_name, everything())
 
-merged_nyt_searches = merge(merged_searches2, table_county, by= &quot;county&quot;, all=TRUE)</code></pre>
+merged_nyt_searches = merge(merged_searches, table_county, by= &quot;county&quot;, all=TRUE)</code></pre>
 </div>
 </div>
 <div id="plot-for-topics-search-per-county" class="section level1">

@@ -148,14 +148,14 @@ ggplot(table_county_long, aes(x = votes, y = candidate)) +
 ## comparing these county level election results to highly searched voter election interests in google
 -using search terms "Midterms" and selecting dataset from top result
 
-```{r reading in dataset voter searches2}
+```{r reading in dataset voter searches}
 
-district_searches = read_csv(file =  "./data/Search_Data_US_Congressional_District_04Nov2018.csv")
+district_searches = read_csv(file =  "./data/Search_Data_US_Congressional_District_26Sep2018.csv")
 
 ```
 
 
-```{r Tx subdata2}
+```{r Tx subdata}
 
 TX_searches = 
   district_searches %>% janitor::clean_names() %>% 
@@ -163,35 +163,6 @@ TX_searches =
 
 TX_counts = 
   TX_searches %>% 
-  count(fifth)
-
-#select only some variables: immigration, health care, Medicare, Medicaid 
-#first most searched: immigration, health care, islam, Medicare
-#second most searched: health care, immigration, Medicaid, Medicare, Mental Health, Offshore bank
-#third most searched: Medicare, Islam, Medicaid, Mental health, Social security, September 11 attacks, Electoral college, Climate change
-#4th most searched: Medicaid, Medicare, Abortion...
-#5th most searched: Medicaid, Mental health, Abortion, Islam...
-#based on this, we should select variables immigration, health care, islam, Medicare, Medicaid, Mental health, and Abortion. The others can be combined as "other"
-```
-
-## Looking at searches for Texas but for September 26, 2018 (registration ends Oct 9) 
--I'm a little confused as to the variables... I assume first means the most searched topic... and so forth for each district
-
-```{r reading in dataset voter searches}
-
-district_searches2 = read_csv(file =  "./data/Search_Data_US_Congressional_District_26Sep2018.csv")
-
-```
-
-
-```{r Tx subdata}
-
-TX_searches2 = 
-  district_searches2 %>% janitor::clean_names() %>% 
-  filter(state == "TX")
-
-TX_counts2 = 
-  TX_searches2 %>% 
   count(fifth)
 
 
@@ -215,8 +186,8 @@ congress_district$county_name = str_replace(congress_district$county_name,"MuCul
 ```
 
 ```{r merge searches with congress district dataset}
-TX_searches2 =
-  TX_searches2 %>% 
+TX_searches =
+  TX_searches %>% 
   separate(code, into = c("remove_1", "district_num"), sep = "-") %>% 
   mutate(district_num = as.numeric(district_num)) %>% 
   select(district_num, most_searched = first, everything()) 
@@ -225,14 +196,14 @@ nested_congress =
   congress_district %>% 
   nest(county_name) 
 	
-merged_searches= merge(TX_searches2, nested_congress, by="district_num", all=TRUE) %>% 
+merged_searches= merge(TX_searches, nested_congress, by="district_num", all=TRUE) %>% 
   unnest() 
 
 #rename variable county_name
-merged_searches2 = merged_searches %>% 
+merged_searches = merged_searches %>% 
   select(district_num, county=county_name, everything())
 
-merged_nyt_searches = merge(merged_searches2, table_county, by= "county", all=TRUE)
+merged_nyt_searches = merge(merged_searches, table_county, by= "county", all=TRUE)
 
 ```
 

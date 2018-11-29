@@ -251,3 +251,4 @@ merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = cou
 
 ## comparing these county level election results to search results by candidate
 
+

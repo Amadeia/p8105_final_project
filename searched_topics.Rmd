@@ -1,0 +1,32 @@
+---
+title: "searched_topics_time"
+author: "Helen"
+date: "11/28/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Top searches for political topics
+
+### Import & Clean Dataset
+
+```{r}
+# Reading in Google search topics dataset from Nov 04
+district_searches = read_csv(file =  "./data/Search_Data_US_Congressional_District_04Nov2018.csv")
+
+# Filtering states to Texas 
+tx_data = 
+  district_searches %>% janitor::clean_names() %>% 
+  filter(state == "TX")
+```
+
+```{r}
+tx_data %>% 
+  group_by(state)
+  summarize(unique_first = n_distinct(first))
+```
+
+

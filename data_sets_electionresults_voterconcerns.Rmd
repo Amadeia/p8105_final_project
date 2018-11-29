@@ -204,8 +204,11 @@ TX_counts2 =
 
 ```{r 113th congressional district table}
 
-congress_district = read.csv(file = "./data/congress_district2.csv")
+congress_district = read.csv(file = "./data/congress_district2.csv") 
 
+congress_district$county_name = str_replace(congress_district$county_name,"Sterlin", "Sterling")
+congress_district$county = str_replace(congress_district$county,"MuCulloch","McCulloch")
+#misspelled counties discovered while exploring data when merging later on
 ```
 
 ```{r merge searches with congress district dataset}
@@ -215,6 +218,7 @@ TX_searches2 =
   mutate(district_num = as.numeric(district_num)) %>% 
   select(district_num, most_searched = first, health_care, immigration, medicare, medicaid,mental_health, september_11_attacks) 
 
+
 nested_congress =
   congress_district %>% 
   nest(county_name) 
@@ -222,13 +226,16 @@ nested_congress =
 merged_searches= merge(TX_searches2, nested_congress, by="district_num", all=TRUE) %>% 
   unnest() 
 
-merged_searches = merged_searches %>% 
+table_county$county = str_replace(table_county$county,"La Vaca", "Lavaca")
+#rename variable county_name
+merged_searches2 = merged_searches %>% 
   select(district_num, county=county_name, everything())
 
-merged_nyc_searches = merge(merged_searches, table_county, by="county", all=TRUE)
-#there appear to be 4 counties from the NY times data that aren't in the other datasets...Sterling, De Witt, La Vaca, and McCulloch
+merged_nyt_searches = merge(merged_searches2, table_county, by= "county", all=TRUE)
+#there appear to be 4 counties from the NY times data that aren't in the other datasets...Sterling, DeWitt, Lavaca, and McCulloch. Sterling is in dictrict 11. DeWitt is in district 34, Lavaca is 27. McCulloch is
+
 
 ```
 
 ## comparing these county level election results to search results by candidate
-
+congress_district$county_name = str_replace(congress_district$county_name,"Sterlin", "Sterling")

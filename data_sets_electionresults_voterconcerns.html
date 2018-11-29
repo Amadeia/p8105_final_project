@@ -221,14 +221,43 @@ $(document).ready(function () {
 </div>
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<p>#Testing code for the final project</p>
+<p>##To accomplish: -Looking through the datasets we have available -Need Google Trend data for search terms such as “Cruz” vs “Rourke” or “midterm election” to see if number of searches correlate with # votes for each candidate or # registered voters -What kind of analysis do we want to see -Review the sample final projects</p>
+=======
+<<<<<<< HEAD
+<div id="testing-code" class="section level1">
+<h1>Testing code</h1>
+<p>Courtney Chan November 14, 2018</p>
+</div>
+=======
+>>>>>>> 52374a53b6f8cad885cedd159858ca618147cf24
+>>>>>>> 2098e3d8708853a5b7fa6c0aa73e03eb61a3dc31
 <div id="testing-code-for-the-final-project" class="section level1">
 <h1>Testing code for the final project</h1>
 <div id="to-accomplish" class="section level2">
 <h2>To accomplish:</h2>
 <p>-Looking through the datasets we have available -Need Google Trend data for search terms such as “Cruz” vs “Rourke” or “midterm election” to see if number of searches correlate with # votes for each candidate or # registered voters -What kind of analysis do we want to see -Review the sample final projects</p>
+>>>>>>> f87d62ee06fa43d38dcae9a48be51880f0e4ac9a
 <p>Some links to keep in mind: <a href="https://www.cnn.com/election/2018/exit-polls/texas/senate" class="uri">https://www.cnn.com/election/2018/exit-polls/texas/senate</a> <a href="https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/" class="uri">https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/</a></p>
 <pre class="r"><code>library(tidyverse)</code></pre>
+<<<<<<< HEAD
 <pre><code>## ── Attaching packages ────────────────────</code></pre>
+=======
+<<<<<<< HEAD
+<pre><code>## -- Attaching packages ------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
+## v tibble  1.4.2     v dplyr   0.7.6
+## v tidyr   0.8.1     v stringr 1.3.1
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## -- Conflicts ---------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+=======
+<pre><code>## ── Attaching packages ──────────── tidyverse 1.2.1 ──</code></pre>
+>>>>>>> 2098e3d8708853a5b7fa6c0aa73e03eb61a3dc31
 <pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
 ## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
 ## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
@@ -236,6 +265,7 @@ $(document).ready(function () {
 <pre><code>## ── Conflicts ──── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+>>>>>>> 52374a53b6f8cad885cedd159858ca618147cf24
 <pre class="r"><code>library(rvest)</code></pre>
 <pre><code>## Loading required package: xml2</code></pre>
 <pre><code>## 
@@ -253,11 +283,20 @@ library(ggridges)</code></pre>
 <pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
 ## 
 ##     scale_discrete_manual</code></pre>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<p>##scraping election results from the web</p>
+<p>###New York Times voting results by county</p>
+=======
+>>>>>>> 52374a53b6f8cad885cedd159858ca618147cf24
+>>>>>>> 2098e3d8708853a5b7fa6c0aa73e03eb61a3dc31
 </div>
 <div id="scraping-election-results-from-the-web" class="section level2">
 <h2>scraping election results from the web</h2>
 <div id="new-york-times-voting-results-by-county" class="section level3">
 <h3>New York Times voting results by county</h3>
+>>>>>>> f87d62ee06fa43d38dcae9a48be51880f0e4ac9a
 <pre class="r"><code>url = &quot;https://www.nytimes.com/elections/results/texas-senate&quot;
 nytimes_data = read_html(url, col_types = &quot;ccdd&quot;)
 
@@ -275,8 +314,16 @@ nytimes_data</code></pre>
 <pre class="r"><code>table_overall = (nytimes_data %&gt;% html_nodes(css = &quot;table&quot;)) %&gt;% 
   .[[1]] %&gt;%
   html_table()</code></pre>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 2098e3d8708853a5b7fa6c0aa73e03eb61a3dc31
 </div>
 </div>
+>>>>>>> f87d62ee06fa43d38dcae9a48be51880f0e4ac9a
 <div id="tidying-overall-table-for-exploratory-analysis" class="section level2">
 <h2>Tidying overall table for exploratory analysis</h2>
 <pre class="r"><code>#remove the commas in the numbers first
@@ -438,9 +485,7 @@ TX_counts2 =
 #fourth most searched: Medicaid, Medicare, Immigration...
 #fifth: Medicaid, mental health, Medicare, September 11 attacks...
 #Thus, we should focus on the variables health care, immigration, Medicare, Medicaid, Mental health, September 11 attacks</code></pre>
-</div>
-<div id="uploading-county-congressional-district-txt-file" class="section level2">
-<h2>uploading county congressional district txt file</h2>
+<p>##uploading county congressional district txt file</p>
 <pre class="r"><code>congress_district = read.csv(file = &quot;./data/congress_district2.csv&quot;) 
 
 congress_district$county_name = str_replace(congress_district$county_name,&quot;Sterlin&quot;, &quot;Sterling&quot;)
@@ -464,15 +509,23 @@ merged_searches2 = merged_searches %&gt;%
   select(district_num, county=county_name, everything())
 
 merged_nyt_searches = merge(merged_searches2, table_county, by= &quot;county&quot;, all=TRUE)</code></pre>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<p>#plot for topics search per county Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
+=======
+>>>>>>> 52374a53b6f8cad885cedd159858ca618147cf24
+>>>>>>> 2098e3d8708853a5b7fa6c0aa73e03eb61a3dc31
 </div>
 </div>
 <div id="plot-for-topics-search-per-county" class="section level1">
 <h1>plot for topics search per county</h1>
 <p>Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
+>>>>>>> f87d62ee06fa43d38dcae9a48be51880f0e4ac9a
 <pre class="r"><code>merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = counts, health_care:september_11_attacks)</code></pre>
+</div>
 <div id="comparing-these-county-level-election-results-to-search-results-by-candidate" class="section level2">
 <h2>comparing these county level election results to search results by candidate</h2>
-</div>
 </div>
 
 

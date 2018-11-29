@@ -213,7 +213,7 @@ ideas: 1) interactive barchart in the current long format, if we use shiny we co
 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity?
 3) Alternative to first option, how can we show the distribution of topics among counties instead?
 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area
-```{r}
+```{r long format merged}
 merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = search_interest, health_care:september_11_attacks)
 
 ```

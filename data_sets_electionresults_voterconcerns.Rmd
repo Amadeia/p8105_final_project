@@ -112,6 +112,9 @@ table_county =
   table_county %>% 
   mutate(cruz = as.numeric(cruz), o_rourke = as.numeric(o_rourke), dikeman = as.numeric(dikeman))
 
+table_county$county = str_replace(table_county$county,"La Vaca", "Lavaca")
+table_county$county = str_replace(table_county$county,"De Witt", "DeWitt")
+#county names misspelled (was causing issues with merging later on)
 table_county_long = gather(table_county, key = candidate, value = votes, cruz:dikeman)
 ```
 
@@ -207,7 +210,7 @@ TX_counts2 =
 congress_district = read.csv(file = "./data/congress_district2.csv") 
 
 congress_district$county_name = str_replace(congress_district$county_name,"Sterlin", "Sterling")
-congress_district$county = str_replace(congress_district$county,"MuCulloch","McCulloch")
+congress_district$county_name = str_replace(congress_district$county_name,"MuCulloch","McCulloch")
 #misspelled counties discovered while exploring data when merging later on
 ```
 
@@ -218,7 +221,6 @@ TX_searches2 =
   mutate(district_num = as.numeric(district_num)) %>% 
   select(district_num, most_searched = first, health_care, immigration, medicare, medicaid,mental_health, september_11_attacks) 
 
-
 nested_congress =
   congress_district %>% 
   nest(county_name) 
@@ -226,7 +228,6 @@ nested_congress =
 merged_searches= merge(TX_searches2, nested_congress, by="district_num", all=TRUE) %>% 
   unnest() 
 
-table_county$county = str_replace(table_county$county,"La Vaca", "Lavaca")
 #rename variable county_name
 merged_searches2 = merged_searches %>% 
   select(district_num, county=county_name, everything())

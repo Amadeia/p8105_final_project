@@ -217,19 +217,53 @@ $(document).ready(function () {
 </div>
 
 
+<<<<<<< HEAD
 <div id="testing-code" class="section level1">
 <h1>Testing code</h1>
 <p>Courtney Chan November 14, 2018</p>
 </div>
+=======
+>>>>>>> 52374a53b6f8cad885cedd159858ca618147cf24
 <div id="testing-code-for-the-final-project" class="section level1">
 <h1>Testing code for the final project</h1>
 <div id="to-accomplish" class="section level2">
 <h2>To accomplish:</h2>
+<<<<<<< HEAD
 <p>-Looking through the datasets we have available -What kind of analysis do we want to see -Review the sample final projects</p>
 <p>Some links to keep in mind: <a href="https://www.cnn.com/election/2018/exit-polls/texas/senate" class="uri">https://www.cnn.com/election/2018/exit-polls/texas/senate</a> <a href="https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/" class="uri">https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/</a></p>
 <pre class="r"><code>library(tidyverse)
 library(rvest)
 library(httr)</code></pre>
+=======
+<p>-Looking through the datasets we have available -Need Google Trend data for search terms such as “Cruz” vs “Rourke” or “midterm election” to see if number of searches correlate with # votes for each candidate or # registered voters -What kind of analysis do we want to see -Review the sample final projects</p>
+<p>Some links to keep in mind: <a href="https://www.cnn.com/election/2018/exit-polls/texas/senate" class="uri">https://www.cnn.com/election/2018/exit-polls/texas/senate</a> <a href="https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/" class="uri">https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/</a></p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ──────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
+## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## ── Conflicts ─────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(rvest)</code></pre>
+<pre><code>## Loading required package: xml2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;rvest&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     pluck</code></pre>
+<pre><code>## The following object is masked from &#39;package:readr&#39;:
+## 
+##     guess_encoding</code></pre>
+<pre class="r"><code>library(httr)
+library(ggridges)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;ggridges&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     scale_discrete_manual</code></pre>
+>>>>>>> 52374a53b6f8cad885cedd159858ca618147cf24
 </div>
 <div id="scraping-election-results-from-the-web" class="section level2">
 <h2>scraping election results from the web</h2>
@@ -252,16 +286,73 @@ nytimes_data</code></pre>
 <pre class="r"><code>table_overall = (nytimes_data %&gt;% html_nodes(css = &quot;table&quot;)) %&gt;% 
   .[[1]] %&gt;%
   html_table()</code></pre>
+<<<<<<< HEAD
+=======
+</div>
+</div>
+<div id="tidying-overall-table-for-exploratory-analysis" class="section level2">
+<h2>Tidying overall table for exploratory analysis</h2>
+<pre class="r"><code>#remove the commas in the numbers first
+table_overall$Votes &lt;- gsub(&quot;,&quot;,&quot;&quot;,table_overall$Votes)
+table_overall$Pct. &lt;- gsub(&quot;%&quot;,&quot;&quot;,table_overall$Pct.)
+
+#convert votes and percent to numeric
+table_overall = 
+  table_overall %&gt;% 
+  mutate(Votes = as.numeric(Votes), Pct. = as.numeric(Pct.))</code></pre>
+</div>
+<div id="bar-plot-of-votes-per-candidate" class="section level2">
+<h2>Bar Plot of Votes per Candidate</h2>
+<pre class="r"><code>bar_overall =
+  table_overall %&gt;% 
+  mutate(Candidate = as.factor(Candidate)) %&gt;% 
+  mutate(Candidate = forcats::fct_reorder(Candidate, Votes)) %&gt;% 
+  ggplot(aes(x = Candidate, y = Votes, fill = Party)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  labs(
+    title = &quot;Number of Votes per Candidate&quot;,
+    x = &quot;Candidate&quot;,
+    y = &quot;Number of Votes&quot;
+  ) +
+  scale_x_discrete(labels = c(&quot;Cruz* Ted Cruz*&quot; = &quot;Ted Cruz&quot;, &quot;O&#39;Rourke Beto O&#39;Rourke&quot; = &quot;Beto O&#39;Rourke&quot;,
+                              &quot;Dikeman Neal Dikeman&quot; = &quot;Neal Dikeman&quot;))
+  
+bar_overall</code></pre>
+<p><img src="data_sets_electionresults_voterconcerns_files/figure-html/bar_plot-1.png" width="672" /></p>
+>>>>>>> 52374a53b6f8cad885cedd159858ca618147cf24
 <p>Made the first table that which we have final results for the state of texas.</p>
 <pre class="r"><code>table_county =  (nytimes_data %&gt;% html_nodes(css = &quot;table&quot;)) %&gt;% 
   .[[2]] %&gt;%
   html_table() %&gt;% 
+<<<<<<< HEAD
   slice(1:(n() - 1))</code></pre>
+=======
+  slice(1:(n() - 1)) %&gt;% 
+  select(-Rpt.) %&gt;% 
+  janitor::clean_names()</code></pre>
+</div>
+<div id="tidying-county-table" class="section level2">
+<h2>Tidying county table</h2>
+<pre class="r"><code>#remove the commas in the numbers first
+table_county$cruz &lt;- gsub(&quot;,&quot;,&quot;&quot;,table_county$cruz)
+table_county$o_rourke &lt;- gsub(&quot;,&quot;,&quot;&quot;,table_county$o_rourke)
+table_county$dikeman &lt;- gsub(&quot;,&quot;,&quot;&quot;,table_county$dikeman)
+
+table_county = 
+  table_county %&gt;% 
+  mutate(cruz = as.numeric(cruz), o_rourke = as.numeric(o_rourke), dikeman = as.numeric(dikeman))
+
+table_county$county = str_replace(table_county$county,&quot;La Vaca&quot;, &quot;Lavaca&quot;)
+table_county$county = str_replace(table_county$county,&quot;De Witt&quot;, &quot;DeWitt&quot;)
+#county names misspelled (was causing issues with merging later on)
+table_county_long = gather(table_county, key = candidate, value = votes, cruz:dikeman)</code></pre>
+>>>>>>> 52374a53b6f8cad885cedd159858ca618147cf24
 <p>Made the second table which has all of the 254 county level data for Texas!</p>
 </div>
 </div>
 <div id="comparing-these-county-level-election-results-to-highly-searched-voter-election-interests-in-google" class="section level2">
 <h2>comparing these county level election results to highly searched voter election interests in google</h2>
+<p>-using search terms “Midterms” and selecting dataset from top result</p>
 <pre class="r"><code>district_searches = read_csv(file =  &quot;./data/Search_Data_US_Congressional_District_04Nov2018.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -289,12 +380,101 @@ nytimes_data</code></pre>
 ## See spec(...) for full column specifications.</code></pre>
 <pre class="r"><code>TX_searches = 
   district_searches %&gt;% janitor::clean_names() %&gt;% 
+<<<<<<< HEAD
   filter(state == &quot;TX&quot;)</code></pre>
 </div>
 <div id="uploading-county-congressional-district-txt-file" class="section level2">
 <h2>uploading county congressional district txt file</h2>
 <pre class="r"><code>congress_district = read.csv(file = &quot;./data/congress_district2.csv&quot;)</code></pre>
+=======
+  filter(state == &quot;TX&quot;)
+
+TX_counts = 
+  TX_searches %&gt;% 
+  count(fifth)
+
+#select only some variables: immigration, health care, Medicare, Medicaid 
+#first most searched: immigration, health care, islam, Medicare
+#second most searched: health care, immigration, Medicaid, Medicare, Mental Health, Offshore bank
+#third most searched: Medicare, Islam, Medicaid, Mental health, Social security, September 11 attacks, Electoral college, Climate change
+#4th most searched: Medicaid, Medicare, Abortion...
+#5th most searched: Medicaid, Mental health, Abortion, Islam...
+#based on this, we should select variables immigration, health care, islam, Medicare, Medicaid, Mental health, and Abortion. The others can be combined as &quot;other&quot;</code></pre>
 </div>
+<div id="looking-at-searches-for-texas-but-for-september-26-2018-registration-ends-oct-9" class="section level2">
+<h2>Looking at searches for Texas but for September 26, 2018 (registration ends Oct 9)</h2>
+<p>-I’m a little confused as to the variables… I assume first means the most searched topic… and so forth for each district</p>
+<pre class="r"><code>district_searches2 = read_csv(file =  &quot;./data/Search_Data_US_Congressional_District_26Sep2018.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   District = col_character(),
+##   Code = col_character(),
+##   State = col_character(),
+##   FIRST = col_character(),
+##   SECOND = col_character(),
+##   THIRD = col_character(),
+##   FOURTH = col_character(),
+##   FIFTH = col_character(),
+##   SIXTH = col_character(),
+##   SEVENTH = col_character(),
+##   EIGHTH = col_character(),
+##   NINTH = col_character(),
+##   TENTH = col_character(),
+##   `Maternity leave in the United States` = col_integer(),
+##   `Single-payer healthcare` = col_integer(),
+##   `Tax Cuts and Jobs Act of 2017` = col_integer(),
+##   `Transgender people in the military` = col_integer()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>TX_searches2 = 
+  district_searches2 %&gt;% janitor::clean_names() %&gt;% 
+  filter(state == &quot;TX&quot;)
+
+TX_counts2 = 
+  TX_searches2 %&gt;% 
+  count(fifth)
+
+
+#the topics that were searched most were health care, immigration, mental health, united nations
+#second most searched: immigration, health care, Medicare, Medicaid, capital punishment
+#third most searched: Medicare, Medicaid, September 11 attacks, immigration, 
+#fourth most searched: Medicaid, Medicare, Immigration...
+#fifth: Medicaid, mental health, Medicare, September 11 attacks...
+#Thus, we should focus on the variables health care, immigration, Medicare, Medicaid, Mental health, September 11 attacks</code></pre>
+</div>
+<div id="uploading-county-congressional-district-txt-file" class="section level2">
+<h2>uploading county congressional district txt file</h2>
+<pre class="r"><code>congress_district = read.csv(file = &quot;./data/congress_district2.csv&quot;) 
+
+congress_district$county_name = str_replace(congress_district$county_name,&quot;Sterlin&quot;, &quot;Sterling&quot;)
+congress_district$county_name = str_replace(congress_district$county_name,&quot;MuCulloch&quot;,&quot;McCulloch&quot;)
+#misspelled counties discovered while exploring data when merging later on</code></pre>
+<pre class="r"><code>TX_searches2 =
+  TX_searches2 %&gt;% 
+  separate(code, into = c(&quot;remove_1&quot;, &quot;district_num&quot;), sep = &quot;-&quot;) %&gt;% 
+  mutate(district_num = as.numeric(district_num)) %&gt;% 
+  select(district_num, most_searched = first, health_care, immigration, medicare, medicaid,mental_health, september_11_attacks) 
+
+nested_congress =
+  congress_district %&gt;% 
+  nest(county_name) 
+    
+merged_searches= merge(TX_searches2, nested_congress, by=&quot;district_num&quot;, all=TRUE) %&gt;% 
+  unnest() 
+
+#rename variable county_name
+merged_searches2 = merged_searches %&gt;% 
+  select(district_num, county=county_name, everything())
+
+merged_nyt_searches = merge(merged_searches2, table_county, by= &quot;county&quot;, all=TRUE)</code></pre>
+>>>>>>> 52374a53b6f8cad885cedd159858ca618147cf24
+</div>
+</div>
+<div id="plot-for-topics-search-per-county" class="section level1">
+<h1>plot for topics search per county</h1>
+<p>Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
+<pre class="r"><code>merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = counts, health_care:september_11_attacks)</code></pre>
 <div id="comparing-these-county-level-election-results-to-search-results-by-candidate" class="section level2">
 <h2>comparing these county level election results to search results by candidate</h2>
 </div>

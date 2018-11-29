@@ -143,6 +143,7 @@ ggplot(table_county_long, aes(x = votes, y = candidate)) +
 
 
 ## comparing these county level election results to highly searched voter election interests in google
+-using search terms "Midterms" and selecting dataset from top result
 
 ```{r reading in dataset voter searches}
 
@@ -162,8 +163,42 @@ TX_counts =
   count(fifth)
 
 #select only some variables: immigration, health care, Medicare, Medicaid 
+#first most searched: immigration, health care, islam, Medicare
+#second most searched: health care, immigration, Medicaid, Medicare, Mental Health, Offshore bank
+#third most searched: Medicare, Islam, Medicaid, Mental health, Social security, September 11 attacks, Electoral college, Climate change
+#4th most searched: Medicaid, Medicare, Abortion...
+#5th most searched: Medicaid, Mental health, Abortion, Islam...
+#based on this, we should select variables immigration, health care, islam, Medicare, Medicaid, Mental health, and Abortion. The others can be combined as "other"
 ```
 
+## Looking at searches for Texas but for September 26, 2018 (registration ends Oct 9) 
+-I'm a little confused as to the variables... I assume first means the most searched topic... and so forth for each district
+
+```{r reading in dataset voter searches}
+
+district_searches2 = read_csv(file =  "./data/Search_Data_US_Congressional_District_26Sep2018.csv")
+
+```
+
+
+```{r Tx subdata}
+
+TX_searches2 = 
+  district_searches2 %>% janitor::clean_names() %>% 
+  filter(state == "TX")
+
+TX_counts2 = 
+  TX_searches2 %>% 
+  count(fifth)
+
+
+#the topics that were searched most were health care, immigration, mental health, united nations
+#second most searched: immigration, health care, Medicare, Medicaid, capital punishment
+#third most searched: Medicare, Medicaid, September 11 attacks, immigration, 
+#fourth most searched: Medicaid, Medicare, Immigration...
+#fifth: Medicaid, mental health, Medicare, September 11 attacks...
+#Thus, we should focus on the variables health care, immigration, Medicare, Medicaid, Mental health, September 11 attacks
+```
 
 ##uploading county congressional district txt file
 
@@ -171,6 +206,15 @@ TX_counts =
 
 congress_district = read.csv(file = "./data/congress_district2.csv")
 
+```
+
+```{r merge searches with congress district dataset}
+TX_searches2 =
+  TX_searches2 %>% 
+  separate(code, into = c("remove_1", "district_num"), sep = "-") %>% 
+  mutate(district_num = as.numeric(district_num)) %>% 
+  select(district_num, most_searched = first, health_care, immigration, medicare, medicaid,mental_health, september_11_attacks) 
+  
 ```
 
 ## comparing these county level election results to search results by candidate

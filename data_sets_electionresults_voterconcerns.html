@@ -225,12 +225,12 @@ $(document).ready(function () {
 <p>##To accomplish: -Looking through the datasets we have available -Need Google Trend data for search terms such as “Cruz” vs “Rourke” or “midterm election” to see if number of searches correlate with # votes for each candidate or # registered voters -What kind of analysis do we want to see -Review the sample final projects</p>
 <p>Some links to keep in mind: <a href="https://www.cnn.com/election/2018/exit-polls/texas/senate" class="uri">https://www.cnn.com/election/2018/exit-polls/texas/senate</a> <a href="https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/" class="uri">https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/</a></p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages ------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
 <pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
 ## v tibble  1.4.2     v dplyr   0.7.6
 ## v tidyr   0.8.1     v stringr 1.3.1
 ## v readr   1.1.1     v forcats 0.3.0</code></pre>
-<pre><code>## -- Conflicts ---------------------------- tidyverse_conflicts() --
+<pre><code>## -- Conflicts ------------------------------------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(rvest)</code></pre>
@@ -298,6 +298,7 @@ table_overall =
   
 bar_overall</code></pre>
 <p><img src="data_sets_electionresults_voterconcerns_files/figure-html/bar_plot-1.png" width="672" /></p>
+<p>This plot illustrates how it was a close race between the top two candidates, O’Rourke and Cruz. As Dikeman had very few votes, we decided to omit Dikeman from further analyses.</p>
 <p>Made the first table that which we have final results for the state of texas.</p>
 <pre class="r"><code>table_county =  (nytimes_data %&gt;% html_nodes(css = &quot;table&quot;)) %&gt;% 
   .[[2]] %&gt;%
@@ -326,8 +327,12 @@ table_county_long = gather(table_county, key = candidate, value = votes, cruz:di
 <div id="plots-for-all-counties" class="section level2">
 <h2>Plots for all counties</h2>
 <pre class="r"><code>point_county =
-  table_county_long %&gt;% 
-  filter(candidate != &quot;dikeman&quot;) %&gt;% 
+  table_county %&gt;% 
+  select(-&quot;dikeman&quot;) %&gt;%
+  mutate(total = cruz + o_rourke) %&gt;% 
+  arrange(desc(total)) %&gt;% 
+  top_n(5) %&gt;% 
+  gather(key = candidate, value = votes, cruz:o_rourke) %&gt;% 
   ggplot(aes(x = county, y = votes, color = candidate)) +
   geom_point() +
   labs(
@@ -335,16 +340,10 @@ table_county_long = gather(table_county, key = candidate, value = votes, cruz:di
     x = &quot;County&quot;,
     y = &quot;Number of Votes&quot;
   ) +
-  theme(axis.text.x = element_text(angle = 90), text = element_text(size = 3))
-  
-point_county</code></pre>
+  theme(axis.text.x = element_text(angle = 90))</code></pre>
+<pre><code>## Selecting by total</code></pre>
+<pre class="r"><code>point_county</code></pre>
 <p><img src="data_sets_electionresults_voterconcerns_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<pre class="r"><code>ggplot(table_county_long, aes(x = candidate, y = votes)) + geom_boxplot()</code></pre>
-<p><img src="data_sets_electionresults_voterconcerns_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
-<pre class="r"><code>ggplot(table_county_long, aes(x = votes, y = candidate)) + 
-  geom_density_ridges(scale = .85)</code></pre>
-<pre><code>## Picking joint bandwidth of 1080</code></pre>
-<p><img src="data_sets_electionresults_voterconcerns_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
 </div>
 <div id="comparing-these-county-level-election-results-to-highly-searched-voter-election-interests-in-google" class="section level2">
 <h2>comparing these county level election results to highly searched voter election interests in google</h2>

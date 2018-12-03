@@ -217,7 +217,51 @@ ideas: 1) interactive barchart in the current long format, if we use shiny we co
 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity?
 3) Alternative to first option, how can we show the distribution of topics among counties instead?
 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area
-```{r long format merged, include=FALSE}
+```{r long format merged, message=FALSE, warning=FALSE, echo=FALSE}
 merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = search_interest, health_care:september_11_attacks)
 
 ```
+
+#chi-squared test 
+Testing whether there's a relationship between topics searched and political party
+
+```{r chi-squared test, message=FALSE, echo=FALSE, warning=FALSE}
+#removing columns we don't need
+pre_chisquare_df = merged_nyt_searches %>% 
+  select(county, x2003_invasion_of_iraq:womens_health, cruz, o_rourke, dikeman ) %>% 
+  mutate(cruz_orour_rat = cruz/o_rourke,
+         status = as.numeric(cruz_orour_rat>=1),
+         winner = ifelse(status==1, "Ted Cruz", "Beto O'Rourke")) %>% 
+  select(-county, -cruz, -dikeman, -o_rourke, -cruz_orour_rat, -winner)
+
+#there are 309 observations initially to account for the county/district combos. 129 topics. Our election results are based on county, thus despite a particular county having differ search counts, the election result will be the same and thus the count can be totalled.
+
+#making a new dataframe for chi-squared analysis
+
+cruz = pre_chisquare_df %>% 
+  filter(status==1) 
+
+cruz = data.frame(winner="Cruz", t(colSums(cruz))) %>% 
+  select(-status)
+
+o_rourke = pre_chisquare_df %>% 
+  filter(status==0)
+
+  
+
+o_rourke = data.frame(winner="O'Rourke", t(colSums(o_rourke))) %>% 
+  select(-status)
+
+chi_square_df = bind_rows(cruz, o_rourke) 
+
+chi_square_df[2:130] = lapply(chi_square_df[2:13], as.integer)
+
+chi_square_df = chi_square_df %>% 
+  select(-winner)
+#I was getting an error, so I made cells into integers and removed the first column
+
+#results of chi squared test
+chisq.test(chi_square_df)
+```
+
+According to the results it appears that there is an association between politcal party and topics searched. However, it is unclear how valid this may be? The Chi-squared test gives a warning when I run it. Maybe if we could figure out how to do a Fisher's exact test?

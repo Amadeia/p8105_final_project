@@ -17,7 +17,7 @@ https://www.cnn.com/election/2018/exit-polls/texas/senate
 https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/
 
 
-```{r packages}
+```{r packages, include=FALSE}
 library(tidyverse)
 library(rvest)
 library(httr)
@@ -34,7 +34,7 @@ library(purrr)
 
 ###New York Times voting results by county
 
-```{r scraping election results for texas from the web table method}
+```{r scraping election results for texas from the web table method, include=FALSE}
 
 url = "https://www.nytimes.com/elections/results/texas-senate"
 nytimes_data = read_html(url, col_types = "ccdd")
@@ -43,14 +43,14 @@ nytimes_data
 
 ```
 
-```{r extracting tables from website}
+```{r extracting tables from website, include=FALSE}
 nytimes_data %>% 
   html_nodes(css = "table")
 
 ```
 This seems to have created two tables from the website data.
 
-```{r making 1st web table into tibbles?}
+```{r making 1st web table into tibbles, include=FALSE}
 
 table_overall = (nytimes_data %>% html_nodes(css = "table")) %>% 
   .[[1]] %>%
@@ -59,7 +59,7 @@ table_overall = (nytimes_data %>% html_nodes(css = "table")) %>%
 
 ## Tidying overall table for exploratory analysis
 
-```{r}
+```{r tidy overall, include=FALSE}
 #remove the commas in the numbers first
 table_overall$Votes <- gsub(",","",table_overall$Votes)
 table_overall$Pct. <- gsub("%","",table_overall$Pct.)
@@ -72,7 +72,7 @@ table_overall =
 
 ## Bar Plot of Votes per Candidate
 
-```{r bar_plot}
+```{r bar_plot, echo=FALSE}
 bar_overall =
   table_overall %>% 
   mutate(Candidate = as.factor(Candidate)) %>% 
@@ -94,7 +94,7 @@ This plot illustrates how it was a close race between the top two candidates, O'
 
 Made the first table that which we have final results for the state of texas.
 
-```{r making 2nd web table into another tibble}
+```{r making 2nd web table into another tibble, include=FALSE}
 
 table_county =  (nytimes_data %>% html_nodes(css = "table")) %>% 
   .[[2]] %>%
@@ -107,7 +107,7 @@ table_county =  (nytimes_data %>% html_nodes(css = "table")) %>%
 
 ## Tidying county table
 
-```{r}
+```{r tidy county, include=FALSE}
 #remove the commas in the numbers first
 table_county$cruz <- gsub(",","",table_county$cruz)
 table_county$o_rourke <- gsub(",","",table_county$o_rourke)
@@ -128,9 +128,7 @@ Made the second table which has all of the 254 county level data for Texas!
 
 ## Plots for all counties
 
-
-```{r}
-point_county =
+```{r point county, echo=FALSE, message=FALSE}
   table_county %>% 
   select(-"dikeman") %>%
   mutate(total = cruz + o_rourke) %>% 
@@ -145,8 +143,7 @@ point_county =
     y = "Number of Votes"
   ) +
   theme(axis.text.x = element_text(angle = 90))
-  
-point_county
+
 ```
 
 
@@ -155,14 +152,14 @@ point_county
 ## comparing these county level election results to highly searched voter election interests in google
 -using search terms "Midterms" and selecting dataset from top result
 
-```{r reading in dataset voter searches}
+```{r reading in dataset voter searches, include=FALSE}
 
 district_searches = read_csv(file =  "./data/Search_Data_US_Congressional_District_26Sep2018.csv")
 
 ```
 
 
-```{r Tx subdata}
+```{r Tx subdata, include=FALSE}
 
 TX_searches = 
   district_searches %>% janitor::clean_names() %>% 
@@ -183,7 +180,7 @@ TX_counts =
 
 ##uploading county congressional district txt file
 
-```{r 113th congressional district table}
+```{r 113th congressional district table, include=FALSE}
 
 congress_district = read.csv(file = "./data/congress_district2.csv") 
 
@@ -192,7 +189,7 @@ congress_district$county_name = str_replace(congress_district$county_name,"MuCul
 #misspelled counties discovered while exploring data when merging later on
 ```
 
-```{r merge searches with congress district dataset}
+```{r merge searches with congress district dataset, include=FALSE}
 TX_searches =
   TX_searches %>% 
   separate(code, into = c("remove_1", "district_num"), sep = "-") %>% 
@@ -220,7 +217,7 @@ ideas: 1) interactive barchart in the current long format, if we use shiny we co
 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity?
 3) Alternative to first option, how can we show the distribution of topics among counties instead?
 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area
-```{r long format merged}
+```{r long format merged, include=FALSE}
 merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = search_interest, health_care:september_11_attacks)
 
 ```
@@ -230,7 +227,7 @@ merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = sea
 ## comparing these county level election results to search results by candidate
 
 ## map
-```{r cleaning data for use with map}
+```{r cleaning data for use with map, include=FALSE}
 merged_nyt_searches = read_csv(file ="./data/merged_nyt_searches.csv") #previously merged_nyt_searches dataframe into a csv file
 
 gis = merged_nyt_searches %>% 
@@ -255,13 +252,13 @@ gis = gis %>%
 ```
 
 Cleaning data so as to merge with GIS...
-```{r GIS file merge}
+```{r GIS file merge, include=FALSE}
 texas_counties = counties(state = "48",year = "2017") #Texas fips code is 48, using most recent census data, 2017
 
 tx_midterms = geo_join(texas_counties, gis, "NAME", "county")
 ```
 
-```{r specifying what goes into map}
+```{r specifying what goes into map, include=FALSE}
 pal = colorFactor(c("blue", "red"), tx_midterms$status)
 
 popup = paste(sep = "<br/>",
@@ -273,7 +270,7 @@ popup = paste(sep = "<br/>",
               paste0("<b>Most searched topics over one month prior: </b>", tx_midterms$most_searched))
 ```
 
-```{r making the map using leaflet}
+```{r making the map using leaflet, echo=FALSE}
 leaflet(tx_midterms) %>% 
   addProviderTiles("CartoDB.Positron") %>% 
   addPolygons(fillColor= ~pal(status),
@@ -287,4 +284,3 @@ leaflet(tx_midterms) %>%
             opacity = 1,
             title = "2018 Texas Senate Election Results")
 ```
-

@@ -16,7 +16,7 @@ library(purrr)
 
 ```
 
-```{r cleaning data for use with map}
+```{r cleaning data for use with map, include=FALSE}
 merged_nyt_searches = read_csv(file ="./data/merged_nyt_searches.csv") #previously merged_nyt_searches dataframe into a csv file
 
 gis = merged_nyt_searches %>% 
@@ -41,13 +41,13 @@ gis = gis %>%
 ```
 
 Cleaning data so as to merge with GIS...
-```{r GIS file merge}
+```{r GIS file merge, include=FALSE}
 texas_counties = counties(state = "48",year = "2017") #Texas fips code is 48, using most recent census data, 2017
 
 tx_midterms = geo_join(texas_counties, gis, "NAME", "county")
 ```
 
-```{r specifying what goes into map}
+```{r specifying what goes into map, include=FALSE}
 pal = colorFactor(c("blue", "red"), tx_midterms$status)
 
 popup = paste(sep = "<br/>",
@@ -59,7 +59,7 @@ popup = paste(sep = "<br/>",
               paste0("<b>Most searched topics over one month prior: </b>", tx_midterms$most_searched))
 ```
 
-```{r making the map using leaflet}
+```{r making the map using leaflet, echo=FALSE}
 leaflet(tx_midterms) %>% 
   addProviderTiles("CartoDB.Positron") %>% 
   addPolygons(fillColor= ~pal(status),

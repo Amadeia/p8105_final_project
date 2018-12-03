@@ -90,7 +90,7 @@ bar_overall =
 bar_overall
 ```
 
-
+This plot illustrates how it was a close race between the top two candidates, O'Rourke and Cruz. As Dikeman had very few votes, we decided to omit Dikeman from further analyses.
 
 Made the first table that which we have final results for the state of texas.
 
@@ -128,10 +128,15 @@ Made the second table which has all of the 254 county level data for Texas!
 
 ## Plots for all counties
 
+
 ```{r}
 point_county =
-  table_county_long %>% 
-  filter(candidate != "dikeman") %>% 
+  table_county %>% 
+  select(-"dikeman") %>%
+  mutate(total = cruz + o_rourke) %>% 
+  arrange(desc(total)) %>% 
+  top_n(5) %>% 
+  gather(key = candidate, value = votes, cruz:o_rourke) %>% 
   ggplot(aes(x = county, y = votes, color = candidate)) +
   geom_point() +
   labs(
@@ -139,15 +144,12 @@ point_county =
     x = "County",
     y = "Number of Votes"
   ) +
-  theme(axis.text.x = element_text(angle = 90), text = element_text(size = 3))
+  theme(axis.text.x = element_text(angle = 90))
   
 point_county
-
-ggplot(table_county_long, aes(x = candidate, y = votes)) + geom_boxplot()
-
-ggplot(table_county_long, aes(x = votes, y = candidate)) + 
-  geom_density_ridges(scale = .85)
 ```
+
+
 
 
 ## comparing these county level election results to highly searched voter election interests in google

@@ -1,13 +1,11 @@
 ---
-title: "Data"
+title: "Description of our Data"
 output: 
   html_document:
     theme: flatly
     highlight: tango
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+- The [Google Trends](https://trends.google.com/trends/?geo=US) dataset on Midterm Election results is from the [Google Trends Datastore](http://googletrends.github.io/data/). These datasets are created by the News Lab at Google team. We used the "Top searched issues by US Congressional District, 09/26/2018." This data only covers searches in the U.S. We chose the dataset from 9/26/2018 because our goal was to examine search trends prior to the Midterm Election. This dataset provides a search index for the most highly searched terms. The search index is a relative percentage. Google Trends adjusts the search data so results are proportionate to the specific time and location of a query. More information can be found at [Trends Help](https://support.google.com/trends/answer/4365533?hl=en) 
 
-##Description of our dataset 
+- The [NY Times Election Results](https://www.nytimes.com/elections/results/texas-senate) data is taken from the New York Times report of Midterm Election results. It provides data on the candidate and their respective party, number of votes, and percentage of votes. Additionally, it provides voting data by county.

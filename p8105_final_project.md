@@ -27,7 +27,7 @@ Intended Final Products:
 Anticipated Data Sources:
 -------------------------
 
--   [Google trends](http://googletrends.github.io/data/) (downloading the provided csv files)
+-   [Google trends](http://googletrends.github.io/data/)
 -   [NY Times Election Results](https://www.nytimes.com/elections/results/texas-senate)
 
 Planned Analyses / Visualizations / Coding Challenges:

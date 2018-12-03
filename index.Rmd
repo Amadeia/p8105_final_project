@@ -1,48 +1,97 @@
 ---
-title: "Midterm Election 2018"
-author: "Amadeia Rector, aar2192; Courtney Chan, cac2225; Pei Yang Hsieh, ph2538; Qiu Xia Guan, qg2155; Francois Ban, kb2977"
-date: "November 20th, 2018"
+title: <center> Midterm Election 2018
+author: <center> Amadeia Rector, aar2192; Courtney Chan, cac2225; Pei Yang Hsieh, ph2538; Qiu Xia Guan, qg2155; Francois Ban, kb2977
 output: 
   html_document:
     theme: flatly
 ---
 
-# Midterm Election Voter Registration Searches in Texas Using Google Trends
-
 <center>
-<img src="image/texas.png" style="width:55%">  
+## Ted Cruz Vs. Beto O'Rourke  
 
-# Ted Cruz Vs. Beto O'Rourke
+<div id="just-line-break"></div>
+<br/>
+<div id="line-break-and-tab"></div>
 
 <center>
 <img src="image/candidates.png" style="width:55%"> 
 
-## Motivations:
+<div id="just-line-break"></div>
+<br/>
+<div id="line-break-and-tab"></div>
 
-- Currently relevant (e.g. Beto O'Rourke vs. Ted Cruz)
-- The midterm elections are about to happen (November 6)
-- Comparing voter registration since the last election cycle
-- Cross referencing voter registration searches and highly searched political topics
-- Political party searches
-- Look at geographic components (i.e. where are certain searches occurring)
+## 2018 Texas Midterm Election Results by County  
 
-## Intended Final Products:
+<div id="just-line-break"></div>
+<br/>
+<div id="line-break-and-tab"></div>
 
-- Map of Texas that shows voter registration searches per county
-- Graph(s) on trends of voter registration searches and searched political topics by election cycle
-- Searches for Beto O'Rourke vs. Ted Cruz for this cycle
-- Registration deadline in relation to voter registration searches
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tigris)
+library(rvest)
+library(leaflet)
+library(dplyr)
+library(tidyverse)
+library(purrr)
 
-## Anticipated Data Sources:
+```
 
-- [Google trends](http://googletrends.github.io/data/)  (downloading the provided csv files) 
-- [NY Times Election Results](https://www.nytimes.com/elections/results/texas-senate)
+```{r cleaning data for use with map, include=FALSE}
+merged_nyt_searches = read_csv(file ="./data/merged_nyt_searches.csv") #previously merged_nyt_searches dataframe into a csv file
 
-## Planned Analyses / Visualizations / Coding Challenges:
+gis = merged_nyt_searches %>% 
+  select(county, most_searched, cruz, o_rourke, dikeman) %>% 
+  mutate(cruz_orour_rat = cruz/o_rourke,
+         status = as.numeric(cruz_orour_rat>=1),
+         winner = ifelse(status==1, "Ted Cruz", "Beto O'Rourke"))
 
-- Interactive map (Plotly/Flexdashboard)
-      - GIS type of interactive map showing different searches by districts 
-- Line graph for timelines
-- Bar graph for counties and voter registration searches
-- Bar graph for political topic searches (e.g. top 5)
-- Finding county level data 
+gis = unique(gis) 
+
+gis = gis %>% 
+nest(most_searched) 
+
+listcollapse = function(x){
+  paste(unlist(x), collapse = ", ")
+}
+
+gis = gis %>% 
+  mutate( most_searched = map(data, listcollapse)) %>% 
+  select(-data)
+
+```
+
+```{r GIS file merge, include=FALSE}
+texas_counties = counties(state = "48",year = "2017") #Texas fips code is 48, using most recent census data, 2017
+
+tx_midterms = geo_join(texas_counties, gis, "NAME", "county")
+```
+
+```{r specifying what goes into map, include=FALSE}
+pal = colorFactor(c("blue", "red"), tx_midterms$status)
+
+popup = paste(sep = "<br/>",
+              paste0("<b>Winner: </b>", tx_midterms$winner),
+              paste0("<b>County: </b>", tx_midterms$county),
+              paste0("<b>Votes for Ted Cruz: </b>", tx_midterms$cruz),
+              paste0("<b>Votes for Beto O'Rourke: </b>", tx_midterms$o_rourke),
+              paste0("<b>Votes for Neal Dikeman: </b>", tx_midterms$dikeman),
+              paste0("<b>Most searched topics over one month prior: </b>", tx_midterms$most_searched))
+```
+
+```{r making the map using leaflet, echo=FALSE}
+leaflet(tx_midterms) %>% 
+  addProviderTiles("CartoDB.Positron") %>% 
+  addPolygons(fillColor= ~pal(status),
+              color = "black",
+              popup = popup,
+              fillOpacity = 0.5,
+              weight = 0.5) %>% 
+  addLegend(position = "bottomleft",
+            colors = c("blue", "red"),
+            labels = c("Democrat", "Republican"),
+            opacity = 1,
+            title = "2018 Texas Senate Election Results")
+```
+
+</center>

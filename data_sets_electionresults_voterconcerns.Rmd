@@ -225,7 +225,7 @@ merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = sea
 #chi-squared test 
 Testing whether there's a relationship between topics searched and political party
 
-```{r chi-squared test, message=FALSE, echo=FALSE, warning=FALSE}
+```{r fisher exact chi-squared test, message=FALSE, echo=FALSE, warning=FALSE}
 #removing columns we don't need
 pre_chisquare_df = merged_nyt_searches %>% 
   select(county, x2003_invasion_of_iraq:womens_health, cruz, o_rourke, dikeman ) %>% 
@@ -259,7 +259,7 @@ chi_square_df = chi_square_df %>%
   select(health_care, immigration, medicaid, medicare, september_11_attacks)
 
 
-#results of chi squared test
+#results of fisher exact chi squared test
 fisher.test(chi_square_df)
 ```
 

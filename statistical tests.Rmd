@@ -2,7 +2,7 @@
 title: "statistical testing"
 author: "Courtney Chan"
 date: "December 3, 2018"
-output: github_document
+output: html_document
 ---
 
 #Trying linear regression with dataset merged_nyt_searches
@@ -226,7 +226,7 @@ merged_most_searched$winning_candidate <- apply(merged_most_searched, 1, functio
 
 ```{r max searched}
 
-merged_most_searched$most_searched[1] <-
+#merged_most_searched$most_searched[1] <-
 
 ```
 

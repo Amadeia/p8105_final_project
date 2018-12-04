@@ -17,6 +17,7 @@ library(leaflet)
 library(dplyr)
 library(purrr)
 library(plotly)
+
 ```
 
 Column {data-width=350}
@@ -48,12 +49,8 @@ table_county$county = str_replace(table_county$county,"De Witt", "DeWitt")
 #county names misspelled (was causing issues with merging later on)
 table_county_long = gather(table_county, key = candidate, value = votes, cruz:dikeman)
 
-table_county %>% 
-<<<<<<< HEAD
-#  select(-"dikeman") %>%
-=======
+table_county %>%
   select(-dikeman) %>%
->>>>>>> 7f419f2c8da3080ad35ebe7f5848acfef27314c4
   mutate(total = cruz + o_rourke) %>% 
   arrange(desc(total)) %>% 
   top_n(5) %>% 

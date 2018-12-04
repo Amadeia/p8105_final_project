@@ -1,5 +1,5 @@
 ---
-title: "graph"
+title: "Graphical Figures"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -8,45 +8,79 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(tidyverse)
+library(rvest)
+library(httr)
+library(ggridges)
+library(tigris)
+library(leaflet)
+library(dplyr)
+library(purrr)
+library(plotly)
 ```
 
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart A
+### Number of Votes for Beto vs. Cruz
 
 ```{r}
+url = "https://www.nytimes.com/elections/results/texas-senate"
+nytimes_data = read_html(url, col_types = "ccdd")
+
+table_county =  (nytimes_data %>% html_nodes(css = "table")) %>% 
+  .[[2]] %>%
+  html_table() %>% 
+  slice(1:(n() - 1)) %>% 
+  select(-Rpt.) %>% 
+  janitor::clean_names()
+
+table_county$cruz <- gsub(",","",table_county$cruz)
+table_county$o_rourke <- gsub(",","",table_county$o_rourke)
+table_county$dikeman <- gsub(",","",table_county$dikeman)
+
+table_county = 
   table_county %>% 
+  mutate(cruz = as.numeric(cruz), o_rourke = as.numeric(o_rourke), dikeman = as.numeric(dikeman))
+
+table_county$county = str_replace(table_county$county,"La Vaca", "Lavaca")
+table_county$county = str_replace(table_county$county,"De Witt", "DeWitt")
+#county names misspelled (was causing issues with merging later on)
+table_county_long = gather(table_county, key = candidate, value = votes, cruz:dikeman)
+
+table_county %>% 
   select(-"dikeman") %>%
   mutate(total = cruz + o_rourke) %>% 
   arrange(desc(total)) %>% 
   top_n(5) %>% 
   gather(key = candidate, value = votes, cruz:o_rourke) %>% 
-  ggplot(aes(x = county, y = votes, color = candidate)) +
-  geom_point() +
-  labs(
-    title = "Number of Votes for Beto vs Cruz",
-    x = "County",
-    y = "Number of Votes"
-  ) +
-  theme(axis.text.x = element_text(angle = 90))
+  plot_ly(x = ~county, y = ~votes, color = ~candidate, type = "scatter")
 ```
 
-### Chart B
+### Top Five Topics Searched by Top Five Populated Districts in Texas
 
 ```{r}
+district_searches2 = read_csv(file =  "./data/Search_Data_US_Congressional_District_26Sep2018.csv")
+tx_searches = 
+  district_searches2 %>% janitor::clean_names() %>% 
+  filter(state == "TX") %>% 
+  select(district, x2003_invasion_of_iraq:womens_health)
+tx_searches_sum = colSums(tx_searches[,-1])
 tx_searches_population = 
   tx_searches %>% 
   filter(district %in% c("Texas 22nd", "Texas 26th", "Texas 3rd", "Texas 8th", "Texas 31st")) %>%
   select(district, health_care, immigration, medicare, medicaid, september_11_attacks) %>% 
   gather(key = topics, value = searched_freq, health_care:september_11_attacks)
+
+tx_searches_population %>%
+  plot_ly(x = ~district, y = ~searched_freq, color = ~topics)
 ```
 
 
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart C
+### Frequencies of the Top Five Topics Searched by Party
 
 ```{r}
 tx_searches_pvi = 
@@ -55,13 +89,21 @@ tx_searches_pvi =
   select(district, health_care, immigration, medicare, medicaid, september_11_attacks) %>% 
   gather(key = topics, value = searched_freq, health_care:september_11_attacks) %>% 
   mutate(party = ifelse(district %in% c("Texas 9th", "Texas 30th", "Texas 18th", "Texas 33rd"), "Democrats", "Republicans"))
+
+tx_searches_pvi %>%
+  plot_ly(x = ~party, y = ~searched_freq, color = ~topics) 
 ```
 
-### Chart D
+### Frequency of Top Searched Topics Across All Districts 
 
 ```{r}
 tx_all = 
   tx_searches %>% 
   select(district, health_care, immigration, medicare, medicaid, september_11_attacks) %>% 
   gather(key = topics, value = searched_freq, health_care:september_11_attacks) 
+
+ tx_all %>%
+   filter(topics == "health_care") %>%
+   mutate(district = fct_reorder(district, searched_freq)) %>% 
+   plot_ly(x = ~district, y = ~searched_freq,  type = "bar")
 ```

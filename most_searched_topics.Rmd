@@ -190,12 +190,12 @@ tx_all =
 
 ```{r}
 # Same graph by sort by searched_freq
-# tx_all %>%
-#   filter(topics == "health_care") %>%
-#   mutate(district = fct_reorder(district, searched_freq)) %>% 
-#   ggplot(aes(x = district, y = searched_freq)) +   
-#   geom_bar(position = "dodge", stat = "identity") +
-#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
+ tx_all %>%
+   filter(topics == "health_care") %>%
+   mutate(district = fct_reorder(district, searched_freq)) %>% 
+   ggplot(aes(x = district, y = searched_freq)) +   
+   geom_bar(position = "dodge", stat = "identity") +
+   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
 ```{r}

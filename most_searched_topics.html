@@ -195,6 +195,9 @@ $(document).ready(function () {
   <a href="data_sets_electionresults_voterconcerns.html">Exploratory Data</a>
 </li>
 <li>
+  <a href="graph.html">Graph</a>
+</li>
+<li>
   <a href="report.html">Report</a>
 </li>
 <li>
@@ -226,14 +229,6 @@ $(document).ready(function () {
 
 
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
-## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
-## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>district_searches2 = read_csv(file =  &quot;./data/Search_Data_US_Congressional_District_26Sep2018.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -277,8 +272,8 @@ tx_searches_sum = colSums(tx_searches[,-1])
 # * medicaid 234.14
 # 
 # * september_11_attacks 195.37 </code></pre>
-<div id="looking-at-the-top-4-most-populated-districts-in-texas" class="section level3">
-<h3>Looking at the top 4 most populated districts in Texas</h3>
+<div id="looking-at-the-top-5-most-populated-districts-in-texas" class="section level3">
+<h3>Looking at the top 5 most populated districts in Texas</h3>
 <p>According to <a href="https://www.census.gov/mycd/" class="uri">https://www.census.gov/mycd/</a>, the top most populated districts in Texas are: Districts 22, 26, 3, 8, 31</p>
 <pre class="r"><code>tx_searches_population = 
   tx_searches %&gt;% 
@@ -374,12 +369,13 @@ tx_searches_pvi %&gt;%
 #   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
 #   theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
 <pre class="r"><code># Same graph by sort by searched_freq
-# tx_all %&gt;%
-#   filter(topics == &quot;health_care&quot;) %&gt;%
-#   mutate(district = fct_reorder(district, searched_freq)) %&gt;% 
-#   ggplot(aes(x = district, y = searched_freq)) +   
-#   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
-#   theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
+ tx_all %&gt;%
+   filter(topics == &quot;health_care&quot;) %&gt;%
+   mutate(district = fct_reorder(district, searched_freq)) %&gt;% 
+   ggplot(aes(x = district, y = searched_freq)) +   
+   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+   theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
+<p><img src="most_searched_topics_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <pre class="r"><code># Immigration across all districts 
 # tx_all %&gt;%
 #   filter(topics == &quot;immigration&quot;) %&gt;%

@@ -5,9 +5,7 @@ navbar:
   right:
     - text: "Data Source"
       href: data.html
-    - text: "Exploratory Data"
-      href: data_sets_electionresults_voterconcerns.html
-    - text: "Graph"
+    - text: "Graphs"
       href: graph.html
     - text: "Report"
       href: report.html

@@ -1,13 +1,16 @@
 ---
 title: <center> Midterm Election 2018
-author: <center> Amadeia Rector, aar2192; Courtney Chan, cac2225; Pei Yang Hsieh, ph2538; Qiu Xia Guan, qg2155; Francois Ban, kb2977
+author: <center> Amadeia Rector | Courtney Chan | Pei Yang Hsieh | Qiu Xia Guan | Francois Ban 
 output: 
   html_document:
     theme: flatly
 ---
+<div id="just-line-break"></div>
+<br/>
+<div id="line-break-and-tab"></div>
 
 <center>
-## Ted Cruz Vs. Beto O'Rourke  
+### Ted Cruz Vs. Beto O'Rourke  
 
 <div id="just-line-break"></div>
 <br/>
@@ -20,7 +23,7 @@ output:
 <br/>
 <div id="line-break-and-tab"></div>
 
-## 2018 Texas Midterm Election Results by County  
+### 2018 Texas Midterm Election Results by County  
 
 <div id="just-line-break"></div>
 <br/>

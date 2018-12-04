@@ -10,3 +10,5 @@ output:
 
 - The [NY Times Election Results](https://www.nytimes.com/elections/results/texas-senate) data is taken from the New York Times report of Midterm Election results. It provides data on the candidate and their respective party, number of votes, and percentage of votes. Additionally, it provides voting data by county.
 
+- We used the [Cook Partisan Voting Index (PVI)](https://www.cookpolitical.com/index.php/pvi-map-and-district-list) to determine the most Republican and Democratic districts. This value was determined by comparing each district's prior two presidental elections to the nation as a whole. We used this in our exploratory analysis of the most searched topics by party.
+

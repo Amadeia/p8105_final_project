@@ -37,8 +37,66 @@ library(purrr)
 
 ```
 
-```{r cleaning data for use with map, include=FALSE}
-merged_nyt_searches = read_csv(file ="./data/merged_nyt_searches.csv") #previously merged_nyt_searches dataframe into a csv file
+```{r cleaning data for use with map, include=FALSE, message=FALSE}
+
+#original data
+url = "https://www.nytimes.com/elections/results/texas-senate"
+nytimes_data = read_html(url, col_types = "ccdd")
+
+#convert votes and percent to numeric
+table_county =  (nytimes_data %>% html_nodes(css = "table")) %>% 
+  .[[2]] %>%
+  html_table() %>% 
+  slice(1:(n() - 1)) %>% 
+  select(-Rpt.) %>% 
+  janitor::clean_names()
+
+#remove the commas in the numbers first
+table_county$cruz <- gsub(",","",table_county$cruz)
+table_county$o_rourke <- gsub(",","",table_county$o_rourke)
+table_county$dikeman <- gsub(",","",table_county$dikeman)
+
+table_county = 
+  table_county %>% 
+  mutate(cruz = as.numeric(cruz), o_rourke = as.numeric(o_rourke), dikeman = as.numeric(dikeman))
+
+table_county$county = str_replace(table_county$county,"La Vaca", "Lavaca")
+table_county$county = str_replace(table_county$county,"De Witt", "DeWitt")
+#county names misspelled (was causing issues with merging later on)
+
+#reading in topic searches by districts using google trend data
+district_searches = read_csv(file =  "./data/Search_Data_US_Congressional_District_26Sep2018.csv")
+
+TX_searches = 
+  district_searches %>% janitor::clean_names() %>% 
+  filter(state == "TX")
+
+#reading in congress districts
+congress_district = read.csv(file = "./data/congress_district2.csv") 
+
+congress_district$county_name = str_replace(congress_district$county_name,"Sterlin", "Sterling")
+congress_district$county_name = str_replace(congress_district$county_name,"MuCulloch","McCulloch")
+#misspelled counties discovered while exploring data when merging later on
+
+#cleaning and merging all three files from NYT, congressional districts file, and district topic searches
+TX_searches =
+  TX_searches %>% 
+  separate(code, into = c("remove_1", "district_num"), sep = "-") %>% 
+  mutate(district_num = as.numeric(district_num)) %>% 
+  select(district_num, most_searched = first, x2003_invasion_of_iraq:womens_health) 
+
+nested_congress =
+  congress_district %>% 
+  nest(county_name) 
+	
+merged_searches= merge(TX_searches, nested_congress, by="district_num", all=TRUE) %>% 
+  unnest() 
+
+#rename variable county_name
+merged_searches = merged_searches %>% 
+  select(district_num, county=county_name, everything())
+
+merged_nyt_searches = merge(merged_searches, table_county, by= "county", all=TRUE)
 
 gis = merged_nyt_searches %>% 
   select(county, most_searched, cruz, o_rourke, dikeman) %>% 

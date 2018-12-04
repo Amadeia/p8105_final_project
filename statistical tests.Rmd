@@ -200,7 +200,7 @@ merged_searches= merge(TX_searches, nested_congress, by="district_num", all=TRUE
 merged_searches = merged_searches %>% 
   select(district_num, county=county_name, everything())
 
-merged_nyt_searches = merge(merged_searches, table_county, by= "county", all=TRUE)
+merged_nyt_searches = merge(merged_searches, table_county, by = "county", all=TRUE)
 
 ```
 
@@ -215,13 +215,21 @@ merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = sea
 
 ```
 
-```{r visually assessing counts}
+```{r selecting who won}
 
-merged_nyt_searches %>% 
-  gather(key = candidate, value = vote_count, cruz:dikeman) %>% 
-  ggplot(aes(x = vote_count, fill = candidate)) + geom_histogram(position = "dodge")
+merged_most_searched = merged_nyt_searches %>% 
+  select(district_num, county, health_care, immigration, mental_health, medicaid, medicare, september_11_attacks, united_nations, cruz, o_rourke, dikeman)
+
+merged_most_searched$winning_candidate <- apply(merged_most_searched, 1, function(x) names(merged_most_searched)[which.max(x)])
 
 ```
+
+```{r max searched}
+
+merged_most_searched$most_searched[1] <-
+
+```
+
 
 ```{r lm health care vs. votes}
 
@@ -255,5 +263,17 @@ lm_most_searched_dikeman = lm(dikeman ~ most_searched, data = df_most_searched) 
 ```{r logistic}
 merged_nyt_searches %>% 
   mutate()
+
+```
+
+
+```{r lm continuous }
+
+lm_o_cont = lm(o_rourke ~ health_care, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_cont = lm(cruz ~ health_care, data = merged_most_searched) %>% broom::tidy()
+
+lm_dikeman_cont = lm(dikeman ~ most_searched, data = df_most_searched) %>% broom::tidy()
+
 
 ```

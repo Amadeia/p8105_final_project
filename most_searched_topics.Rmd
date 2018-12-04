@@ -45,7 +45,7 @@ tx_searches_sum = colSums(tx_searches[,-1])
 
 
 
-### Looking at the top 4 most populated districts in Texas
+### Looking at the top 5 most populated districts in Texas
 According to https://www.census.gov/mycd/, the top most populated districts in Texas are: Districts 22, 26, 3, 8, 31 
 
 ```{r}

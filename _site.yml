@@ -7,6 +7,8 @@ navbar:
       href: data.html
     - text: "Exploratory Data"
       href: data_sets_electionresults_voterconcerns.html
+    - text: "Graph"
+      href: graph.html
     - text: "Report"
       href: report.html
     - icon: fab fa-youtube

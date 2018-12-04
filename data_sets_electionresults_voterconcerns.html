@@ -268,10 +268,11 @@ $(document).ready(function () {
 <h1>chi-squared test</h1>
 <p>Testing whether there’s a relationship between topics searched and political party</p>
 <pre><code>## 
-##  Pearson&#39;s Chi-squared test
+##  Fisher&#39;s Exact Test for Count Data
 ## 
 ## data:  chi_square_df
-## X-squared = 179.62, df = 128, p-value = 0.001791</code></pre>
+## p-value = 0.1008
+## alternative hypothesis: two.sided</code></pre>
 <p>According to the results it appears that there is an association between politcal party and topics searched. However, it is unclear how valid this may be? The Chi-squared test gives a warning when I run it. Maybe if we could figure out how to do a Fisher’s exact test?</p>
 </div>
 

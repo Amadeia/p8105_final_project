@@ -226,6 +226,7 @@ $(document).ready(function () {
 
 
 <pre class="r"><code>library(tidyverse)</code></pre>
+<<<<<<< HEAD
 <pre><code>## -- Attaching packages ------ tidyverse 1.2.1 --</code></pre>
 <pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
 ## v tibble  1.4.2     v dplyr   0.7.6
@@ -234,6 +235,16 @@ $(document).ready(function () {
 <pre><code>## -- Conflicts --------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
+=======
+<pre><code>## ── Attaching packages ─────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
+## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+>>>>>>> 4ed3b0f14359ced1997948887a2022b7e405fe51
 <pre class="r"><code>district_searches2 = read_csv(file =  &quot;./data/Search_Data_US_Congressional_District_26Sep2018.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -259,40 +270,24 @@ $(document).ready(function () {
 <pre><code>## See spec(...) for full column specifications.</code></pre>
 <div id="using-search-data-us-congressional-district-sep-26-dataset" class="section level1">
 <h1>Using Search Data US Congressional District Sep 26 Dataset</h1>
-<div id="bar-graph-of-most-searched-topics-using-relative-frequencies-of-search" class="section level2">
-<h2>Bar graph of most searched topics using relative frequencies of search</h2>
-<ul>
-<li>Looking at top 5 most populated districts on x - axis
-<ul>
-<li>Option 1: Different color bar graphs representing the 5 top searches</li>
-<li>Option 2: Facet the 5 districts to have 5 small graphs</li>
-</ul></li>
-<li>Looking at the top 3 most populated Democratic &amp; 3 Republican districts - axis
-<ul>
-<li>Option 1: Different color bar graphs representing the 5 top searches</li>
-<li>Option 2: Facet the 5 districts to have 5 small graphs</li>
-</ul></li>
-<li>Top topics across all districts</li>
-</ul>
-<div id="limit-tx_searches-dataset-to-only-texas-rows-and-all-the-topic-columns" class="section level3">
-<h3>Limit tx_searches dataset to only Texas rows and all the topic columns</h3>
-<pre class="r"><code>tx_searches = 
+<pre class="r"><code># Limit tx_searches dataset to only Texas rows and all the topic columns
+tx_searches = 
   district_searches2 %&gt;% janitor::clean_names() %&gt;% 
   filter(state == &quot;TX&quot;) %&gt;% 
   select(district, x2003_invasion_of_iraq:womens_health)</code></pre>
-</div>
-<div id="summing-up-the-relative-searched-frequencies-of-each-topic-to-get-the-5-most-searched-topics-in-texas" class="section level3">
-<h3>Summing up the relative searched frequencies of each topic to get the 5 most searched topics in Texas</h3>
-<pre class="r"><code>tx_searches_sum = colSums(tx_searches[,-1])</code></pre>
-<p>According to the searched frequencies, the five most searched topics are:</p>
-<ul>
-<li><p>health_care 509.87</p></li>
-<li><p>immigration 357.52</p></li>
-<li><p>medicare 270.02</p></li>
-<li><p>medicaid 234.14</p></li>
-<li><p>september_11_attacks 195.37</p></li>
-</ul>
-</div>
+<pre class="r"><code># Summing up the relative searched frequencies of each topic to get the 5 most searched topics in Texas 
+tx_searches_sum = colSums(tx_searches[,-1])
+
+# According to the searched frequencies, the five most searched topics are:
+# * health_care 509.87
+# 
+# * immigration 357.52
+# 
+# * medicare 270.02
+# 
+# * medicaid 234.14
+# 
+# * september_11_attacks 195.37 </code></pre>
 <div id="looking-at-the-top-4-most-populated-districts-in-texas" class="section level3">
 <h3>Looking at the top 4 most populated districts in Texas</h3>
 <p>According to <a href="https://www.census.gov/mycd/" class="uri">https://www.census.gov/mycd/</a>, the top most populated districts in Texas are: Districts 22, 26, 3, 8, 31</p>
@@ -301,22 +296,21 @@ $(document).ready(function () {
   filter(district %in% c(&quot;Texas 22nd&quot;, &quot;Texas 26th&quot;, &quot;Texas 3rd&quot;, &quot;Texas 8th&quot;, &quot;Texas 31st&quot;)) %&gt;%
   select(district, health_care, immigration, medicare, medicaid, september_11_attacks) %&gt;% 
   gather(key = topics, value = searched_freq, health_care:september_11_attacks) </code></pre>
-<p>Stacked bar graph</p>
-<pre class="r"><code>tx_searches_population %&gt;% 
-  ggplot(aes(x = district, y = searched_freq)) +
-  geom_bar(aes(fill = topics), stat = &quot;identity&quot;) </code></pre>
-<p><img src="most_searched_topics_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>Multiple bars bar graph</p>
-<pre class="r"><code>tx_searches_population %&gt;%
+<pre class="r"><code># Stacked bar graph
+# tx_searches_population %&gt;% 
+#   ggplot(aes(x = district, y = searched_freq)) +
+#   geom_bar(aes(fill = topics), stat = &quot;identity&quot;) </code></pre>
+<pre class="r"><code># Multiple bars bar graph
+tx_searches_population %&gt;%
   ggplot(aes(district, searched_freq)) +   
   geom_bar(aes(fill = topics), position = &quot;dodge&quot;, stat = &quot;identity&quot;)</code></pre>
 <p><img src="most_searched_topics_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>Facet by the districts (I don’t know why the bars won’t change color…)</p>
-<pre class="r"><code>tx_searches_population %&gt;%
-  ggplot(aes(x = topics, y = searched_freq)) +   
-  geom_bar(aes(color = topics), position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
-  facet_wrap(~district)</code></pre>
-<p><img src="most_searched_topics_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code># Facet by the districts
+# (I don&#39;t know why the bars won&#39;t change color...)
+# tx_searches_population %&gt;%
+#   ggplot(aes(x = topics, y = searched_freq)) +   
+#   geom_bar(aes(color = topics), position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+#   facet_wrap(~district)</code></pre>
 </div>
 <div id="looking-at-the-most-democrats-vs-republicans-districts-in-texas" class="section level3">
 <h3>Looking at the most Democrats vs Republicans districts in Texas</h3>
@@ -332,36 +326,35 @@ $(document).ready(function () {
   select(district, health_care, immigration, medicare, medicaid, september_11_attacks) %&gt;% 
   gather(key = topics, value = searched_freq, health_care:september_11_attacks) %&gt;% 
   mutate(party = ifelse(district %in% c(&quot;Texas 9th&quot;, &quot;Texas 30th&quot;, &quot;Texas 18th&quot;, &quot;Texas 33rd&quot;), &quot;Democrats&quot;, &quot;Republicans&quot;))</code></pre>
-<p>Stacked bar graph</p>
-<pre class="r"><code>tx_searches_pvi %&gt;% 
-  ggplot(aes(x = district, y = searched_freq)) +
-  geom_bar(aes(fill = topics), stat = &quot;identity&quot;) </code></pre>
-<p><img src="most_searched_topics_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<p>Multiple bars bar graph</p>
-<pre class="r"><code>tx_searches_pvi %&gt;%
+<pre class="r"><code># Stacked bar graph
+# tx_searches_pvi %&gt;% 
+#   ggplot(aes(x = district, y = searched_freq)) +
+#   geom_bar(aes(fill = topics), stat = &quot;identity&quot;) </code></pre>
+<pre class="r"><code># Multiple bars bar graph
+tx_searches_pvi %&gt;%
   ggplot(aes(district, searched_freq)) +   
   geom_bar(aes(fill = topics), position = &quot;dodge&quot;, stat = &quot;identity&quot;)</code></pre>
 <p><img src="most_searched_topics_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<p>Facet by the districts (I don’t know why the bars won’t change color…)</p>
-<pre class="r"><code>tx_searches_pvi %&gt;%
-  ggplot(aes(x = topics, y = searched_freq)) +   
-  geom_bar(aes(color = topics), position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
-  facet_wrap(~district)</code></pre>
+<pre class="r"><code># Facet by the districts
+# (I don&#39;t know why the bars won&#39;t change color...)
+tx_searches_pvi %&gt;%
+   ggplot(aes(x = topics, y = searched_freq)) +   
+   geom_bar(aes(color = topics), position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+   facet_wrap(~district)</code></pre>
 <p><img src="most_searched_topics_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <div id="recreate-same-graphs-using-party-variable" class="section level4">
 <h4>Recreate same graphs using party variable</h4>
-<p>Stacked bar graph</p>
-<pre class="r"><code>tx_searches_pvi %&gt;% 
-  ggplot(aes(x = party, y = searched_freq)) +
-  geom_bar(aes(fill = topics), stat = &quot;identity&quot;) </code></pre>
-<p><img src="most_searched_topics_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<p>Multiple bars bar graph</p>
-<pre class="r"><code>tx_searches_pvi %&gt;%
+<pre class="r"><code># Stacked bar graph
+# tx_searches_pvi %&gt;% 
+#   ggplot(aes(x = party, y = searched_freq)) +
+#   geom_bar(aes(fill = topics), stat = &quot;identity&quot;) </code></pre>
+<pre class="r"><code># Multiple bars bar graph
+tx_searches_pvi %&gt;%
   ggplot(aes(party, searched_freq)) +   
   geom_bar(aes(fill = topics), position = &quot;dodge&quot;, stat = &quot;identity&quot;)</code></pre>
 <p><img src="most_searched_topics_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<p>Facet by the party</p>
-<pre class="r"><code>tx_searches_pvi %&gt;%
+<pre class="r"><code># Facet by the party
+tx_searches_pvi %&gt;%
   ggplot(aes(x = topics, y = searched_freq)) +   
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
   facet_wrap(~party)</code></pre>
@@ -374,50 +367,43 @@ $(document).ready(function () {
   tx_searches %&gt;% 
   select(district, health_care, immigration, medicare, medicaid, september_11_attacks) %&gt;% 
   gather(key = topics, value = searched_freq, health_care:september_11_attacks) </code></pre>
-<p>Stacked bar graph</p>
-<pre class="r"><code>tx_all %&gt;% 
-  ggplot(aes(x = district, y = searched_freq)) +
-  geom_bar(aes(fill = topics), stat = &quot;identity&quot;) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
-<p><img src="most_searched_topics_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<p>Facet across districts showing all five searched topics</p>
-<pre class="r"><code>tx_all %&gt;%
-  ggplot(aes(topics, searched_freq)) +   
-  geom_bar(aes(fill = topics), position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
-  facet_wrap(~district) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
-<p><img src="most_searched_topics_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
-<p>Healthcare across all districts</p>
-<pre class="r"><code>tx_all %&gt;%
-  filter(topics == &quot;health_care&quot;) %&gt;%
-  ggplot(aes(x = district, y = searched_freq)) +   
-  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
-<p><img src="most_searched_topics_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<p>Same graph by sort by searched_freq</p>
-<pre class="r"><code>tx_all %&gt;%
-  filter(topics == &quot;health_care&quot;) %&gt;%
-  mutate(district = fct_reorder(district, searched_freq)) %&gt;% 
-  ggplot(aes(x = district, y = searched_freq)) +   
-  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
-<p><img src="most_searched_topics_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
-<p>Immigration across all districts</p>
-<pre class="r"><code>tx_all %&gt;%
-  filter(topics == &quot;immigration&quot;) %&gt;%
-  ggplot(aes(x = district, y = searched_freq)) +   
-  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
-<p><img src="most_searched_topics_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
-<p>Same graph but sort by searched_freq</p>
-<pre class="r"><code>tx_all %&gt;%
-  filter(topics == &quot;immigration&quot;) %&gt;%
-  mutate(district = fct_reorder(district, searched_freq)) %&gt;% 
-  ggplot(aes(x = district, y = searched_freq)) +   
-  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
-<p><img src="most_searched_topics_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
-</div>
+<pre class="r"><code># Stacked bar graph
+# tx_all %&gt;% 
+#   ggplot(aes(x = district, y = searched_freq)) +
+#   geom_bar(aes(fill = topics), stat = &quot;identity&quot;) +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
+<pre class="r"><code># Facet across districts showing all five searched topics 
+# tx_all %&gt;%
+#   ggplot(aes(topics, searched_freq)) +   
+#   geom_bar(aes(fill = topics), position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+#   facet_wrap(~district) +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
+<pre class="r"><code># Healthcare across all districts
+# tx_all %&gt;%
+#   filter(topics == &quot;health_care&quot;) %&gt;%
+#   ggplot(aes(x = district, y = searched_freq)) +   
+#   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
+<pre class="r"><code># Same graph by sort by searched_freq
+# tx_all %&gt;%
+#   filter(topics == &quot;health_care&quot;) %&gt;%
+#   mutate(district = fct_reorder(district, searched_freq)) %&gt;% 
+#   ggplot(aes(x = district, y = searched_freq)) +   
+#   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
+<pre class="r"><code># Immigration across all districts 
+# tx_all %&gt;%
+#   filter(topics == &quot;immigration&quot;) %&gt;%
+#   ggplot(aes(x = district, y = searched_freq)) +   
+#   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
+<pre class="r"><code># Same graph but sort by searched_freq
+# tx_all %&gt;%
+#   filter(topics == &quot;immigration&quot;) %&gt;%
+#   mutate(district = fct_reorder(district, searched_freq)) %&gt;% 
+#   ggplot(aes(x = district, y = searched_freq)) +   
+#   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
 </div>
 </div>
 

@@ -49,7 +49,11 @@ table_county$county = str_replace(table_county$county,"De Witt", "DeWitt")
 table_county_long = gather(table_county, key = candidate, value = votes, cruz:dikeman)
 
 table_county %>% 
+<<<<<<< HEAD
 #  select(-"dikeman") %>%
+=======
+  select(-dikeman) %>%
+>>>>>>> 7f419f2c8da3080ad35ebe7f5848acfef27314c4
   mutate(total = cruz + o_rourke) %>% 
   arrange(desc(total)) %>% 
   top_n(5) %>% 

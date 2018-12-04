@@ -215,3 +215,37 @@ merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = sea
 
 ```
 
+```{r visually assessing counts}
+
+merged_nyt_searches %>% 
+  gather(key = candidate, value = vote_count, cruz:dikeman) %>% 
+  ggplot(aes(x = vote_count, fill = candidate)) + geom_histogram(position = "dodge")
+
+```
+
+```{r lm health care vs. votes}
+
+health_most_searched = merged_nyt_searches %>% 
+  mutate(most_searched = recode(most_searched, "Health care" = "Health care", .default = "Not Health care")) %>% 
+  mutate(most_searched = factor(most_searched, levels = c("Not Health care", "Health care")))
+
+lm_healthcare_o = lm(o_rourke ~ most_searched, data = health_most_searched) %>% broom::tidy()
+
+lm_healthcare_cruz = lm(cruz ~ most_searched, data = health_most_searched) %>% broom::tidy()
+
+```
+
+```{r lm most_searched vs. votes}
+
+unique(merged_nyt_searches_long$most_searched)
+
+df_most_searched = merged_nyt_searches %>% 
+  mutate(most_searched = factor(most_searched, levels = c("Immigration", "United Nations", "Mental health", "Health care")))
+
+lm_most_searched_o = lm(o_rourke ~ most_searched, data = df_most_searched) %>% broom::tidy()
+
+lm_most_searched_cruz = lm(cruz ~ most_searched, data = df_most_searched) %>% broom::tidy()
+
+lm_most_searched_dikeman = lm(dikeman ~ most_searched, data = df_most_searched) %>% broom::tidy()
+
+```

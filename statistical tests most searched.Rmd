@@ -202,22 +202,62 @@ merged_searches = merged_searches %>%
 
 merged_nyt_searches = merge(merged_searches, table_county, by= "county", all=TRUE)
 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#plot for topics search per county
-Still figuring out how to display this
-ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc.
-2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity?
-3) Alternative to first option, how can we show the distribution of topics among counties instead?
-4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area
-```{r long format merged, include=FALSE}
-merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = search_interest, health_care:september_11_attacks)
-
+```{r}
+library(tidyverse)
 ```
+
+```{r}
+district_searches2 = read_csv(file =  "./data/Search_Data_US_Congressional_District_26Sep2018.csv")
+```
+
+# Using Search Data US Congressional District Sep 26 Dataset 
+
+## Bar graph of most searched topics using relative frequencies of search
+* Looking at top 5 most populated districts on x - axis
+    * Option 1: Different color bar graphs representing the 5 top searches 
+    * Option 2: Facet the 5 districts to have 5 small graphs
+* Looking at the top 3 most populated Democratic & 3 Republican districts - axis
+    * Option 1: Different color bar graphs representing the 5 top searches 
+    * Option 2: Facet the 5 districts to have 5 small graphs
+* Top topics across all districts 
+
+
+### Limit tx_searches dataset to only Texas rows and all the topic columns
+
+```{r}
+tx_searches = 
+  district_searches2 %>% janitor::clean_names() %>% 
+  filter(state == "TX") %>% 
+  select(district, x2003_invasion_of_iraq:womens_health)
+```
+
+### Summing up the relative searched frequencies of each topic to get the 5 most searched topics in Texas 
+
+```{r}
+tx_searches_sum = colSums(tx_searches[,-1])
+```
+
+According to the searched frequencies, the five most searched topics are:
+
+* health_care 509.87
+
+* immigration 357.52
+
+* medicare 270.02
+
+* medicaid 234.14
+
+* september_11_attacks 195.37
+
 
 ```{r visually assessing counts}
 
-merged_nyt_searches %>% 
+tx_searches %>% 
   gather(key = candidate, value = vote_count, cruz:dikeman) %>% 
   ggplot(aes(x = vote_count, fill = candidate)) + geom_histogram(position = "dodge")
 
@@ -249,11 +289,5 @@ lm_most_searched_o = lm(o_rourke ~ most_searched, data = df_most_searched) %>% b
 lm_most_searched_cruz = lm(cruz ~ most_searched, data = df_most_searched) %>% broom::tidy()
 
 lm_most_searched_dikeman = lm(dikeman ~ most_searched, data = df_most_searched) %>% broom::tidy()
-
-```
-
-```{r logistic}
-merged_nyt_searches %>% 
-  mutate()
 
 ```

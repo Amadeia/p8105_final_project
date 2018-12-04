@@ -233,6 +233,8 @@ lm_healthcare_o = lm(o_rourke ~ most_searched, data = health_most_searched) %>% 
 
 lm_healthcare_cruz = lm(cruz ~ most_searched, data = health_most_searched) %>% broom::tidy()
 
+lm_healthcare_dikeman = lm(cruz ~ most_searched, data = health_most_searched) %>% broom::tidy()
+
 ```
 
 ```{r lm most_searched vs. votes}
@@ -247,5 +249,11 @@ lm_most_searched_o = lm(o_rourke ~ most_searched, data = df_most_searched) %>% b
 lm_most_searched_cruz = lm(cruz ~ most_searched, data = df_most_searched) %>% broom::tidy()
 
 lm_most_searched_dikeman = lm(dikeman ~ most_searched, data = df_most_searched) %>% broom::tidy()
+
+```
+
+```{r logistic}
+merged_nyt_searches %>% 
+  mutate()
 
 ```

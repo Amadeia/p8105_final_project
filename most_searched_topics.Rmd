@@ -19,45 +19,33 @@ district_searches2 = read_csv(file =  "./data/Search_Data_US_Congressional_Distr
 
 # Using Search Data US Congressional District Sep 26 Dataset 
 
-## Bar graph of most searched topics using relative frequencies of search
-* Looking at top 5 most populated districts on x - axis
-    * Option 1: Different color bar graphs representing the 5 top searches 
-    * Option 2: Facet the 5 districts to have 5 small graphs
-* Looking at the top 3 most populated Democratic & 3 Republican districts - axis
-    * Option 1: Different color bar graphs representing the 5 top searches 
-    * Option 2: Facet the 5 districts to have 5 small graphs
-* Top topics across all districts 
-
-
-### Limit tx_searches dataset to only Texas rows and all the topic columns
-
 ```{r}
+# Limit tx_searches dataset to only Texas rows and all the topic columns
 tx_searches = 
   district_searches2 %>% janitor::clean_names() %>% 
   filter(state == "TX") %>% 
   select(district, x2003_invasion_of_iraq:womens_health)
 ```
 
-### Summing up the relative searched frequencies of each topic to get the 5 most searched topics in Texas 
-
 ```{r}
+# Summing up the relative searched frequencies of each topic to get the 5 most searched topics in Texas 
 tx_searches_sum = colSums(tx_searches[,-1])
+
+# According to the searched frequencies, the five most searched topics are:
+# * health_care 509.87
+# 
+# * immigration 357.52
+# 
+# * medicare 270.02
+# 
+# * medicaid 234.14
+# 
+# * september_11_attacks 195.37 
 ```
 
-According to the searched frequencies, the five most searched topics are:
 
-* health_care 509.87
-
-* immigration 357.52
-
-* medicare 270.02
-
-* medicaid 234.14
-
-* september_11_attacks 195.37
 
 ### Looking at the top 4 most populated districts in Texas
-
 According to https://www.census.gov/mycd/, the top most populated districts in Texas are: Districts 22, 26, 3, 8, 31 
 
 ```{r}
@@ -68,27 +56,30 @@ tx_searches_population =
   gather(key = topics, value = searched_freq, health_care:september_11_attacks) 
 ```
 
-Stacked bar graph
+
 ```{r}
-tx_searches_population %>% 
-  ggplot(aes(x = district, y = searched_freq)) +
-  geom_bar(aes(fill = topics), stat = "identity") 
+# Stacked bar graph
+# tx_searches_population %>% 
+#   ggplot(aes(x = district, y = searched_freq)) +
+#   geom_bar(aes(fill = topics), stat = "identity") 
 ```
 
-Multiple bars bar graph
+
 ```{r}
+# Multiple bars bar graph
 tx_searches_population %>%
   ggplot(aes(district, searched_freq)) +   
   geom_bar(aes(fill = topics), position = "dodge", stat = "identity")
 ```
 
-Facet by the districts
-(I don't know why the bars won't change color...)
+
 ```{r}
-tx_searches_population %>%
-  ggplot(aes(x = topics, y = searched_freq)) +   
-  geom_bar(aes(color = topics), position = "dodge", stat = "identity") +
-  facet_wrap(~district)
+# Facet by the districts
+# (I don't know why the bars won't change color...)
+# tx_searches_population %>%
+#   ggplot(aes(x = topics, y = searched_freq)) +   
+#   geom_bar(aes(color = topics), position = "dodge", stat = "identity") +
+#   facet_wrap(~district)
 ```
 
 ### Looking at the most Democrats vs Republicans districts in Texas
@@ -108,47 +99,52 @@ tx_searches_pvi =
   mutate(party = ifelse(district %in% c("Texas 9th", "Texas 30th", "Texas 18th", "Texas 33rd"), "Democrats", "Republicans"))
 ```
 
-Stacked bar graph
+
 ```{r}
-tx_searches_pvi %>% 
-  ggplot(aes(x = district, y = searched_freq)) +
-  geom_bar(aes(fill = topics), stat = "identity") 
+# Stacked bar graph
+# tx_searches_pvi %>% 
+#   ggplot(aes(x = district, y = searched_freq)) +
+#   geom_bar(aes(fill = topics), stat = "identity") 
 ```
 
-Multiple bars bar graph
 ```{r}
+# Multiple bars bar graph
 tx_searches_pvi %>%
   ggplot(aes(district, searched_freq)) +   
   geom_bar(aes(fill = topics), position = "dodge", stat = "identity")
 ```
 
-Facet by the districts
-(I don't know why the bars won't change color...)
+
 ```{r}
+# Facet by the districts
+# (I don't know why the bars won't change color...)
 tx_searches_pvi %>%
-  ggplot(aes(x = topics, y = searched_freq)) +   
-  geom_bar(aes(color = topics), position = "dodge", stat = "identity") +
-  facet_wrap(~district)
+   ggplot(aes(x = topics, y = searched_freq)) +   
+   geom_bar(aes(color = topics), position = "dodge", stat = "identity") +
+   facet_wrap(~district)
 ```
 
 #### Recreate same graphs using party variable 
 
-Stacked bar graph
+
 ```{r}
-tx_searches_pvi %>% 
-  ggplot(aes(x = party, y = searched_freq)) +
-  geom_bar(aes(fill = topics), stat = "identity") 
+# Stacked bar graph
+# tx_searches_pvi %>% 
+#   ggplot(aes(x = party, y = searched_freq)) +
+#   geom_bar(aes(fill = topics), stat = "identity") 
 ```
 
-Multiple bars bar graph
+
 ```{r}
+# Multiple bars bar graph
 tx_searches_pvi %>%
   ggplot(aes(party, searched_freq)) +   
   geom_bar(aes(fill = topics), position = "dodge", stat = "identity")
 ```
 
-Facet by the party
+
 ```{r}
+# Facet by the party
 tx_searches_pvi %>%
   ggplot(aes(x = topics, y = searched_freq)) +   
   geom_bar(position = "dodge", stat = "identity") +
@@ -163,59 +159,61 @@ tx_all =
   gather(key = topics, value = searched_freq, health_care:september_11_attacks) 
 ```
 
-Stacked bar graph
+
 ```{r}
-tx_all %>% 
-  ggplot(aes(x = district, y = searched_freq)) +
-  geom_bar(aes(fill = topics), stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+# Stacked bar graph
+# tx_all %>% 
+#   ggplot(aes(x = district, y = searched_freq)) +
+#   geom_bar(aes(fill = topics), stat = "identity") +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-Facet across districts showing all five searched topics 
 ```{r}
-tx_all %>%
-  ggplot(aes(topics, searched_freq)) +   
-  geom_bar(aes(fill = topics), position = "dodge", stat = "identity") +
-  facet_wrap(~district) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
+# Facet across districts showing all five searched topics 
+# tx_all %>%
+#   ggplot(aes(topics, searched_freq)) +   
+#   geom_bar(aes(fill = topics), position = "dodge", stat = "identity") +
+#   facet_wrap(~district) +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-Healthcare across all districts
+
 ```{r}
-tx_all %>%
-  filter(topics == "health_care") %>%
-  ggplot(aes(x = district, y = searched_freq)) +   
-  geom_bar(position = "dodge", stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+# Healthcare across all districts
+# tx_all %>%
+#   filter(topics == "health_care") %>%
+#   ggplot(aes(x = district, y = searched_freq)) +   
+#   geom_bar(position = "dodge", stat = "identity") +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-Same graph by sort by searched_freq
+
 ```{r}
-tx_all %>%
-  filter(topics == "health_care") %>%
-  mutate(district = fct_reorder(district, searched_freq)) %>% 
-  ggplot(aes(x = district, y = searched_freq)) +   
-  geom_bar(position = "dodge", stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+# Same graph by sort by searched_freq
+# tx_all %>%
+#   filter(topics == "health_care") %>%
+#   mutate(district = fct_reorder(district, searched_freq)) %>% 
+#   ggplot(aes(x = district, y = searched_freq)) +   
+#   geom_bar(position = "dodge", stat = "identity") +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-Immigration across all districts 
 ```{r}
-tx_all %>%
-  filter(topics == "immigration") %>%
-  ggplot(aes(x = district, y = searched_freq)) +   
-  geom_bar(position = "dodge", stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+# Immigration across all districts 
+# tx_all %>%
+#   filter(topics == "immigration") %>%
+#   ggplot(aes(x = district, y = searched_freq)) +   
+#   geom_bar(position = "dodge", stat = "identity") +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-Same graph but sort by searched_freq
 ```{r}
-tx_all %>%
-  filter(topics == "immigration") %>%
-  mutate(district = fct_reorder(district, searched_freq)) %>% 
-  ggplot(aes(x = district, y = searched_freq)) +   
-  geom_bar(position = "dodge", stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+# Same graph but sort by searched_freq
+# tx_all %>%
+#   filter(topics == "immigration") %>%
+#   mutate(district = fct_reorder(district, searched_freq)) %>% 
+#   ggplot(aes(x = district, y = searched_freq)) +   
+#   geom_bar(position = "dodge", stat = "identity") +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 

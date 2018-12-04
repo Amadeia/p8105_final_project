@@ -249,19 +249,18 @@ o_rourke = pre_chisquare_df %>%
 
   
 
-o_rourke = data.frame(winner="O'Rourke", t(colSums(o_rourke))) %>% 
+o_rourke = data.frame(winner="O'Rourke", t(colSums(o_rourke))) %>%
   select(-status)
 
 chi_square_df = bind_rows(cruz, o_rourke) 
 
 chi_square_df[2:130] = lapply(chi_square_df[2:13], as.integer)
-
 chi_square_df = chi_square_df %>% 
-  select(-winner)
-#I was getting an error, so I made cells into integers and removed the first column
+  select(health_care, immigration, medicaid, medicare, september_11_attacks)
+
 
 #results of chi squared test
-chisq.test(chi_square_df)
+fisher.test(chi_square_df)
 ```
 
 According to the results it appears that there is an association between politcal party and topics searched. However, it is unclear how valid this may be? The Chi-squared test gives a warning when I run it. Maybe if we could figure out how to do a Fisher's exact test?

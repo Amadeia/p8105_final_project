@@ -17,7 +17,6 @@ library(leaflet)
 library(dplyr)
 library(purrr)
 library(plotly)
-
 ```
 
 Column {data-width=350}

@@ -261,6 +261,14 @@ $(document).ready(function () {
 </div>
 <div id="additional-analysis" class="section level2">
 <h2><u>Additional Analysis </u></h2>
+<div id="linear-regression" class="section level4">
+<h4><strong>Linear Regression</strong></h4>
+<p>Using a merged dataset with the searched topics and vote results, we ran linear regressions to examine the linear relationship between all searched topics and the number of votes for the two different candidates across counties and districts in Texas We wanted to examine if there was a relationship between the searched topics (health care, immigration, medicaid, medicare, and September 11 attacks) and actual vote results for the candidates. In our models, we used the variable for candidates’ poll counts as our continuous outcome, and one of the five searched topics as our predictor. We ran the models individually with one searched topic at a time. Below is the r-code for our statistical test analysis:</p>
+</div>
+<div id="fishers-exact-test" class="section level4">
+<h4><strong>Fisher’s Exact Test</strong></h4>
+<p>We used a Fisher’s exact test to examine the relationship between topics searched and political party. A Fisher’s Exact Test was ran as opposed to a standard Chi-Squared Tests as some of the cells in our dataset were below the expected count. We wanted to examine if the topics (health care, immigration, medicaid, medicare, September 11 attacks) were related to which political party the counties voted for. All counties were pooled together. Our p-value was 0.1008 which was not statistically significant. Below is the r-code for our statistical test analysis:</p>
+</div>
 </div>
 <div id="discussion" class="section level2">
 <h2><u>Discussion </u></h2>

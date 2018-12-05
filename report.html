@@ -204,30 +204,45 @@ $(document).ready(function () {
 </div>
 
 
-<p>The written report (e.g. R Markdown and MD files) produced by your team are central to this project. This will detail how you completed your project, and should cover data collection and cleaning, exploratory analyses, alternative strategies, descriptions of approaches, and a discussion of results. We anticipate that your project will change somewhat over time; these changes and the reasons for them should be documented! You should write one report document per group, and be sure to include all group member names in the document.</p>
-<p>Your R Markdown should include the following topics. Depending on your project type the amount of discussion you devote to each of them will vary:</p>
-<div id="motivation-provide-an-overview-of-the-project-goals-and-motivation." class="section level1">
-<h1>Motivation: Provide an overview of the project goals and motivation.</h1>
+<div id="motivation" class="section level2">
+<h2><u>Motivation</u></h2>
+<p>Our project goals were to analyze Google Trends data for the 2018 midterm elections. We chose to focus on Texas because of the close race between Beto O’Rourke and Ted Cruz. We wanted to identify the most highly searched political topics and examine different geographic components, such as where certain searches occurred. Our motivation is that this is a currently relevant issue in the U.S. and allows for analyses of civic engagement among American voters.</p>
 </div>
-<div id="related-work-anything-that-inspired-you-such-as-a-paper-a-web-site-or-something-we-discussed-in-class." class="section level1">
-<h1>Related work: Anything that inspired you, such as a paper, a web site, or something we discussed in class.</h1>
+<div id="related-work" class="section level2">
+<h2><u>Related Work </u></h2>
+<p>We were inspired to explore this research question due to the high amount of media coverage on the close race between O’Rourke and Cruz. Click <a href="http://www.wbur.org/npr/654059869/beto-orourke-ted-cruz-texas-senate">here</a> and <a href="https://www.vox.com/2018/9/12/17841716/ted-cruz-beto-orourke-senate-midterm">here</a> for some articles reported before the midterm election.</p>
+<p>A blog website that focuses on using statistical analysis to model poll predictions revealed that they believe O’Rourke might have a chance at winning the race against Ted Cruz. They explained the factors that were looked at in their model predictions <a href="https://fivethirtyeight.com/features/election-update-why-our-model-thinks-beto-orourke-really-has-a-chance-in-texas/">here</a></p>
 </div>
-<div id="initial-questions-what-questions-are-you-trying-to-answer-how-did-these-questions-evolve-over-the-course-of-the-project-what-new-questions-did-you-consider-in-the-course-of-your-analysis" class="section level1">
-<h1>Initial questions: What questions are you trying to answer? How did these questions evolve over the course of the project? What new questions did you consider in the course of your analysis?</h1>
+<div id="initial-questions" class="section level2">
+<h2><u>Initial Questions</u></h2>
+<ul>
+<li>How does voter registration for this election compare to previous year’s? Due to the close race between O’Rourke and Cruz, will this increase voter registration?</li>
+<li>What are the most highly searched political topics and how do they vary by county or district?</li>
+<li>How do political topic searches differ by party (Democrat vs Republican)?</li>
+</ul>
+<p>Over the course of the project, we realized that we only had Google Trends data from September to November 2018, which limited our ability to look at Trend data over time. Consequently, we restricted our analyses to this year’s data, specifically September 2018, and we did not compare 2018 data to that of previous years.</p>
 </div>
-<div id="data-source-scraping-method-cleaning-etc." class="section level1">
-<h1>Data: Source, scraping method, cleaning, etc.</h1>
+<div id="data" class="section level2">
+<h2><u>Data </u></h2>
+<ul>
+<li>Refer to our Data Source Tab for a detailed description of our data sources</li>
+<li>We downloaded CSV files from Google Trends Datastore for data on the top searched issues by US Congressional District</li>
+<li>We scraped election results data from a New York Times article that reported on the midterm elections.</li>
+</ul>
 </div>
-<div id="exploratory-analysis-visualizations-summaries-and-exploratory-statistical-analyses.-justify-the-steps-you-took-and-show-any-major-changes-to-your-ideas." class="section level1">
-<h1>Exploratory analysis: Visualizations, summaries, and exploratory statistical analyses. Justify the steps you took, and show any major changes to your ideas.</h1>
+<div id="exploratory-analysis" class="section level2">
+<h2><u>Exploratory Analysis </u></h2>
+<ul>
+<li>We created an interactive map of Texas to show voting results by county</li>
+<li>First, we created a bar graph of total votes for each party candidate and found that there were significantly less votes for Dikeman</li>
+<li>Moving forward, we narrowed our results to Ted Cruz and Beto O’Rourke</li>
+</ul>
 </div>
-<div id="additional-analysis-if-you-undertake-formal-statistical-analyses-describe-these-in-detail" class="section level1">
-<h1>Additional analysis: If you undertake formal statistical analyses, describe these in detail</h1>
+<div id="additional-analysis" class="section level2">
+<h2><u>Additional Analysis </u></h2>
 </div>
-<div id="discussion-what-were-your-findings-are-they-what-you-expect-what-insights-into-the-data-can-you-make" class="section level1">
-<h1>Discussion: What were your findings? Are they what you expect? What insights into the data can you make?</h1>
-<p>As this will be your only chance to describe your project in detail, make sure that your report is a standalone document that fully describes your process and results. We also expect you to write high-quality code that is understandable to an outside reader. Coding collaboratively and actively reviewing code within the team will help with this!</p>
-<p>Your report should be developed in a dedicated GitHub repository. Data should not be included in the repo; make the data accessible somewhere online (e.g. google drive or a downloadable link) and, in the report, include instructions on where to access the data. If we cannot access your work or links because these directions are not followed correctly, we will not grade your work.</p>
+<div id="discussion" class="section level2">
+<h2><u>Discussion </u></h2>
 </div>
 
 

@@ -1,5 +1,5 @@
 ---
-title: "Description of our Data"
+title: "Data Description"
 output: 
   html_document:
     theme: flatly

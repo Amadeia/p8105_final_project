@@ -225,11 +225,7 @@ merged_most_searched = merged_nyt_searches %>%
 
 runnning linear regressions for all of the top five across counties topics, with outcome as number of votes for o rourke and cruz.
 
-<<<<<<< HEAD
 ```{r lm continuous health_care}
-=======
-#merged_most_searched$most_searched[1] <-
->>>>>>> 07c2ff67f256058ec968a9d01b8cd007f380da4e
 
 lm_o_hc = lm(o_rourke ~ health_care, data = merged_most_searched) %>% broom::tidy()
 

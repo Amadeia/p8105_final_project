@@ -54,7 +54,11 @@ table_county %>%
   arrange(desc(total)) %>% 
   top_n(5) %>% 
   gather(key = candidate, value = votes, cruz:o_rourke) %>% 
-  plot_ly(x = ~county, y = ~votes, color = ~candidate, type = "scatter")
+  plot_ly(x = ~county, y = ~votes, color = ~candidate, type = "scatter") %>% 
+  layout(
+      xaxis = list(title = "County"),
+      yaxis = list(title = "Number of Votes")
+    )
 ```
 
 ### Top Five Topics Searched by Top Five Populated Districts in Texas
@@ -73,7 +77,11 @@ tx_searches_population =
   gather(key = topics, value = searched_freq, health_care:september_11_attacks)
 
 tx_searches_population %>%
-  plot_ly(x = ~district, y = ~searched_freq, color = ~topics)
+  plot_ly(x = ~district, y = ~searched_freq, color = ~topics) %>% 
+  layout(
+      xaxis = list(title = "District"),
+      yaxis = list(title = "Search Frequency")
+  )
 ```
 
 
@@ -91,10 +99,14 @@ tx_searches_pvi =
   mutate(party = ifelse(district %in% c("Texas 9th", "Texas 30th", "Texas 18th", "Texas 33rd"), "Democrats", "Republicans"))
 
 tx_searches_pvi %>%
-  plot_ly(x = ~party, y = ~searched_freq, color = ~topics) 
+  plot_ly(x = ~party, y = ~searched_freq, color = ~topics) %>% 
+  layout(
+      xaxis = list(title = "Party"),
+      yaxis = list(title = "Search Frequency")
+    )
 ```
 
-### Frequency of Top Searched Topics Across All Districts 
+### Frequency of Searches for Healthcare Across All Districts 
 
 ```{r}
 tx_all = 
@@ -105,5 +117,9 @@ tx_all =
  tx_all %>%
    filter(topics == "health_care") %>%
    mutate(district = fct_reorder(district, searched_freq)) %>% 
-   plot_ly(x = ~district, y = ~searched_freq,  type = "bar")
+   plot_ly(x = ~district, y = ~searched_freq,  type = "bar") %>% 
+   layout(
+      xaxis = list(title = "District"),
+      yaxis = list(title = "Search Frequency")
+    )
 ```

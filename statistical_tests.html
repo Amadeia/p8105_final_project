@@ -9,9 +9,14 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Courtney Chan" />
 
 
+<<<<<<< HEAD
 <title>statistical_tests.utf8.md</title>
+=======
+<title>statistical testing</title>
+>>>>>>> f72ddafbf298af3eb9b3b656d7e32312b646fbcd
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,6 +27,9 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -213,14 +221,13 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">statistical testing</h1>
+<h4 class="author"><em>Courtney Chan</em></h4>
+<h4 class="date"><em>December 3, 2018</em></h4>
 
 </div>
 
 
-<div id="statistical-testing" class="section level1">
-<h1>statistical testing</h1>
-<p>Courtney Chan December 3, 2018</p>
-</div>
 <div id="trying-linear-regression-with-dataset-merged_nyt_searches" class="section level1">
 <h1>Trying linear regression with dataset merged_nyt_searches</h1>
 <div id="first-creating-the-dataset" class="section level2">
@@ -238,7 +245,11 @@ $(document).ready(function () {
 </div>
 <div id="bar-plot-of-votes-per-candidate" class="section level2">
 <h2>Bar Plot of Votes per Candidate</h2>
+<<<<<<< HEAD
 <p><img src="statistical_tests_files/figure-markdown_github/bar_plot-1.png" /></p>
+=======
+<p><img src="statistical_tests_files/figure-html/bar_plot-1.png" width="672" /></p>
+>>>>>>> f72ddafbf298af3eb9b3b656d7e32312b646fbcd
 <p>This plot illustrates how it was a close race between the top two candidates, O’Rourke and Cruz. As Dikeman had very few votes, we decided to omit Dikeman from further analyses.</p>
 <p>Made the first table that which we have final results for the state of texas.</p>
 </div>
@@ -248,7 +259,11 @@ $(document).ready(function () {
 </div>
 <div id="plots-for-all-counties" class="section level2">
 <h2>Plots for all counties</h2>
+<<<<<<< HEAD
 <p><img src="statistical_tests_files/figure-markdown_github/point%20county-1.png" /></p>
+=======
+<p><img src="statistical_tests_files/figure-html/point%20county-1.png" width="672" /></p>
+>>>>>>> f72ddafbf298af3eb9b3b656d7e32312b646fbcd
 </div>
 <div id="comparing-these-county-level-election-results-to-highly-searched-voter-election-interests-in-google" class="section level2">
 <h2>comparing these county level election results to highly searched voter election interests in google</h2>
@@ -261,6 +276,89 @@ $(document).ready(function () {
 <div id="plot-for-topics-search-per-county" class="section level1">
 <h1>plot for topics search per county</h1>
 <p>Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
+<pre class="r"><code>merged_most_searched = merged_nyt_searches %&gt;% 
+  select(district_num, county, health_care, immigration, medicaid, medicare, september_11_attacks, cruz, o_rourke)</code></pre>
+<p>runnning linear regressions for all of the top five across counties topics, with outcome as number of votes for o rourke and cruz.</p>
+<pre class="r"><code>lm_o_hc = lm(o_rourke ~ health_care, data = merged_most_searched) %&gt;% broom::tidy()
+
+lm_cruz_hc = lm(cruz ~ health_care, data = merged_most_searched) %&gt;% broom::tidy()
+
+lm_o_hc</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)   55061.    22994.    2.39    0.0172
+## 2 health_care     118.     1514.    0.0779  0.938</code></pre>
+<pre class="r"><code>lm_cruz_hc</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)   42026.    15655.     2.68  0.00766
+## 2 health_care     118.     1031.     0.115 0.909</code></pre>
+<pre class="r"><code>lm_o_immigration = lm(o_rourke ~ immigration, data = merged_most_searched) %&gt;% broom::tidy()
+
+lm_cruz_immigration = lm(cruz ~ immigration, data = merged_most_searched) %&gt;% broom::tidy()
+
+lm_o_immigration</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic     p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+## 1 (Intercept)  -63289.    24130.     -2.62 0.00916    
+## 2 immigration   14426.     2732.      5.28 0.000000244</code></pre>
+<pre class="r"><code>lm_cruz_immigration</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic      p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+## 1 (Intercept)  -40846.    16376.     -2.49 0.0131      
+## 2 immigration   10162.     1854.      5.48 0.0000000883</code></pre>
+<pre class="r"><code>lm_o_caid = lm(o_rourke ~ medicaid, data = merged_most_searched) %&gt;% broom::tidy()
+
+lm_cruz_caid = lm(cruz ~ medicaid, data = merged_most_searched) %&gt;% broom::tidy()
+
+lm_o_caid</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept) 56704.      29880.  1.90      0.0587
+## 2 medicaid        3.48     4482.  0.000775  0.999</code></pre>
+<pre class="r"><code>lm_cruz_caid</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)   41756.    20343.    2.05    0.0410
+## 2 medicaid        304.     3052.    0.0995  0.921</code></pre>
+<pre class="r"><code>lm_o_care = lm(o_rourke ~ medicare, data = merged_most_searched) %&gt;% broom::tidy()
+
+lm_cruz_care = lm(cruz ~ medicare, data = merged_most_searched) %&gt;% broom::tidy()
+
+lm_o_care</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   77788.    20854.      3.73 0.000228
+## 2 medicare      -2612.     2364.     -1.10 0.270</code></pre>
+<pre class="r"><code>lm_cruz_care</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)   56946.    14202.      4.01 0.0000764
+## 2 medicare      -1643.     1610.     -1.02 0.308</code></pre>
+<pre class="r"><code>lm_o_911 = lm(o_rourke ~ september_11_attacks, data = merged_most_searched) %&gt;% broom::tidy()
+
+lm_cruz_911 = lm(cruz ~ september_11_attacks, data = merged_most_searched) %&gt;% broom::tidy()
+
+lm_o_911</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term                 estimate std.error statistic p.value
+##   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)            -9045.    29779.    -0.304  0.762 
+## 2 september_11_attacks   13479.     5855.     2.30   0.0220</code></pre>
+<pre class="r"><code>lm_cruz_911</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term                 estimate std.error statistic p.value
+##   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)            -6246.    20232.    -0.309  0.758 
+## 2 september_11_attacks   10235.     3978.     2.57   0.0106</code></pre>
 </div>
 
 

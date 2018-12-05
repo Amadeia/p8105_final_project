@@ -256,6 +256,15 @@ $(document).ready(function () {
 ## data:  chi_square_df
 ## p-value = 0.1008
 ## alternative hypothesis: two.sided</code></pre>
+<<<<<<< HEAD
+<p>According to the results it appears that there is an association between politcal party and topics searched. However, it is unclear how valid this may be? The Chi-squared test gives a warning when I run it. Maybe if we could figure out how to do a Fisher’s exact test?</p>
+<pre class="r"><code>merged_nyt_searches %&gt;% 
+  mutate(cruz_orour_rat = cruz/o_rourke,
+         status = as.numeric(cruz_orour_rat&gt;=1),
+         winner = ifelse(status==1, &quot;Ted Cruz&quot;, &quot;Beto O&#39;Rourke&quot;)) %&gt;% 
+  filter(district_num %in% c(22,26,31,3,8)) %&gt;% View</code></pre>
+=======
+>>>>>>> 299576c40258d2147f1bac4706bfb06145bb55a7
 </div>
 
 

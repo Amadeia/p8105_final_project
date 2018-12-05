@@ -130,7 +130,7 @@ Made the second table which has all of the 254 county level data for Texas!
 
 ```{r point county, echo=FALSE, message=FALSE}
   table_county %>% 
-  select(-"dikeman") %>%
+  select(-dikeman) %>%
   mutate(total = cruz + o_rourke) %>% 
   arrange(desc(total)) %>% 
   top_n(5) %>% 

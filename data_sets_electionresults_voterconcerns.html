@@ -217,6 +217,7 @@ $(document).ready(function () {
 </div>
 
 
+<<<<<<< HEAD
 <div id="testing-code" class="section level1">
 <h1>Testing code</h1>
 <p>Courtney Chan November 14, 2018</p>
@@ -252,6 +253,21 @@ nytimes_data</code></pre>
 <pre class="r"><code>table_overall = (nytimes_data %&gt;% html_nodes(css = &quot;table&quot;)) %&gt;% 
   .[[1]] %&gt;%
   html_table()</code></pre>
+=======
+<p>#Testing code for the final project</p>
+<p>##To accomplish: -Looking through the datasets we have available -Need Google Trend data for search terms such as “Cruz” vs “Rourke” or “midterm election” to see if number of searches correlate with # votes for each candidate or # registered voters -What kind of analysis do we want to see -Review the sample final projects.</p>
+<p>Some links to keep in mind: <a href="https://www.cnn.com/election/2018/exit-polls/texas/senate" class="uri">https://www.cnn.com/election/2018/exit-polls/texas/senate</a> <a href="https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/" class="uri">https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/</a></p>
+<p>##scraping election results from the web</p>
+<p>###New York Times voting results by county</p>
+<p>This seems to have created two tables from the website data.</p>
+<div id="tidying-overall-table-for-exploratory-analysis" class="section level2">
+<h2>Tidying overall table for exploratory analysis</h2>
+</div>
+<div id="bar-plot-of-votes-per-candidate" class="section level2">
+<h2>Bar Plot of Votes per Candidate</h2>
+<p><img src="data_sets_electionresults_voterconcerns_files/figure-html/bar_plot-1.png" width="672" /></p>
+<p>This plot illustrates how it was a close race between the top two candidates, O’Rourke and Cruz. As Dikeman had very few votes, we decided to omit Dikeman from further analyses.</p>
+>>>>>>> 8e19489794cff232722d2041f3adc3194627d522
 <p>Made the first table that which we have final results for the state of texas.</p>
 <pre class="r"><code>table_county =  (nytimes_data %&gt;% html_nodes(css = &quot;table&quot;)) %&gt;% 
   .[[2]] %&gt;%
@@ -262,6 +278,7 @@ nytimes_data</code></pre>
 </div>
 <div id="comparing-these-county-level-election-results-to-highly-searched-voter-election-interests-in-google" class="section level2">
 <h2>comparing these county level election results to highly searched voter election interests in google</h2>
+<<<<<<< HEAD
 <pre class="r"><code>district_searches = read_csv(file =  &quot;./data/Search_Data_US_Congressional_District_04Nov2018.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -298,6 +315,27 @@ nytimes_data</code></pre>
 <div id="comparing-these-county-level-election-results-to-search-results-by-candidate" class="section level2">
 <h2>comparing these county level election results to search results by candidate</h2>
 </div>
+=======
+<p>-using search terms “Midterms” and selecting dataset from top result</p>
+<p>##uploading county congressional district txt file</p>
+<p>#plot for topics search per county Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
+<p>#chi-squared test Testing whether there’s a relationship between topics searched and political party</p>
+<pre><code>## 
+##  Fisher&#39;s Exact Test for Count Data
+## 
+## data:  chi_square_df
+## p-value = 0.1008
+## alternative hypothesis: two.sided</code></pre>
+<<<<<<< HEAD
+<p>According to the results it appears that there is an association between politcal party and topics searched. However, it is unclear how valid this may be? The Chi-squared test gives a warning when I run it. Maybe if we could figure out how to do a Fisher’s exact test?</p>
+<pre class="r"><code>merged_nyt_searches %&gt;% 
+  mutate(cruz_orour_rat = cruz/o_rourke,
+         status = as.numeric(cruz_orour_rat&gt;=1),
+         winner = ifelse(status==1, &quot;Ted Cruz&quot;, &quot;Beto O&#39;Rourke&quot;)) %&gt;% 
+  filter(district_num %in% c(22,26,31,3,8)) %&gt;% View</code></pre>
+=======
+>>>>>>> 299576c40258d2147f1bac4706bfb06145bb55a7
+>>>>>>> 8e19489794cff232722d2041f3adc3194627d522
 </div>
 
 

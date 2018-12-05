@@ -60,7 +60,7 @@ table_county %>%
 ### Top Five Topics Searched by Top Five Populated Districts in Texas
 
 ```{r}
-district_searches2 <- read.csv("https://raw.githubusercontent.com/googletrends/data/master/Search_Data_US_Congressional_District_04Nov2018.csv")
+district_searches2 <- read.csv("https://raw.githubusercontent.com/googletrends/data/master/Search_Data_US_Congressional_District_26Sep2018.csv")
 tx_searches = 
   district_searches2 %>% janitor::clean_names() %>% 
   filter(state == "TX") %>% 

@@ -4,7 +4,7 @@ navbar:
   title: "Home"
   right:
     - text: "Data Source"
-      href: Data.html
+      href: data.html
     - text: "Graphs"
       href: graph.html
     - text: "Report"

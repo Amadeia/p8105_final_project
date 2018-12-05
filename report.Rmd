@@ -65,6 +65,67 @@ We wanted to examine if there was a relationship between the searched topics (he
 In our models, we used the variable for candidates’ poll counts as our continuous outcome, and one of the five searched topics as our predictor. We ran the models individually with one searched topic at a time. 
 Below is the r-code for our statistical test analysis: 
 
+```{r lm continuous health_care}
+
+lm_o_hc = lm(o_rourke ~ health_care, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_hc = lm(cruz ~ health_care, data = merged_most_searched) %>% broom::tidy()
+
+lm_o_hc
+
+lm_cruz_hc
+
+```
+
+```{r lm continuous immigration}
+
+lm_o_immigration = lm(o_rourke ~ immigration, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_immigration = lm(cruz ~ immigration, data = merged_most_searched) %>% broom::tidy()
+
+lm_o_immigration
+
+lm_cruz_immigration
+
+```
+
+```{r lm continuous medicaid}
+
+lm_o_caid = lm(o_rourke ~ medicaid, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_caid = lm(cruz ~ medicaid, data = merged_most_searched) %>% broom::tidy()
+
+lm_o_caid
+
+lm_cruz_caid
+
+```
+
+
+```{r lm continuous medicare}
+
+lm_o_care = lm(o_rourke ~ medicare, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_care = lm(cruz ~ medicare, data = merged_most_searched) %>% broom::tidy()
+
+lm_o_care
+
+lm_cruz_care
+
+```
+
+```{r lm continuous sept 11}
+
+lm_o_911 = lm(o_rourke ~ september_11_attacks, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_911 = lm(cruz ~ september_11_attacks, data = merged_most_searched) %>% broom::tidy()
+
+lm_o_911
+
+lm_cruz_911
+
+```
+
 ####**Fisher’s Exact Test**  
 We used a Fisher’s exact test to examine the relationship between topics searched and political party. A Fisher’s Exact Test was ran as opposed to a standard Chi-Squared Tests as some of the cells in our dataset were below the expected count.
 We wanted to examine if the topics (health care, immigration, medicaid, medicare, September 11 attacks) were related to which political party the counties voted for. 

@@ -11,12 +11,9 @@
 
 <meta name="author" content="Courtney Chan" />
 
+<meta name="date" content="2018-12-03" />
 
-<<<<<<< HEAD
-<title>statistical_tests.utf8.md</title>
-=======
 <title>statistical testing</title>
->>>>>>> f72ddafbf298af3eb9b3b656d7e32312b646fbcd
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -228,28 +225,17 @@ $(document).ready(function () {
 </div>
 
 
-<div id="trying-linear-regression-with-dataset-merged_nyt_searches" class="section level1">
-<h1>Trying linear regression with dataset merged_nyt_searches</h1>
-<div id="first-creating-the-dataset" class="section level2">
-<h2>First creating the dataset</h2>
-</div>
-<div id="scraping-election-results-from-the-web" class="section level2">
-<h2>scraping election results from the web</h2>
-<div id="new-york-times-voting-results-by-county" class="section level3">
-<h3>New York Times voting results by county</h3>
+<p>#Trying linear regression with dataset merged_nyt_searches</p>
+<p>##First creating the dataset</p>
+<p>##scraping election results from the web</p>
+<p>###New York Times voting results by county</p>
 <p>This seems to have created two tables from the website data.</p>
-</div>
-</div>
 <div id="tidying-overall-table-for-exploratory-analysis" class="section level2">
 <h2>Tidying overall table for exploratory analysis</h2>
 </div>
 <div id="bar-plot-of-votes-per-candidate" class="section level2">
 <h2>Bar Plot of Votes per Candidate</h2>
-<<<<<<< HEAD
-<p><img src="statistical_tests_files/figure-markdown_github/bar_plot-1.png" /></p>
-=======
 <p><img src="statistical_tests_files/figure-html/bar_plot-1.png" width="672" /></p>
->>>>>>> f72ddafbf298af3eb9b3b656d7e32312b646fbcd
 <p>This plot illustrates how it was a close race between the top two candidates, O’Rourke and Cruz. As Dikeman had very few votes, we decided to omit Dikeman from further analyses.</p>
 <p>Made the first table that which we have final results for the state of texas.</p>
 </div>
@@ -259,23 +245,13 @@ $(document).ready(function () {
 </div>
 <div id="plots-for-all-counties" class="section level2">
 <h2>Plots for all counties</h2>
-<<<<<<< HEAD
-<p><img src="statistical_tests_files/figure-markdown_github/point%20county-1.png" /></p>
-=======
 <p><img src="statistical_tests_files/figure-html/point%20county-1.png" width="672" /></p>
->>>>>>> f72ddafbf298af3eb9b3b656d7e32312b646fbcd
 </div>
 <div id="comparing-these-county-level-election-results-to-highly-searched-voter-election-interests-in-google" class="section level2">
 <h2>comparing these county level election results to highly searched voter election interests in google</h2>
 <p>-using search terms “Midterms” and selecting dataset from top result</p>
-</div>
-<div id="uploading-county-congressional-district-txt-file" class="section level2">
-<h2>uploading county congressional district txt file</h2>
-</div>
-</div>
-<div id="plot-for-topics-search-per-county" class="section level1">
-<h1>plot for topics search per county</h1>
-<p>Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
+<p>##uploading county congressional district txt file</p>
+<p>#plot for topics search per county Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
 <pre class="r"><code>merged_most_searched = merged_nyt_searches %&gt;% 
   select(district_num, county, health_care, immigration, medicaid, medicare, september_11_attacks, cruz, o_rourke)</code></pre>
 <p>runnning linear regressions for all of the top five across counties topics, with outcome as number of votes for o rourke and cruz.</p>

@@ -154,9 +154,7 @@ Made the second table which has all of the 254 county level data for Texas!
 
 ```{r reading in dataset voter searches, include=FALSE}
 
-district_searches = read_csv(file =  "./data/Search_Data_US_Congressional_District_26Sep2018.csv")
-
-e = read_csv()
+district_searches = read.csv("https://raw.githubusercontent.com/googletrends/data/master/Search_Data_US_Congressional_District_26Sep2018.csv")
 ```
 
 
@@ -183,7 +181,8 @@ TX_counts =
 
 ```{r 113th congressional district table, include=FALSE}
 
-congress_district = read.csv(file = "./data/congress_district2.csv") 
+id <- "1mpBjlmy5CThvrPGgAqlEP2x7OFvnF4VH" # google file ID
+congress_district = read.csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id))
 
 congress_district$county_name = str_replace(congress_district$county_name,"Sterlin", "Sterling")
 congress_district$county_name = str_replace(congress_district$county_name,"MuCulloch","McCulloch")
@@ -195,7 +194,7 @@ TX_searches =
   TX_searches %>% 
   separate(code, into = c("remove_1", "district_num"), sep = "-") %>% 
   mutate(district_num = as.numeric(district_num)) %>% 
-  select(district_num, most_searched = first, x2003_invasion_of_iraq:womens_health) 
+  select(district_num, most_searched = first, x2003_invasion_of_iraq:women_s_health) 
 
 nested_congress =
   congress_district %>% 
@@ -229,7 +228,7 @@ Testing whether there's a relationship between topics searched and political par
 ```{r fisher exact chi-squared test, message=FALSE, echo=FALSE, warning=FALSE}
 #removing columns we don't need
 pre_chisquare_df = merged_nyt_searches %>% 
-  select(county, x2003_invasion_of_iraq:womens_health, cruz, o_rourke, dikeman ) %>% 
+  select(county, x2003_invasion_of_iraq:women_s_health, cruz, o_rourke, dikeman ) %>% 
   mutate(cruz_orour_rat = cruz/o_rourke,
          status = as.numeric(cruz_orour_rat>=1),
          winner = ifelse(status==1, "Ted Cruz", "Beto O'Rourke")) %>% 

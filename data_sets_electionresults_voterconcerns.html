@@ -218,14 +218,18 @@ $(document).ready(function () {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <div id="testing-code" class="section level1">
 <h1>Testing code</h1>
 <p>Courtney Chan November 14, 2018</p>
 </div>
+=======
+>>>>>>> 9f2db7f6d9b426e4d4eeb01005a124ccf503ea6b
 <div id="testing-code-for-the-final-project" class="section level1">
 <h1>Testing code for the final project</h1>
 <div id="to-accomplish" class="section level2">
 <h2>To accomplish:</h2>
+<<<<<<< HEAD
 <p>-Looking through the datasets we have available -What kind of analysis do we want to see -Review the sample final projects</p>
 <p>Some links to keep in mind: <a href="https://www.cnn.com/election/2018/exit-polls/texas/senate" class="uri">https://www.cnn.com/election/2018/exit-polls/texas/senate</a> <a href="https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/" class="uri">https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/</a></p>
 <pre class="r"><code>library(tidyverse)
@@ -256,10 +260,18 @@ nytimes_data</code></pre>
 =======
 <p>#Testing code for the final project</p>
 <p>##To accomplish: -Looking through the datasets we have available -Need Google Trend data for search terms such as “Cruz” vs “Rourke” or “midterm election” to see if number of searches correlate with # votes for each candidate or # registered voters -What kind of analysis do we want to see -Review the sample final projects.</p>
+=======
+<p>-Looking through the datasets we have available -Need Google Trend data for search terms such as “Cruz” vs “Rourke” or “midterm election” to see if number of searches correlate with # votes for each candidate or # registered voters -What kind of analysis do we want to see -Review the sample final projects.</p>
+>>>>>>> 9f2db7f6d9b426e4d4eeb01005a124ccf503ea6b
 <p>Some links to keep in mind: <a href="https://www.cnn.com/election/2018/exit-polls/texas/senate" class="uri">https://www.cnn.com/election/2018/exit-polls/texas/senate</a> <a href="https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/" class="uri">https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/</a></p>
-<p>##scraping election results from the web</p>
-<p>###New York Times voting results by county</p>
+</div>
+<div id="scraping-election-results-from-the-web" class="section level2">
+<h2>scraping election results from the web</h2>
+<div id="new-york-times-voting-results-by-county" class="section level3">
+<h3>New York Times voting results by county</h3>
 <p>This seems to have created two tables from the website data.</p>
+</div>
+</div>
 <div id="tidying-overall-table-for-exploratory-analysis" class="section level2">
 <h2>Tidying overall table for exploratory analysis</h2>
 </div>
@@ -317,15 +329,25 @@ nytimes_data</code></pre>
 </div>
 =======
 <p>-using search terms “Midterms” and selecting dataset from top result</p>
-<p>##uploading county congressional district txt file</p>
-<p>#plot for topics search per county Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
-<p>#chi-squared test Testing whether there’s a relationship between topics searched and political party</p>
+</div>
+<div id="uploading-county-congressional-district-txt-file" class="section level2">
+<h2>uploading county congressional district txt file</h2>
+</div>
+</div>
+<div id="plot-for-topics-search-per-county" class="section level1">
+<h1>plot for topics search per county</h1>
+<p>Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
+</div>
+<div id="chi-squared-test" class="section level1">
+<h1>chi-squared test</h1>
+<p>Testing whether there’s a relationship between topics searched and political party</p>
 <pre><code>## 
 ##  Fisher&#39;s Exact Test for Count Data
 ## 
 ## data:  chi_square_df
 ## p-value = 0.1008
 ## alternative hypothesis: two.sided</code></pre>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <p>According to the results it appears that there is an association between politcal party and topics searched. However, it is unclear how valid this may be? The Chi-squared test gives a warning when I run it. Maybe if we could figure out how to do a Fisher’s exact test?</p>
 <pre class="r"><code>merged_nyt_searches %&gt;% 
@@ -336,6 +358,8 @@ nytimes_data</code></pre>
 =======
 >>>>>>> 299576c40258d2147f1bac4706bfb06145bb55a7
 >>>>>>> 8e19489794cff232722d2041f3adc3194627d522
+=======
+>>>>>>> 9f2db7f6d9b426e4d4eeb01005a124ccf503ea6b
 </div>
 
 

@@ -2,7 +2,7 @@
 title: "statistical testing"
 author: "Courtney Chan"
 date: "December 3, 2018"
-output: github_document
+output: html_document
 ---
 
 #Trying linear regression with dataset merged_nyt_searches
@@ -215,65 +215,75 @@ merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = sea
 
 ```
 
-```{r selecting who won}
+
+```{r selecting who won and most_searched topics overall}
 
 merged_most_searched = merged_nyt_searches %>% 
-  select(district_num, county, health_care, immigration, mental_health, medicaid, medicare, september_11_attacks, united_nations, cruz, o_rourke, dikeman)
-
-merged_most_searched$winning_candidate <- apply(merged_most_searched, 1, function(x) names(merged_most_searched)[which.max(x)])
+  select(district_num, county, health_care, immigration, medicaid, medicare, september_11_attacks, cruz, o_rourke)
 
 ```
 
-```{r max searched}
+runnning linear regressions for all of the top five across counties topics, with outcome as number of votes for o rourke and cruz.
 
-merged_most_searched$most_searched[1] <-
+```{r lm continuous health_care}
 
-```
+lm_o_hc = lm(o_rourke ~ health_care, data = merged_most_searched) %>% broom::tidy()
 
+lm_cruz_hc = lm(cruz ~ health_care, data = merged_most_searched) %>% broom::tidy()
 
-```{r lm health care vs. votes}
+lm_o_hc
 
-health_most_searched = merged_nyt_searches %>% 
-  mutate(most_searched = recode(most_searched, "Health care" = "Health care", .default = "Not Health care")) %>% 
-  mutate(most_searched = factor(most_searched, levels = c("Not Health care", "Health care")))
-
-lm_healthcare_o = lm(o_rourke ~ most_searched, data = health_most_searched) %>% broom::tidy()
-
-lm_healthcare_cruz = lm(cruz ~ most_searched, data = health_most_searched) %>% broom::tidy()
-
-lm_healthcare_dikeman = lm(cruz ~ most_searched, data = health_most_searched) %>% broom::tidy()
+lm_cruz_hc
 
 ```
 
-```{r lm most_searched vs. votes}
+```{r lm continuous immigration}
 
-unique(merged_nyt_searches_long$most_searched)
+lm_o_immigration = lm(o_rourke ~ immigration, data = merged_most_searched) %>% broom::tidy()
 
-df_most_searched = merged_nyt_searches %>% 
-  mutate(most_searched = factor(most_searched, levels = c("Immigration", "United Nations", "Mental health", "Health care")))
+lm_cruz_immigration = lm(cruz ~ immigration, data = merged_most_searched) %>% broom::tidy()
 
-lm_most_searched_o = lm(o_rourke ~ most_searched, data = df_most_searched) %>% broom::tidy()
+lm_o_immigration
 
-lm_most_searched_cruz = lm(cruz ~ most_searched, data = df_most_searched) %>% broom::tidy()
-
-lm_most_searched_dikeman = lm(dikeman ~ most_searched, data = df_most_searched) %>% broom::tidy()
+lm_cruz_immigration
 
 ```
 
-```{r logistic}
-merged_nyt_searches %>% 
-  mutate()
+```{r lm continuous medicaid}
+
+lm_o_caid = lm(o_rourke ~ medicaid, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_caid = lm(cruz ~ medicaid, data = merged_most_searched) %>% broom::tidy()
+
+lm_o_caid
+
+lm_cruz_caid
 
 ```
 
 
-```{r lm continuous }
+```{r lm continuous medicare}
 
-lm_o_cont = lm(o_rourke ~ health_care, data = merged_most_searched) %>% broom::tidy()
+lm_o_care = lm(o_rourke ~ medicare, data = merged_most_searched) %>% broom::tidy()
 
-lm_cruz_cont = lm(cruz ~ health_care, data = merged_most_searched) %>% broom::tidy()
+lm_cruz_care = lm(cruz ~ medicare, data = merged_most_searched) %>% broom::tidy()
 
-lm_dikeman_cont = lm(dikeman ~ most_searched, data = df_most_searched) %>% broom::tidy()
+lm_o_care
 
+lm_cruz_care
 
 ```
+
+```{r lm continuous sept 11}
+
+lm_o_911 = lm(o_rourke ~ september_11_attacks, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_911 = lm(cruz ~ september_11_attacks, data = merged_most_searched) %>% broom::tidy()
+
+lm_o_911
+
+lm_cruz_911
+
+```
+
+

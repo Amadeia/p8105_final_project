@@ -262,13 +262,3 @@ chi_square_df = chi_square_df %>%
 #results of fisher exact chi squared test
 fisher.test(chi_square_df)
 ```
-
-According to the results it appears that there is an association between politcal party and topics searched. However, it is unclear how valid this may be? The Chi-squared test gives a warning when I run it. Maybe if we could figure out how to do a Fisher's exact test?
-```{r}
-#merged_nyt_searches %>% 
-  #mutate(cruz_orour_rat = cruz/o_rourke,
-         #status = as.numeric(cruz_orour_rat>=1),
-        # winner = ifelse(status==1, "Ted Cruz", "Beto O'Rourke")) %>% 
- # filter(district_num %in% c(22,26,31,3,8)) %>% View
-```
-

@@ -25,6 +25,49 @@
 <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -264,6 +307,41 @@ $(document).ready(function () {
 <div id="linear-regression" class="section level4">
 <h4><strong>Linear Regression</strong></h4>
 <p>Using a merged dataset with the searched topics and vote results, we ran linear regressions to examine the linear relationship between all searched topics and the number of votes for the two different candidates across counties and districts in Texas We wanted to examine if there was a relationship between the searched topics (health care, immigration, medicaid, medicare, and September 11 attacks) and actual vote results for the candidates. In our models, we used the variable for candidates’ poll counts as our continuous outcome, and one of the five searched topics as our predictor. We ran the models individually with one searched topic at a time. Below is the r-code for our statistical test analysis:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_o_hc =<span class="st"> </span><span class="kw">lm</span>(o_rourke <span class="op">~</span><span class="st"> </span>health_care, <span class="dt">data =</span> merged_most_searched) <span class="op">%&gt;%</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>()
+
+lm_cruz_hc =<span class="st"> </span><span class="kw">lm</span>(cruz <span class="op">~</span><span class="st"> </span>health_care, <span class="dt">data =</span> merged_most_searched) <span class="op">%&gt;%</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>()
+
+lm_o_hc
+
+lm_cruz_hc</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_o_immigration =<span class="st"> </span><span class="kw">lm</span>(o_rourke <span class="op">~</span><span class="st"> </span>immigration, <span class="dt">data =</span> merged_most_searched) <span class="op">%&gt;%</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>()
+
+lm_cruz_immigration =<span class="st"> </span><span class="kw">lm</span>(cruz <span class="op">~</span><span class="st"> </span>immigration, <span class="dt">data =</span> merged_most_searched) <span class="op">%&gt;%</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>()
+
+lm_o_immigration
+
+lm_cruz_immigration</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_o_caid =<span class="st"> </span><span class="kw">lm</span>(o_rourke <span class="op">~</span><span class="st"> </span>medicaid, <span class="dt">data =</span> merged_most_searched) <span class="op">%&gt;%</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>()
+
+lm_cruz_caid =<span class="st"> </span><span class="kw">lm</span>(cruz <span class="op">~</span><span class="st"> </span>medicaid, <span class="dt">data =</span> merged_most_searched) <span class="op">%&gt;%</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>()
+
+lm_o_caid
+
+lm_cruz_caid</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_o_care =<span class="st"> </span><span class="kw">lm</span>(o_rourke <span class="op">~</span><span class="st"> </span>medicare, <span class="dt">data =</span> merged_most_searched) <span class="op">%&gt;%</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>()
+
+lm_cruz_care =<span class="st"> </span><span class="kw">lm</span>(cruz <span class="op">~</span><span class="st"> </span>medicare, <span class="dt">data =</span> merged_most_searched) <span class="op">%&gt;%</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>()
+
+lm_o_care
+
+lm_cruz_care</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_o_<span class="dv">911</span> =<span class="st"> </span><span class="kw">lm</span>(o_rourke <span class="op">~</span><span class="st"> </span>september_11_attacks, <span class="dt">data =</span> merged_most_searched) <span class="op">%&gt;%</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>()
+
+lm_cruz_<span class="dv">911</span> =<span class="st"> </span><span class="kw">lm</span>(cruz <span class="op">~</span><span class="st"> </span>september_11_attacks, <span class="dt">data =</span> merged_most_searched) <span class="op">%&gt;%</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>()
+
+lm_o_<span class="dv">911</span>
+
+lm_cruz_<span class="dv">911</span></code></pre></div>
 </div>
 <div id="fishers-exact-test" class="section level4">
 <h4><strong>Fisher’s Exact Test</strong></h4>

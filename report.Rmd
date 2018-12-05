@@ -10,23 +10,38 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The written report (e.g. R Markdown and MD files) produced by your team are central to this project. This will detail how you completed your project, and should cover data collection and cleaning, exploratory analyses, alternative strategies, descriptions of approaches, and a discussion of results. We anticipate that your project will change somewhat over time; these changes and the reasons for them should be documented! You should write one report document per group, and be sure to include all group member names in the document.
+## <u>Motivation</u> 
 
-Your R Markdown should include the following topics. Depending on your project type the amount of discussion you devote to each of them will vary:
+Our project goals were to analyze Google Trends data for the 2018 midterm elections. We chose to focus on Texas because of the close race between Beto O’Rourke and Ted Cruz. We wanted to identify the most highly searched political topics and examine different geographic components, such as where certain searches occurred. Our motivation is that this is a currently relevant issue in the U.S. and allows for analyses of civic engagement among American voters. 
 
-#Motivation: Provide an overview of the project goals and motivation.
+## <u>Related Work </u> 
 
-#Related work: Anything that inspired you, such as a paper, a web site, or something we discussed in class.
+We were inspired to explore this research question due to the high amount of media coverage on the close race between O’Rourke and Cruz. Click [here](http://www.wbur.org/npr/654059869/beto-orourke-ted-cruz-texas-senate) and [here](https://www.vox.com/2018/9/12/17841716/ted-cruz-beto-orourke-senate-midterm) for some articles reported before the midterm election.
 
-#Initial questions: What questions are you trying to answer? How did these questions evolve over the course of the project? What new questions did you consider in the course of your analysis?
+A blog website that focuses on using statistical analysis to model poll predictions revealed that they believe O’Rourke might have a chance at winning the race against Ted Cruz. They explained the factors that were looked at in their model predictions [here](https://fivethirtyeight.com/features/election-update-why-our-model-thinks-beto-orourke-really-has-a-chance-in-texas/)
 
-#Data: Source, scraping method, cleaning, etc.
 
-#Exploratory analysis: Visualizations, summaries, and exploratory statistical analyses. Justify the steps you took, and show any major changes to your ideas.
+## <u>Initial Questions</u>
 
-#Additional analysis: If you undertake formal statistical analyses, describe these in detail
-#Discussion: What were your findings? Are they what you expect? What insights into the data can you make?
+- How does voter registration for this election compare to previous year’s? Due to the close race between O’Rourke and Cruz, will this increase voter registration? 
+- What are the most highly searched political topics and how do they vary by county or district?
+- How do political topic searches differ by party (Democrat vs Republican)? 
 
-As this will be your only chance to describe your project in detail, make sure that your report is a standalone document that fully describes your process and results. We also expect you to write high-quality code that is understandable to an outside reader. Coding collaboratively and actively reviewing code within the team will help with this!
+Over the course of the project, we realized that we only had Google Trends data from September to November 2018, which limited our ability to look at Trend data over time. Consequently, we restricted our analyses to this year’s data, specifically September 2018, and we did not compare 2018 data to that of previous years.
 
-Your report should be developed in a dedicated GitHub repository. Data should not be included in the repo; make the data accessible somewhere online (e.g. google drive or a downloadable link) and, in the report, include instructions on where to access the data. If we cannot access your work or links because these directions are not followed correctly, we will not grade your work.
+## <u>Data </u>
+
+- Refer to our Data Source Tab for a detailed description of our data sources
+- We downloaded CSV files from Google Trends Datastore for data on the top searched issues by US Congressional District
+- We scraped election results data from a New York Times article that reported on the midterm elections.
+
+## <u>Exploratory Analysis </u> 
+
+- We created an interactive map of Texas to show voting results by county
+- First, we created a bar graph of total votes for each party candidate and found that there were significantly less votes for Dikeman
+- Moving forward, we narrowed our results to Ted Cruz and Beto O’Rourke
+
+## <u>Additional Analysis </u>
+
+
+## <u>Discussion </u>

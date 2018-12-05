@@ -17,13 +17,12 @@ library(leaflet)
 library(dplyr)
 library(purrr)
 library(plotly)
-
 ```
 
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Number of Votes for Beto vs. Cruz
+### Number of Votes for Beto vs. Cruz for Top Five Counties with the Most Votes
 
 ```{r}
 url = "https://www.nytimes.com/elections/results/texas-senate"
@@ -61,11 +60,11 @@ table_county %>%
 ### Top Five Topics Searched by Top Five Populated Districts in Texas
 
 ```{r}
-district_searches2 = read_csv(file =  "./data/Search_Data_US_Congressional_District_26Sep2018.csv")
+district_searches2 <- read.csv("https://raw.githubusercontent.com/googletrends/data/master/Search_Data_US_Congressional_District_04Nov2018.csv")
 tx_searches = 
   district_searches2 %>% janitor::clean_names() %>% 
   filter(state == "TX") %>% 
-  select(district, x2003_invasion_of_iraq:womens_health)
+  select(district, x2003_invasion_of_iraq:women_s_health)
 tx_searches_sum = colSums(tx_searches[,-1])
 tx_searches_population = 
   tx_searches %>% 

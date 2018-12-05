@@ -153,13 +153,7 @@ Made the second table which has all of the 254 county level data for Texas!
 -using search terms "Midterms" and selecting dataset from top result
 
 ```{r reading in dataset voter searches, include=FALSE}
-
-<<<<<<< HEAD
-district_searches = read_csv(file =  "./data/Search_Data_US_Congressional_District_26Sep2018.csv")
-
-=======
 district_searches = read.csv("https://raw.githubusercontent.com/googletrends/data/master/Search_Data_US_Congressional_District_26Sep2018.csv")
->>>>>>> 2c3661c9fddab05c5a78b82cec8758bd43f54497
 ```
 
 

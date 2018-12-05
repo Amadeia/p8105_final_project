@@ -10,23 +10,158 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The written report (e.g. R Markdown and MD files) produced by your team are central to this project. This will detail how you completed your project, and should cover data collection and cleaning, exploratory analyses, alternative strategies, descriptions of approaches, and a discussion of results. We anticipate that your project will change somewhat over time; these changes and the reasons for them should be documented! You should write one report document per group, and be sure to include all group member names in the document.
+## <u>Motivation</u> 
 
-Your R Markdown should include the following topics. Depending on your project type the amount of discussion you devote to each of them will vary:
+Our project goals were to analyze Google Trends data for the 2018 midterm elections. We chose to focus on Texas because of the close race between Beto O’Rourke and Ted Cruz. We wanted to identify the most highly searched political topics and examine different geographic components, such as where certain searches occurred. Our motivation is that this is a currently relevant issue in the U.S. and allows for analyses of civic engagement among American voters. 
 
-#Motivation: Provide an overview of the project goals and motivation.
+## <u>Related Work </u> 
 
-#Related work: Anything that inspired you, such as a paper, a web site, or something we discussed in class.
+We were inspired to explore this research question due to the high amount of media coverage on the close race between O’Rourke and Cruz. Click [here](http://www.wbur.org/npr/654059869/beto-orourke-ted-cruz-texas-senate) and [here](https://www.vox.com/2018/9/12/17841716/ted-cruz-beto-orourke-senate-midterm) for some articles reported before the midterm election.
 
-#Initial questions: What questions are you trying to answer? How did these questions evolve over the course of the project? What new questions did you consider in the course of your analysis?
+A blog website that focuses on using statistical analysis to model poll predictions revealed that they believe O’Rourke might have a chance at winning the race against Ted Cruz. They explained the factors that were looked at in their model predictions [here](https://fivethirtyeight.com/features/election-update-why-our-model-thinks-beto-orourke-really-has-a-chance-in-texas/)
 
-#Data: Source, scraping method, cleaning, etc.
 
-#Exploratory analysis: Visualizations, summaries, and exploratory statistical analyses. Justify the steps you took, and show any major changes to your ideas.
+## <u>Initial Questions</u>
 
-#Additional analysis: If you undertake formal statistical analyses, describe these in detail
-#Discussion: What were your findings? Are they what you expect? What insights into the data can you make?
+- How does voter registration for this election compare to previous year’s? Due to the close race between O’Rourke and Cruz, will this increase voter registration? 
+- What are the most highly searched political topics and how do they vary by county or district?
+- How do political topic searches differ by party (Democrat vs Republican)? 
 
-As this will be your only chance to describe your project in detail, make sure that your report is a standalone document that fully describes your process and results. We also expect you to write high-quality code that is understandable to an outside reader. Coding collaboratively and actively reviewing code within the team will help with this!
+Over the course of the project, we realized that we only had Google Trends data from September to November 2018, which limited our ability to look at Trend data over time. Consequently, we restricted our analyses to this year’s data, specifically September 2018, and we did not compare 2018 data to that of previous years.
 
-Your report should be developed in a dedicated GitHub repository. Data should not be included in the repo; make the data accessible somewhere online (e.g. google drive or a downloadable link) and, in the report, include instructions on where to access the data. If we cannot access your work or links because these directions are not followed correctly, we will not grade your work.
+## <u>Data </u>
+
+- Refer to our Data Source Tab for a detailed description of our data sources
+- We downloaded CSV files from Google Trends Datastore for data on the top searched issues by US Congressional District
+- We scraped election results data from a New York Times article that reported on the midterm elections.
+- Most searched topics analyses  
+
+##### **Top 5 Most Searched Topics**
+- We determined the top five most searched topics related to the election using Google Trends data for search interests. Looking at the “Top searched issues by US Congressional District” dataset, we extracted the Texas districts and the search counts of all searched topics across districts. These counts ranged from 0 to 100 based on the topic’s proportion to all searches on all topics.  
+- According to Google, these values were generated by dividing each data point by the total searches of the geography and time range it represents to compare relative popularity.  
+- We summed up the search counts for each topic for all the Texas districts and found these topics to have the highest search frequencies: healthcare, immigration, medicaid, medicare, and september 11 attack.  
+- We then filtered to include only these five topics to use on our analyses 
+
+##### **Top 5 Most Populated Districts**   
+Using https://www.census.gov/mycd/, we found the top 5 most populated districts in Texas to be: Districts 22, 26, 3, 8, 31
+We then filtered to include these five districts in our analyses   
+
+##### **Most Democrat vs Republican Districts** 
+Using https://www.cookpolitical.com/index.php/pvi-map-and-district-list, we decided to use the Cook Partisan Voting Index (PVI) as a measure for how Democrat or Republican each district is. The most Democratic districts were 9, 30, 18, and 33. The most Republican districts were 13, 11, 8, and 4. 
+We then filtered to include only these 8 districts in our analyses
+We also created a “party” variable to label whether a specific district is Democrat or Republican 
+
+## <u>Exploratory Analysis </u> 
+
+- We created an interactive map of Texas to show voting results by county
+- First, we created a bar graph of total votes for each party candidate and found that there were significantly less votes for Dikeman
+- Moving forward, we narrowed our results to Ted Cruz and Beto O’Rourke
+- Using the procedure described in Data, we were able to identify the most searched topics across districts in Texas. The most searched is health care with 509.87 search frequencies. Below is an image of top topics searched.
+
+<center>
+<img src="image/top_topics_searched.png" style="width:30%"> 
+
+## <u>Additional Analysis </u>
+
+####**Linear Regression**  
+Using a merged dataset with the searched topics and vote results, we ran linear regressions to examine the linear relationship between all searched topics and the number of votes for the two different candidates across counties and districts in Texas
+We wanted to examine if there was a relationship between the searched topics (health care, immigration, medicaid, medicare, and September 11 attacks) and actual vote results for the candidates. 
+In our models, we used the variable for candidates’ poll counts as our continuous outcome, and one of the five searched topics as our predictor. We ran the models individually with one searched topic at a time.  
+Below is the r-code for our statistical test analysis: 
+
+```{r lm continuous health_care, eval=F, echo=T}
+#Number of votes for each candidate with health care as predictor
+
+lm_o_hc = lm(o_rourke ~ health_care, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_hc = lm(cruz ~ health_care, data = merged_most_searched) %>% broom::tidy()
+
+```
+
+```{r lm continuous immigration, eval=F, echo=T}
+#Number of votes for each candidate with immigration as predictor
+
+lm_o_immigration = lm(o_rourke ~ immigration, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_immigration = lm(cruz ~ immigration, data = merged_most_searched) %>% broom::tidy()
+
+```
+
+```{r lm continuous medicaid, eval=F, echo=T}
+#Number of votes for each candidate with medicaid as predictor
+
+lm_o_caid = lm(o_rourke ~ medicaid, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_caid = lm(cruz ~ medicaid, data = merged_most_searched) %>% broom::tidy()
+
+```
+
+
+```{r lm continuous medicare, eval=F, echo=T}
+#Number of votes for each candidate with medicare as predictor
+
+lm_o_care = lm(o_rourke ~ medicare, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_care = lm(cruz ~ medicare, data = merged_most_searched) %>% broom::tidy()
+
+```
+
+```{r lm continuous sept 11, eval=F, echo=T}
+#Number of votes for each candidate with September 11 attacks as predictor
+
+lm_o_911 = lm(o_rourke ~ september_11_attacks, data = merged_most_searched) %>% broom::tidy()
+
+lm_cruz_911 = lm(cruz ~ september_11_attacks, data = merged_most_searched) %>% broom::tidy()
+
+```
+
+####**Fisher’s Exact Test**  
+We used a Fisher’s exact test to examine the relationship between topics searched and political party. A Fisher’s Exact Test was ran as opposed to a standard Chi-Squared Tests as some of the cells in our dataset were below the expected count.
+We wanted to examine if the topics (health care, immigration, medicaid, medicare, September 11 attacks) were related to which political party the counties voted for. 
+All counties were pooled together.
+Our p-value was 0.1008 which was not statistically significant.  
+Below is the r-code for our statistical test analysis:
+
+```{r pre-chisquared, eval=F, echo=T}
+#Cleaning the data before performing analysis
+
+pre_chisquare_df = merged_nyt_searches %>% 
+  select(county, x2003_invasion_of_iraq:womens_health, cruz, o_rourke, dikeman ) %>% 
+  mutate(cruz_orour_rat = cruz/o_rourke,
+         status = as.numeric(cruz_orour_rat>=1),
+         winner = ifelse(status==1, "Ted Cruz", "Beto O'Rourke")) %>% 
+  select(-county, -cruz, -dikeman, -o_rourke, -cruz_orour_rat, -winner)
+
+#there are 309 observations initially to account for the county/district combos. 129 topics. Our election results are based on county, thus despite a particular county having differ search counts, the election result will be the same and thus the count can be totalled.
+```
+
+```{r new_df, eval=F, echo=T}
+#Making a new dataframe for chi-squared analysis
+
+cruz = pre_chisquare_df %>% 
+  filter(status==1) 
+
+cruz = data.frame(winner="Cruz", t(colSums(cruz))) %>% 
+  select(-status)
+
+o_rourke = pre_chisquare_df %>% 
+  filter(status==0)
+
+o_rourke = data.frame(winner="O'Rourke", t(colSums(o_rourke))) %>%
+  select(-status)
+
+chi_square_df = bind_rows(cruz, o_rourke) 
+
+chi_square_df[2:130] = lapply(chi_square_df[2:13], as.integer)
+chi_square_df = chi_square_df %>% 
+  select(health_care, immigration, medicaid, medicare, september_11_attacks)
+```
+
+```{r results, eval=F, echo=T}
+#Results of fisher exact chi squared test
+
+fisher.test(chi_square_df)
+```
+
+
+## <u>Discussion </u>

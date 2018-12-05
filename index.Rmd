@@ -10,7 +10,7 @@ output:
 <div id="line-break-and-tab"></div>
 
 <center>
-### Ted Cruz Vs. Beto O'Rourke  
+### Ted Cruz vs. Beto O'Rourke  
 
 <div id="just-line-break"></div>
 <br/>

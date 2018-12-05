@@ -11,17 +11,20 @@
 
 
 
-<title></title>
+<title>Testing code</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -102,34 +105,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 51px;
+  padding-top: 60px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 
 .section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 </style>
 
@@ -213,91 +216,69 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Testing code</h1>
 
 </div>
 
 
-<div id="testing-code" class="section level1">
-<h1>Testing code</h1>
-<p>Courtney Chan November 14, 2018</p>
-</div>
 <div id="testing-code-for-the-final-project" class="section level1">
 <h1>Testing code for the final project</h1>
 <div id="to-accomplish" class="section level2">
 <h2>To accomplish:</h2>
-<p>-Looking through the datasets we have available -What kind of analysis do we want to see -Review the sample final projects</p>
+<p>-Looking through the datasets we have available -Need Google Trend data for search terms such as “Cruz” vs “Rourke” or “midterm election” to see if number of searches correlate with # votes for each candidate or # registered voters -What kind of analysis do we want to see -Review the sample final projects</p>
 <p>Some links to keep in mind: <a href="https://www.cnn.com/election/2018/exit-polls/texas/senate" class="uri">https://www.cnn.com/election/2018/exit-polls/texas/senate</a> <a href="https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/" class="uri">https://www.texastribune.org/2018/10/31/ut-tt-poll-texans-say-immigration-border-security-top-issues/</a></p>
-<pre class="r"><code>library(tidyverse)
-library(rvest)
-library(httr)</code></pre>
 </div>
 <div id="scraping-election-results-from-the-web" class="section level2">
 <h2>scraping election results from the web</h2>
 <div id="new-york-times-voting-results-by-county" class="section level3">
 <h3>New York Times voting results by county</h3>
-<pre class="r"><code>url = &quot;https://www.nytimes.com/elections/results/texas-senate&quot;
-nytimes_data = read_html(url)
-
-nytimes_data</code></pre>
-<pre><code>## {xml_document}
-## &lt;html lang=&quot;en&quot; itemscope=&quot;&quot; xmlns:og=&quot;http://opengraphprotocol.org/schema/&quot; itemtype=&quot;http://schema.org/NewsArticle&quot;&gt;
-## [1] &lt;head&gt;\n&lt;title&gt;Texas Senate Election Results: Beto O’Rourke vs. Ted  ...
-## [2] &lt;body class=&quot;eln-race-page eln-2018-11-06 eln-forecast&quot;&gt;\n&lt;script ty ...</code></pre>
-<pre class="r"><code>nytimes_data %&gt;% 
-  html_nodes(css = &quot;table&quot;)</code></pre>
-<pre><code>## {xml_nodeset (2)}
-## [1] &lt;table class=&quot;eln-table eln-results-table&quot;&gt;\n&lt;thead&gt;&lt;tr&gt;\n&lt;th class= ...
-## [2] &lt;table class=&quot;eln-table eln-county-table&quot;&gt;\n&lt;thead&gt;&lt;tr&gt;\n&lt;th class=&quot; ...</code></pre>
 <p>This seems to have created two tables from the website data.</p>
-<pre class="r"><code>table_overall = (nytimes_data %&gt;% html_nodes(css = &quot;table&quot;)) %&gt;% 
-  .[[1]] %&gt;%
-  html_table()</code></pre>
+</div>
+</div>
+<div id="tidying-overall-table-for-exploratory-analysis" class="section level2">
+<h2>Tidying overall table for exploratory analysis</h2>
+</div>
+<div id="bar-plot-of-votes-per-candidate" class="section level2">
+<h2>Bar Plot of Votes per Candidate</h2>
+<p><img src="data_sets_electionresults_voterconcerns_files/figure-html/bar_plot-1.png" width="672" /></p>
+<p>This plot illustrates how it was a close race between the top two candidates, O’Rourke and Cruz. As Dikeman had very few votes, we decided to omit Dikeman from further analyses.</p>
 <p>Made the first table that which we have final results for the state of texas.</p>
-<pre class="r"><code>table_county =  (nytimes_data %&gt;% html_nodes(css = &quot;table&quot;)) %&gt;% 
-  .[[2]] %&gt;%
-  html_table() %&gt;% 
-  slice(1:(n() - 1))</code></pre>
+</div>
+<div id="tidying-county-table" class="section level2">
+<h2>Tidying county table</h2>
 <p>Made the second table which has all of the 254 county level data for Texas!</p>
 </div>
+<div id="plots-for-all-counties" class="section level2">
+<h2>Plots for all counties</h2>
+<p><img src="data_sets_electionresults_voterconcerns_files/figure-html/point%20county-1.png" width="672" /></p>
 </div>
 <div id="comparing-these-county-level-election-results-to-highly-searched-voter-election-interests-in-google" class="section level2">
 <h2>comparing these county level election results to highly searched voter election interests in google</h2>
-<pre class="r"><code>district_searches = read_csv(file =  &quot;./data/Search_Data_US_Congressional_District_04Nov2018.csv&quot;)</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_double(),
-##   District = col_character(),
-##   Code = col_character(),
-##   State = col_character(),
-##   FIRST = col_character(),
-##   SECOND = col_character(),
-##   THIRD = col_character(),
-##   FOURTH = col_character(),
-##   FIFTH = col_character(),
-##   SIXTH = col_character(),
-##   SEVENTH = col_character(),
-##   EIGHTH = col_character(),
-##   NINTH = col_character(),
-##   TENTH = col_character(),
-##   `Gender workplace diversity` = col_integer(),
-##   `Maternity leave in the United States` = col_integer(),
-##   `Single-payer healthcare` = col_integer(),
-##   `Tax Cuts and Jobs Act of 2017` = col_integer(),
-##   `Transgender people in the military` = col_integer()
-## )
-
-## See spec(...) for full column specifications.</code></pre>
-<pre class="r"><code>TX_searches = 
-  district_searches %&gt;% janitor::clean_names() %&gt;% 
-  filter(state == &quot;TX&quot;)</code></pre>
+<p>-using search terms “Midterms” and selecting dataset from top result</p>
 </div>
 <div id="uploading-county-congressional-district-txt-file" class="section level2">
 <h2>uploading county congressional district txt file</h2>
-<pre class="r"><code>congress_district = read.csv(file = &quot;./data/congress_district2.csv&quot;)</code></pre>
 </div>
-<div id="comparing-these-county-level-election-results-to-search-results-by-candidate" class="section level2">
-<h2>comparing these county level election results to search results by candidate</h2>
 </div>
+<div id="plot-for-topics-search-per-county" class="section level1">
+<h1>plot for topics search per county</h1>
+<p>Still figuring out how to display this ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc. 2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity? 3) Alternative to first option, how can we show the distribution of topics among counties instead? 4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area</p>
+</div>
+<div id="chi-squared-test" class="section level1">
+<h1>chi-squared test</h1>
+<p>Testing whether there’s a relationship between topics searched and political party</p>
+<pre><code>## 
+##  Fisher&#39;s Exact Test for Count Data
+## 
+## data:  chi_square_df
+## p-value = 0.1008
+## alternative hypothesis: two.sided</code></pre>
+<p>According to the results it appears that there is an association between politcal party and topics searched. However, it is unclear how valid this may be? The Chi-squared test gives a warning when I run it. Maybe if we could figure out how to do a Fisher’s exact test?</p>
+<pre class="r"><code>merged_nyt_searches %&gt;% 
+  mutate(cruz_orour_rat = cruz/o_rourke,
+         status = as.numeric(cruz_orour_rat&gt;=1),
+         winner = ifelse(status==1, &quot;Ted Cruz&quot;, &quot;Beto O&#39;Rourke&quot;)) %&gt;% 
+  filter(district_num %in% c(22,26,31,3,8)) %&gt;% View</code></pre>
 </div>
 
 

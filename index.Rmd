@@ -162,6 +162,68 @@ leaflet(tx_midterms) %>%
 <br/>
 <div id="line-break-and-tab"></div>
 
-###Click [here](https://github.com/Amadeia/p8105_final_project_report/blob/master/p8105_final_project_report.md) for a link to our full report.
+### Project Summary
+
+For our project, due to the relevant political climate and our interest in analyzing civic engagement amongst American votes, we chose to focus on Texas because of the close race between Beto O’Rourke and Ted Cruz. We thus decided to analyze Google Trends data for the 2018 midterm elections in comparison with the number of votes each candidate received within each county/congressional district within Texas. We created graphs to showcase interesting trends, created an interactive map indicating number of votes per county and most searched topics and performed linear regressions and a Fisher’s Exact test to analyze pertinent relationships.
+
+#### Project Scope
+
+We focused our project on Google Trends searches for September 2018, specifically for the top 5 most highly searched topics. We narrowed down our geographic location to Texas and three Senate candidates: Beto O’Rourke, Ted Cruz, and Neal Dikeman. 
+
+#### Data
+
+We used data from Google Trends Datastore for data on the top searched issues by U.S. Congressional District. In addition, we scraped election results data from a New York Times article on the midterm elections.
+
+#### Approaches
+
+As shown in the plot below, we focused on O’Rourke and Ted Cruz because Dikeman had far fewer votes.  Furthermore, for more feasible statistical analyses, we focused on the top 5 most highly searched topics. We used a Fisher’s exact test to examine the relationship between topics searched and political party. We performed a linear regression model to examine the relationship between # of votes for each candidate and the top 5 searched topics: healthcare, immigration, medicaid, medicare, and september 11 attack.
+
+#### Visualizations
+
+```{r making 1st web table into tibbles, include=FALSE}
+
+table_overall = (nytimes_data %>% html_nodes(css = "table")) %>% 
+  .[[1]] %>%
+  html_table()
+```
+
+```{r tidy overall, include=FALSE}
+#remove the commas in the numbers first
+table_overall$Votes <- gsub(",","",table_overall$Votes)
+table_overall$Pct. <- gsub("%","",table_overall$Pct.)
+
+#convert votes and percent to numeric
+table_overall = 
+  table_overall %>% 
+  mutate(Votes = as.numeric(Votes), Pct. = as.numeric(Pct.))
+```
+
+```{r bar_plot, echo=FALSE}
+bar_overall =
+  table_overall %>% 
+  mutate(Candidate = as.factor(Candidate)) %>% 
+  mutate(Candidate = forcats::fct_reorder(Candidate, Votes)) %>% 
+  ggplot(aes(x = Candidate, y = Votes, fill = Party)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Number of Votes per Candidate",
+    x = "Candidate",
+    y = "Number of Votes"
+  ) +
+  scale_x_discrete(labels = c("Cruz* Ted Cruz*" = "Ted Cruz", "O'Rourke Beto O'Rourke" = "Beto O'Rourke",
+                              "Dikeman Neal Dikeman" = "Neal Dikeman"))
+  
+bar_overall
+```
+
+We also created four graphs displaying trends we noticed. The first graph displays the number of votes received for each candidate, amongst the top five counties with the most votes. The second graph displays, based on party affiliation, the frequency of searches of the top five most searched topics. The third graph shows the search frequencies, of the top five most searched topics, amongst the five most populated districts in Texas. The last graph shows the search frequencies for the most searched topic, health care, across all districts in Texas.
+
+#### Results
+We performed multiple linear regressions, using the search frequencies of each of the five most searched topics as predictors and the number of votes for each candidate as the outcome variable. We found a statistically significant relationship between frequency of immigration searches with the number of votes each candidate received, and between frequency of September 11th attacks searches and the number of votes each candidate received. The other three predictors - Medicaid, Medicare and Healthcare - did not result in statistically significant results.
+
+For the Fisher’s exact test, we did not find a statistically significant relationship between health topics and which political party the counties voted for.
+
+
+### Click [here](https://github.com/Amadeia/p8105_final_project_report/blob/master/p8105_final_project_report.md) for a link to our full report.
 
 </center>

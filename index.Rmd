@@ -158,6 +158,10 @@ leaflet(tx_midterms) %>%
             title = "2018 Texas Senate Election Results")
 ```
 
-</center>
+<div id="just-line-break"></div>
+<br/>
+<div id="line-break-and-tab"></div>
 
-###Click [here](link) for a link to our full report.
+###Click [here](https://github.com/Amadeia/p8105_final_project_report/blob/master/p8105_final_project_report.md) for a link to our full report.
+
+</center>

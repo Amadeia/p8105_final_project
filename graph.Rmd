@@ -77,11 +77,11 @@ tx_searches_population =
   gather(key = topics, value = searched_freq, health_care:september_11_attacks)
 
 tx_searches_population %>%
-  plot_ly(x = ~ district, y = ~searched_freq, color = ~topics) %>% 
-  layout(
+  plot_ly(x = ~ district, y = ~searched_freq, color = ~topics, type = "bar") %>% 
+   layout(
       xaxis = list(title = "District"),
       yaxis = list(title = "Search Frequency")
-  )
+    )
 ```
 
 

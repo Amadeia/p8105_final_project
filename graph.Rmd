@@ -76,14 +76,15 @@ tx_searches_population =
   select(district, health_care, immigration, medicare, medicaid, september_11_attacks) %>% 
   gather(key = topics, value = searched_freq, health_care:september_11_attacks)
 
-tx_searches_population %>%
-  plot_ly(x = ~ district, y = ~searched_freq, color = ~topics, type = "bar") %>% 
-   layout(
+pop_graph = ggplot(data = tx_searches_population, aes(x = district, y = searched_freq)) +   
+  geom_bar(aes(fill = topics), position = "dodge", stat = "identity")
+
+ggplotly(pop_graph) %>% 
+  layout(
       xaxis = list(title = "District"),
       yaxis = list(title = "Search Frequency")
     )
 ```
-
 
 Column {data-width=350}
 -----------------------------------------------------------------------

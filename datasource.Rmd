@@ -12,3 +12,11 @@ output:
 
 - We used the [Cook Partisan Voting Index (PVI)](https://www.cookpolitical.com/index.php/pvi-map-and-district-list) to determine the most Republican and Democratic districts. This value was determined by comparing each district's prior two presidental elections to the nation as a whole. We used this in our exploratory analysis of the most searched topics by party.
 
+- We used [CENSUS data](https://www.census.gov/geo/maps-data/data/cd_state.html) from 2010 to obtain the districts that correspond with counties in Texas. The geography information provided by the US Census Bureau is maintained by geographers, cartographers, statisticians, information technology specialists.
+
+- We used r code from an [Rpub page](https://rpubs.com/walkerke/txlege) developed by Kyle Walker in creating our interactive Texas map. 
+
+- Using the [tigris](https://cran.r-project.org/web/packages/tigris/tigris.pdf) package, we downloaded a shape file for Texas counties from 2017, which is updated by the US Census Bureau.
+
+- Additionally, we used the [leaflet](https://cran.r-project.org/web/packages/leaflet/leaflet.pdf) package to make our interactive map. This relied on the Texas county shape file populated by the tigris package.
+

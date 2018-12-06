@@ -64,10 +64,13 @@ We also created a “party” variable to label whether a specific district is D
 ## <u>Additional Analysis </u>
 
 ####**Linear Regression**  
-Using a merged dataset with the searched topics and vote results, we ran linear regressions to examine the linear relationship between all searched topics and the number of votes for the two different candidates across counties and districts in Texas
+Using a merged dataset with the searched topics and vote results, we ran linear regressions to examine the linear relationship between all searched topics and the number of votes for the two different candidates across counties and districts in Texas.  
+
 We wanted to examine if there was a relationship between the searched topics (health care, immigration, medicaid, medicare, and September 11 attacks) and actual vote results for the candidates. 
+
 In our models, we used the variable for candidates’ poll counts as our continuous outcome, and one of the five searched topics as our predictor. We ran the models individually with one searched topic at a time.  
-Below is the r-code for our statistical test analysis: 
+
+Below is the r-code for linear regression analysis: 
 
 ```{r lm continuous health_care, eval=F, echo=T}
 #Number of votes for each candidate with health care as predictor
@@ -115,11 +118,13 @@ lm_cruz_911 = lm(cruz ~ september_11_attacks, data = merged_most_searched) %>% b
 ```
 
 ####**Fisher’s Exact Test**  
-We used a Fisher’s exact test to examine the relationship between topics searched and political party. A Fisher’s Exact Test was ran as opposed to a standard Chi-Squared Tests as some of the cells in our dataset were below the expected count.
-We wanted to examine if the topics (health care, immigration, medicaid, medicare, September 11 attacks) were related to which political party the counties voted for. 
-All counties were pooled together.
-Our p-value was 0.1008 which was not statistically significant.  
-Below is the r-code for our statistical test analysis:
+We used a Fisher’s exact test to examine the relationship between topics searched and political party. A Fisher’s Exact Test was ran as opposed to a standard Chi-Squared Test as some of the cells in our dataset were below the expected count.  
+
+We wanted to examine if the most searched topics (health care, immigration, medicaid, medicare, September 11 attacks) were related to which political party the counties voted for. 
+
+All counties were pooled together, such that we created a 2X5 table with the first row representing the search results for counties that voted for Ted Cruz and the second row representing the search results for counties that voted for Beto O'Rourke.
+
+Below is the r-code for Fisher's Exact Test: 
 
 ```{r pre-chisquared, eval=F, echo=T}
 #Cleaning the data before performing analysis
@@ -176,4 +181,7 @@ For Medicaid, the fourth most widely searched topic did not have significant p v
 - These findings are not exactly what we expected. We expected that for the top five search terms, as frequency of searches increased, there would be a clearer trend in the number of votes for either candidate. For example, as health care searches increased, the number of votes that O’Rourke might receive would be clearly and significantly larger than the number of votes that Cruz would receive. These findings require further exploration of underlying trends. For example, it may be that despite an increase in number of healthcare searches, this does not necessarily translate into individuals who go out and vote nor does it indicate which candidate voters prefer. Additional information, such as surveys of voter preferences and the intentions of individuals who perform searches, might help inform future analyses.
 
 ####**Fisher’s Exact Test**  
+- The results of the Fisher's Exact Test were not statistically significant at the alpha=0.05 level (p=0.1008). Given this result, we have insufficient evidence to conclude that there is a relationship between political party and the most searched topics (health care, immigration, medicaid, medicare, September 11 attacks).  
+- Therefore, it seems that these particular topics are equally of interest regardless of political ideation. If instead we had analyzed topics that we believe are relevant to a rural vs. urban area, we may have had significant results because usually there is a vast difference  in political ideology between these geographies.  
+- However, given the how the Google trend data is framed, we noticed that it would be difficult to compare geographies that may be distinctly different in size, as a bigger population will result in more topic searches overall.
 

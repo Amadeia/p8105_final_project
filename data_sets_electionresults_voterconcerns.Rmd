@@ -153,11 +153,7 @@ Made the second table which has all of the 254 county level data for Texas!
 -using search terms "Midterms" and selecting dataset from top result
 
 ```{r reading in dataset voter searches, include=FALSE}
-
 district_searches = read.csv("https://raw.githubusercontent.com/googletrends/data/master/Search_Data_US_Congressional_District_26Sep2018.csv")
-
-district_searches
-
 ```
 
 
@@ -187,7 +183,6 @@ TX_counts =
 id <- "1mpBjlmy5CThvrPGgAqlEP2x7OFvnF4VH" # google file ID
 congress_district = read.csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id))
 
-
 congress_district$county_name = str_replace(congress_district$county_name,"Sterlin", "Sterling")
 congress_district$county_name = str_replace(congress_district$county_name,"MuCulloch","McCulloch")
 #misspelled counties discovered while exploring data when merging later on
@@ -203,9 +198,9 @@ TX_searches =
 nested_congress =
   congress_district %>% 
   nest(county_name) 
-	
+
 merged_searches= merge(TX_searches, nested_congress, by="district_num", all=TRUE) %>% 
-  unnest()
+  unnest() 
 
 #rename variable county_name
 merged_searches = merged_searches %>% 
@@ -215,12 +210,7 @@ merged_nyt_searches = merge(merged_searches, table_county, by= "county", all=TRU
 
 ```
 
-#plot for topics search per county
-Still figuring out how to display this
-ideas: 1) interactive barchart in the current long format, if we use shiny we could show how the top topics vary among counties through use of drop-down menu to select county, etc.
-2) figure out we can juxtapose how the counties voted vs. topics. Use of plotly for interactivity?
-3) Alternative to first option, how can we show the distribution of topics among counties instead?
-4)focus on 5 biggest counties or districts? but this would be biased as it may be a metropolitan area
+
 ```{r long format merged, message=FALSE, warning=FALSE, echo=FALSE}
 merged_nyt_searches_long = gather(merged_nyt_searches, key = topics, value = search_interest, health_care:september_11_attacks)
 
@@ -266,3 +256,6 @@ chi_square_df = chi_square_df %>%
 #results of fisher exact chi squared test
 fisher.test(chi_square_df)
 ```
+
+
+

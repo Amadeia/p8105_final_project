@@ -8,7 +8,7 @@ navbar:
     - text: "Graphs"
       href: graph.html
     - icon: fab fa-youtube
-      href: http://www.youtube.com
+      href: https://youtu.be/9q5HMiTg8c0
     - icon: fa-github fa-lg
       href: http://github.com/Amadeia/p8105_final_project
 

@@ -160,4 +160,4 @@ leaflet(tx_midterms) %>%
 
 </center>
 
-##Click [here](link) is a link to our full report.
+###Click [here](link) for a link to our full report.

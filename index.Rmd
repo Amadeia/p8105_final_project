@@ -29,6 +29,8 @@ output:
 <br/>
 <div id="line-break-and-tab"></div>
 
+Check out the interactive map below of Texas! Click on each county to see information about the election results.
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tigris)
@@ -156,3 +158,5 @@ leaflet(tx_midterms) %>%
 ```
 
 </center>
+
+##Click [here](link) is a link to our full report.
